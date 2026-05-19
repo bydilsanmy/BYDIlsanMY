@@ -774,99 +774,7 @@
 
 <script>
 /* =====================================================
-   CONTACT CONFIG
-   - 명함 정보 통합 관리
-===================================================== */
-const CONTACT = {
-  name: '박민용',
-  title: '팀장/차장',
-  company: 'DT Networks',
-  showroom: 'BYD 일산전시장',
-  mobile: '01089411004',
-  office: '0319110940',
-  email: 'minyong.park@dtnetworks.co.kr',
-  address: '경기도 고양시 일산동구 백마로 516',
-  placeQuery: 'BYD 일산전시장'
-};
-
-/* =====================================================
-   연락처 저장 (vCard 생성)
-===================================================== */
-function saveContact() {
-  const vcard = `BEGIN:VCARD
-VERSION:3.0
-FN:${CONTACT.name}
-ORG:${CONTACT.company}
-TITLE:${CONTACT.title}
-TEL;TYPE=CELL:${CONTACT.mobile}
-TEL;TYPE=WORK:${CONTACT.office}
-EMAIL:${CONTACT.email}
-ADR:;;${CONTACT.address};;;;
-END:VCARD`;
-
-  const blob = new Blob([vcard], { type: 'text/vcard;charset=utf-8' });
-  const url = URL.createObjectURL(blob);
-
-  const link = document.createElement('a');
-  link.href = url;
-  link.download = `${CONTACT.name}.vcf`;
-
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-
-  URL.revokeObjectURL(url);
-}
-
-/* =====================================================
-   지도 앱 연동
-   - 원본.html 방식 기반 검증 완료
-===================================================== */
-function tryAppLink(appUrl, fallbackUrl) {
-  const timer = setTimeout(() => {
-    window.location.href = fallbackUrl;
-  }, 1200);
-
-  window.location.href = appUrl;
-
-  window.addEventListener('pagehide', () => {
-    clearTimeout(timer);
-  }, { once:true });
-}
-
-/* 티맵 */
-function openTmap() {
-  const q = encodeURIComponent(CONTACT.placeQuery);
-
-  tryAppLink(
-    `tmap://search?name=${q}`,
-    'https://surl.tmobiapi.com/d97deca3'
-  );
-}
-
-/* 카카오맵 */
-function openKakaoMap() {
-  window.location.href =
-    `https://map.kakao.com/link/search/${encodeURIComponent(CONTACT.placeQuery)}`;
-}
-
-/* 네이버맵 */
-function openNaverMap() {
-  const q = encodeURIComponent(CONTACT.placeQuery);
-
-  tryAppLink(
-    `nmap://search?query=${q}&appname=dt.networks.card`,
-    `https://map.naver.com/p/search/${q}`
-  );
-}
-</script>
-
-
-<script>
-/* =====================================================
-   CONTACT INFO
-   - 명함 영역 기준 단일 데이터 관리
-   - 수정 시 아래만 변경하면 전체 자동 반영
+   공통 데이터
 ===================================================== */
 const CONTACT_INFO = {
   firstName: "박민용",
@@ -878,16 +786,14 @@ const CONTACT_INFO = {
   office: "0319110940",
   email: "minyong.park@dtnetworks.co.kr",
   address: "경기 고양시 일산동구 백마로 516",
+  placeQuery: "BYD 일산전시장",
   website: window.location.href
 };
 
 /* =====================================================
    vCard 연락처 저장
-   - iPhone / Android 기본 연락처앱 호환
-   - UTF-8 한글 지원
 ===================================================== */
 function saveContact() {
-
   const vcard = [
     "BEGIN:VCARD",
     "VERSION:3.0",
@@ -903,24 +809,39 @@ function saveContact() {
     "END:VCARD"
   ].join("\n");
 
-  const blob = new Blob(
-    ["\uFEFF" + vcard],
-    { type: "text/vcard;charset=utf-8" }
-  );
-
+  const blob = new Blob(["\uFEFF" + vcard], { type: "text/vcard;charset=utf-8" });
   const link = document.createElement("a");
   link.href = URL.createObjectURL(blob);
   link.download = `${CONTACT_INFO.fullName}.vcf`;
-
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
-
   setTimeout(() => URL.revokeObjectURL(link.href), 1000);
 }
-</script>
 
-<script>
+/* =====================================================
+   지도 앱 연동
+===================================================== */
+function tryAppLink(appUrl, fallbackUrl) {
+  const timer = setTimeout(() => { window.location.href = fallbackUrl; }, 1200);
+  window.location.href = appUrl;
+  window.addEventListener('pagehide', () => { clearTimeout(timer); }, { once: true });
+}
+
+function openTmap() {
+  const q = encodeURIComponent(CONTACT_INFO.placeQuery);
+  tryAppLink(`tmap://search?name=${q}`, 'https://surl.tmobiapi.com/d97deca3');
+}
+
+function openKakaoMap() {
+  window.location.href = `https://map.kakao.com/link/search/${encodeURIComponent(CONTACT_INFO.placeQuery)}`;
+}
+
+function openNaverMap() {
+  const q = encodeURIComponent(CONTACT_INFO.placeQuery);
+  tryAppLink(`nmap://search?query=${q}&appname=dt.networks.card`, `https://map.naver.com/p/search/${q}`);
+}
+
 /* =====================================================
    Toast 알림
 ===================================================== */
@@ -1049,5 +970,4 @@ function fallbackDownloadCanvas() {
 
 </body>
 </html>
-
 
