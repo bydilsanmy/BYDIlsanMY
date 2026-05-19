@@ -31,7 +31,6 @@
     href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700;900&display=swap"
     rel="stylesheet"
   />
-  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 
   <style>
     /* =====================================================
@@ -366,134 +365,6 @@
       font-weight: 600;
       text-transform: uppercase;
     }
-    /* =====================================================
-       7. 토스트 알림
-    ===================================================== */
-    .toast {
-      position: fixed;
-      bottom: 32px;
-      left: 50%;
-      transform: translateX(-50%) translateY(20px);
-      background: #222;
-      color: white;
-      padding: 13px 22px;
-      border-radius: 32px;
-      font-size: 13px;
-      font-weight: 600;
-      opacity: 0;
-      transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
-      z-index: 1000;
-      pointer-events: none;
-      box-shadow: 0 12px 32px -8px rgba(0,0,0,0.4);
-      letter-spacing: -0.01em;
-    }
-    .toast.show {
-      opacity: 1;
-      transform: translateX(-50%) translateY(0);
-    }
-
-    /* =====================================================
-       8. 공유 모달 (modal-overlay / modal / modal-item 등)
-    ===================================================== */
-    .modal-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.5);
-      display: none;
-      align-items: flex-end;
-      justify-content: center;
-      z-index: 999;
-      backdrop-filter: blur(4px);
-    }
-    .modal-overlay.show { display: flex; animation: fadeIn 0.2s ease; }
-    @keyframes fadeIn { from { opacity: 0 } to { opacity: 1 } }
-
-    .modal {
-      background: #fff;
-      width: 100%;
-      max-width: 480px;
-      border-radius: 22px 22px 0 0;
-      padding: 22px 20px 28px;
-      animation: slideUp 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
-    }
-    @keyframes slideUp {
-      from { transform: translateY(100%); }
-      to   { transform: translateY(0); }
-    }
-
-    .modal-grip {
-      width: 40px; height: 4px;
-      background: #ddd;
-      border-radius: 2px;
-      margin: 0 auto 18px;
-    }
-
-    .modal-title {
-      font-size: 17px;
-      font-weight: 800;
-      margin-bottom: 4px;
-      letter-spacing: -0.02em;
-      color: var(--text-main);
-    }
-    .modal-desc {
-      font-size: 13px;
-      color: var(--text-mute);
-      margin-bottom: 18px;
-      letter-spacing: -0.005em;
-    }
-    .modal-list {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-    .modal-item {
-      padding: 14px 14px;
-      border-radius: 12px;
-      background: #f8f9fa;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      cursor: pointer;
-      border: none;
-      width: 100%;
-      text-align: left;
-      font-family: inherit;
-      transition: background 0.15s ease;
-    }
-    .modal-item:active { background: #edf0f2; }
-
-    .modal-item-icon {
-      width: 36px; height: 36px;
-      border-radius: 10px;
-      flex-shrink: 0;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .modal-item-text { flex: 1; }
-    .modal-item-text strong {
-      display: block;
-      font-size: 14px;
-      font-weight: 700;
-      margin-bottom: 1px;
-      letter-spacing: -0.01em;
-      color: var(--text-main);
-    }
-    .modal-item-text span {
-      font-size: 12px;
-      color: var(--text-mute);
-      letter-spacing: -0.005em;
-    }
-    .modal-close {
-      width: 100%;
-      margin-top: 14px;
-      padding: 14px;
-      background: transparent;
-      border: none;
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--text-mute);
-      cursor: pointer;
-      font-family: inherit;
-    }
   </style>
 </head>
 
@@ -618,7 +489,7 @@
         </button>
 
         <!-- [아이콘] 공유 — Feather Icons "share" 변형 (링크 복사 등) -->
-        <button class="action-item" onclick="openShareModal()">
+        <button class="action-item" onclick="alert('명함 링크 복사 완료')">
           <svg class="action-icon" viewBox="0 0 24 24"
                fill="none" stroke="currentColor" stroke-width="2"
                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -721,48 +592,6 @@
     <div class="footer">BYD | DT NETWORKS | Ilsan</div>
 
   </div><!-- /.container -->
-
-<!-- ============ Toast 알림 ============ -->
-<div class="toast" id="toast"></div>
-
-<!-- ============ 공유 모달 ============ -->
-<div class="modal-overlay" id="share-modal" onclick="closeShareModal(event)">
-  <div class="modal" onclick="event.stopPropagation()">
-    <div class="modal-grip"></div>
-    <div class="modal-title">명함 공유하기</div>
-    <div class="modal-desc">카톡·문자에서 명함이 이미지로 보이게 하려면 '이미지로 저장 후 전송'을 추천드립니다.</div>
-    <div class="modal-list">
-      <button class="modal-item" onclick="shareImageDirect()">
-        <div class="modal-item-icon" style="background:#FEE500;">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="#1a1a1a"><path d="M12 3C6.48 3 2 6.48 2 10.8c0 2.76 1.86 5.18 4.66 6.6-.2.7-.74 2.6-.84 3-.13.5.18.5.38.36.16-.1 2.54-1.74 3.56-2.42.74.1 1.5.16 2.24.16 5.52 0 10-3.48 10-7.7S17.52 3 12 3z"/></svg>
-        </div>
-        <div class="modal-item-text">
-          <strong>명함 이미지로 저장 후 전송</strong>
-          <span>가장 깔끔하게 보입니다 (권장)</span>
-        </div>
-      </button>
-      <button class="modal-item" onclick="shareViaSystem()">
-        <div class="modal-item-icon" style="background:#4e5356;color:white;">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-        </div>
-        <div class="modal-item-text">
-          <strong>링크로 공유</strong>
-          <span>카톡·문자·메일 등 어디든</span>
-        </div>
-      </button>
-      <button class="modal-item" onclick="copyLink()">
-        <div class="modal-item-icon" style="background:#f8f9fa;">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
-        </div>
-        <div class="modal-item-text">
-          <strong>링크 복사</strong>
-          <span>주소창에 붙여넣기</span>
-        </div>
-      </button>
-    </div>
-    <button class="modal-close" onclick="closeShareModal()">닫기</button>
-  </div>
-</div>
 
 
 <script>
@@ -913,161 +742,7 @@ function saveContact() {
 }
 </script>
 
-<script>
-/* =====================================================
-   Toast 알림
-===================================================== */
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  clearTimeout(window._toastTimer);
-  window._toastTimer = setTimeout(() => t.classList.remove('show'), 2200);
-}
-
-/* =====================================================
-   공유 모달 제어
-===================================================== */
-function openShareModal() {
-  document.getElementById('share-modal').classList.add('show');
-}
-
-function closeShareModal(e) {
-  if (!e || e.target === e.currentTarget) {
-    document.getElementById('share-modal').classList.remove('show');
-  }
-}
-
-function shareViaSystem() {
-  closeShareModal();
-  if (navigator.share) {
-    navigator.share({
-      title: '박민용 팀장 | BYD 일산전시장',
-      text: 'BYD 일산전시장 박민용 팀장 명함',
-      url: window.location.href
-    }).catch(() => {});
-  } else {
-    copyLink();
-  }
-}
-
-function copyLink() {
-  closeShareModal();
-  navigator.clipboard.writeText(window.location.href)
-    .then(() => showToast('링크가 복사되었습니다'))
-    .catch(() => showToast('복사에 실패했습니다'));
-}
-
-function shareImageDirect() {
-  closeShareModal();
-  downloadCardImage(true);
-}
-
-/* =====================================================
-   명함 → PNG 고해상도 캡처 (html2canvas)
-===================================================== */
-function downloadCardImage(viaShare = false) {
-  showToast('이미지를 생성 중입니다...');
-
-  const original = document.getElementById('business-card');
-  const clone = original.cloneNode(true);
-
-  const captureBox = document.createElement('div');
-  captureBox.style.cssText = `
-    position: fixed;
-    top: 0; left: -9999px;
-    width: 1500px;
-    pointer-events: none;
-    z-index: -1;
-  `;
-
-  clone.style.cssText = `
-    width: 1500px;
-    max-width: 1500px;
-    margin: 0;
-    box-shadow: none;
-    border-radius: 0;
-    animation: none;
-    opacity: 1;
-    transform: none;
-  `;
-  clone.id = 'capture-card';
-
-  /* clamp() 폰트 크기를 1500px 기준 고정 px로 환산 */
-  const nameLine = clone.querySelector('.name-line');
-  if (nameLine) {
-    nameLine.style.fontSize = '72px';
-    nameLine.style.fontWeight = '700';
-    nameLine.style.marginBottom = '15px';
-  }
-
-  const subLines = clone.querySelectorAll('.sub-title-line, .showroom-line, .info-line');
-  subLines.forEach(el => {
-    el.style.fontSize = '44px';
-    el.style.lineHeight = '1.4';
-    el.style.marginBottom = '8px';
-    if (el.classList.contains('phone-bold')) {
-      el.style.fontWeight = '800';
-      el.style.fontSize = '46px';
-    }
-  });
-
-  captureBox.appendChild(clone);
-  document.body.appendChild(captureBox);
-
-  const renderCapture = () => {
-    html2canvas(clone, {
-      scale: 2,
-      backgroundColor: '#e2e3e5',
-      useCORS: true,
-      logging: false,
-      width: 1500,
-      windowWidth: 1500
-    }).then(canvas => {
-      if (captureBox.parentNode) document.body.removeChild(captureBox);
-
-      if (viaShare && navigator.canShare) {
-        canvas.toBlob(blob => {
-          const file = new File([blob], '박민용_BYD명함.png', { type: 'image/png' });
-          if (navigator.canShare({ files: [file] })) {
-            navigator.share({
-              files: [file],
-              title: '박민용 | BYD 일산전시장',
-              text: 'BYD 일산전시장 박민용 팀장 명함입니다.'
-            }).catch(() => fallbackDownload(canvas));
-          } else {
-            fallbackDownload(canvas);
-          }
-        }, 'image/png');
-      } else {
-        fallbackDownload(canvas);
-      }
-    }).catch(err => {
-      if (captureBox.parentNode) document.body.removeChild(captureBox);
-      showToast('이미지 생성에 실패했습니다');
-      console.error(err);
-    });
-  };
-
-  /* 폰트 로드 대기 후 렌더링 */
-  if (document.fonts && document.fonts.ready) {
-    document.fonts.ready.then(renderCapture);
-  } else {
-    setTimeout(renderCapture, 400);
-  }
-}
-
-function fallbackDownload(canvas) {
-  const link = document.createElement('a');
-  link.download = '박민용_BYD명함.png';
-  link.href = canvas.toDataURL('image/png');
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-  showToast('명함 이미지가 저장되었습니다');
-}
-</script>
-
 </body>
 </html>
+
 
