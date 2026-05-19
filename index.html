@@ -5,12 +5,12 @@
   <!-- 모바일 뷰포트 설정: 확대/축소 비활성화 -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
-  <title>박민용 | DT Networks 일산전시장</title>
+  <title>박민용 | BYD 일산전시장</title>
 
   <!-- Open Graph 메타태그: SNS 공유 시 미리보기 정보 -->
   <meta property="og:type"        content="profile" />
-  <meta property="og:title"       content="박민용 팀장/차장 | DT Networks" />
-  <meta property="og:description" content="Sales | Team Manager | 010-8941-1004" />
+  <meta property="og:title"       content="박민용 팀장 | BYD Ilsan" />
+  <meta property="og:description" content="010-8941-1004" />
   <meta property="og:image"       content="byd-logo.png" />
   <meta property="og:image:width"  content="1200" />
   <meta property="og:image:height" content="630" />
@@ -48,14 +48,14 @@
        - 색상, 배경, 강조색을 한 곳에서 관리
     ===================================================== */
     :root {
-      --card-bg:    #efefef;   /* 명함 카드 배경 */
-      --text-main:  #4e5356;   /* 주요 텍스트 */
-      --text-mute:  #7a8080;   /* 보조 텍스트 */
+      --card-bg:       #d4d8db;  /* 명함 카드 배경 */
+      --text-main:     #4e5356;  /* 주요 텍스트 */
+      --text-mute:     #7a8080;  /* 보조 텍스트 */
       --accent-deep: #3753b1;  /* 강조색 (딥 블루) */
-      --accent-light: #4f9edd; /* 강조색 (라이트 블루) */
-      --paper:      #ffffff;   /* 흰 배경 (카드 내부 등) */
-      --btn-bg:     #efefef;   /* 버튼/섹션 배경 */
-      --paper-soft: #f8f9fa;   /* 페이지 전체 배경 */
+      --accent-light:  #4f9edd;  /* 강조색 (라이트 블루) */
+      --paper:            #efefef;  /* 흰 배경 (카드 내부 등) */
+      --btn-bg:         #e2e3e5;  /* 버튼/섹션 배경 */
+      --paper-soft:     #f8f9fa;  /* 페이지 전체 배경 */
     }
 
     /* =====================================================
@@ -179,7 +179,7 @@
     .info-line.phone-bold {
       font-weight: 800;
       color: var(--text-main);
-      font-size: clamp(13px, 3vw, 15.5px);
+      font-size: clamp(13px, 3vw, 16px);
       margin-top: 0;
       margin-bottom: 0;
     }
@@ -253,14 +253,14 @@
     }
     .cta-secondary:hover { background: #e5e5e5; }
 
-    /* 연락처 허브: 4열 아이콘 그리드 */
+    /* 연락처: 4열 아이콘 그리드 */
     .action-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 8px;
     }
 
-    /* 개별 아이콘 버튼 (전시장 유선, 문자, 이메일, 공유) */
+    /* 개별 아이콘 버튼 (전시장 전화, 문자, 이메일, 공유) */
     .action-item {
       display: flex;
       flex-direction: column;
@@ -350,7 +350,7 @@
     /* 전시장 주소 */
     .map-text span {
       color: var(--text-mute);
-      font-size: 11.5px;
+      font-size: 12px;
     }
 
     /* =====================================================
@@ -448,11 +448,11 @@
     </div><!-- /.cta-row -->
 
     <!-- ===================================================
-         CONTACT HUBS 섹션 (4개 아이콘 버튼)
+         CONTACT 섹션 (4개 아이콘 버튼)
     =================================================== -->
     <div class="section">
 
-      <div class="section-title">CONTACT HUBS</div>
+      <div class="section-title">CONTACT</div>
 
       <div class="action-grid">
 
@@ -466,7 +466,7 @@
             <!-- 창문/출입구 점 (세로 4개) -->
             <path d="M9 9v.01M9 12v.01M9 15v.01M9 18v.01"/>
           </svg>
-          <span class="action-label">전시장 유선</span>
+          <span class="action-label">전시장 전화</span>
         </button>
 
         <!-- [아이콘] 말풍선 — Feather Icons "message-circle" (문자 보내기) -->
@@ -668,15 +668,15 @@ function openNaverMap() {
    - 수정 시 아래만 변경하면 전체 자동 반영
 ===================================================== */
 const CONTACT_INFO = {
-  firstName: "민용",
-  lastName: "박",
-  fullName: "박민용",
+  firstName: "박민용",
+  lastName: "BYD",
+  fullName: "BYD박민용",
   title: "팀장/차장",
-  company: "DT Networks BYD 일산전시장",
+  company: "BYD 일산전시장",
   mobile: "01089411004",
   office: "0319110940",
   email: "minyong.park@dtnetworks.co.kr",
-  address: "경기 고양시 일산동구 백마로 516, BYD 일산전시장",
+  address: "경기 고양시 일산동구 백마로 516",
   website: window.location.href
 };
 
