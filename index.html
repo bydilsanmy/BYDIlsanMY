@@ -431,7 +431,7 @@
       </button>
 
       <!-- [아이콘] 사람 + 플러스 — Feather Icons "user-plus" 변형 -->
-      <button class="cta-button cta-secondary" onclick="alert('연락처 저장(vCard) 연동 영역입니다.')">
+      <button class="cta-button cta-secondary" onclick="saveContact()">
         <svg width="16" height="16" viewBox="0 0 24 24"
              fill="none" stroke="currentColor" stroke-width="2.5"
              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -657,6 +657,65 @@ function openNaverMap() {
     `nmap://search?query=${q}&appname=dt.networks.card`,
     `https://map.naver.com/p/search/${q}`
   );
+}
+</script>
+
+
+<script>
+/* =====================================================
+   CONTACT INFO
+   - 명함 영역 기준 단일 데이터 관리
+   - 수정 시 아래만 변경하면 전체 자동 반영
+===================================================== */
+const CONTACT_INFO = {
+  firstName: "민용",
+  lastName: "박",
+  fullName: "박민용",
+  title: "팀장/차장",
+  company: "DT Networks BYD 일산전시장",
+  mobile: "01089411004",
+  office: "0319110940",
+  email: "minyong.park@dtnetworks.co.kr",
+  address: "경기 고양시 일산동구 백마로 516, BYD 일산전시장",
+  website: window.location.href
+};
+
+/* =====================================================
+   vCard 연락처 저장
+   - iPhone / Android 기본 연락처앱 호환
+   - UTF-8 한글 지원
+===================================================== */
+function saveContact() {
+
+  const vcard = [
+    "BEGIN:VCARD",
+    "VERSION:3.0",
+    `N:${CONTACT_INFO.lastName};${CONTACT_INFO.firstName}`,
+    `FN:${CONTACT_INFO.fullName}`,
+    `ORG:${CONTACT_INFO.company}`,
+    `TITLE:${CONTACT_INFO.title}`,
+    `TEL;TYPE=CELL:${CONTACT_INFO.mobile}`,
+    `TEL;TYPE=WORK:${CONTACT_INFO.office}`,
+    `EMAIL;TYPE=WORK:${CONTACT_INFO.email}`,
+    `ADR;TYPE=WORK:;;${CONTACT_INFO.address}`,
+    `URL:${CONTACT_INFO.website}`,
+    "END:VCARD"
+  ].join("\n");
+
+  const blob = new Blob(
+    ["\uFEFF" + vcard],
+    { type: "text/vcard;charset=utf-8" }
+  );
+
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = `${CONTACT_INFO.fullName}.vcf`;
+
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+
+  setTimeout(() => URL.revokeObjectURL(link.href), 1000);
 }
 </script>
 
