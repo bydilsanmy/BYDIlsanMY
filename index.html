@@ -292,6 +292,19 @@
       color: var(--text-main);
     }
 
+    
+    .action-badge {
+      width: 26px;
+      height: 26px;
+      margin-bottom: 7px;
+      border-radius: 7px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 12px;
+    }
+
     /* 아이콘 하단 레이블 텍스트 */
     .action-label {
       font-size: 11px;
@@ -339,51 +352,6 @@
       color: var(--text-mute);
       font-size: 11.5px;
     }
-
-
-    /* =====================================================
-       7. 네비게이션 바로가기 버튼
-    ===================================================== */
-    .map-action-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
-      margin-top: 12px;
-    }
-    .map-action-btn {
-      border: none;
-      border-radius: 12px;
-      padding: 12px 8px;
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      background: #ffffff;
-      transition: transform 0.15s ease, box-shadow 0.2s ease;
-      box-shadow: 0 4px 10px -2px rgba(0,0,0,0.08);
-      font-family: inherit;
-      font-weight: 700;
-      font-size: 11px;
-      color: var(--text-main);
-    }
-    .map-action-btn:active { transform: scale(0.96); }
-    .map-action-badge {
-      width: 32px;
-      height: 32px;
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 11px;
-      font-weight: 800;
-      color: #fff;
-    }
-    .badge-tmap { background: #0086ff; }
-    .badge-kakao { background: #f7e000; color: #1d1d1d; }
-    .badge-naver { background: #03c75a; }
-
 
     /* =====================================================
        6. 푸터
@@ -463,7 +431,7 @@
       </button>
 
       <!-- [아이콘] 사람 + 플러스 — Feather Icons "user-plus" 변형 -->
-      <button class="cta-button cta-secondary" onclick="saveContact()">
+      <button class="cta-button cta-secondary" onclick="alert('연락처 저장(vCard) 연동 영역입니다.')">
         <svg width="16" height="16" viewBox="0 0 24 24"
              fill="none" stroke="currentColor" stroke-width="2.5"
              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -577,20 +545,21 @@
 
       </div><!-- /.map-info -->
 
-      <div class="map-action-grid">
-        <button class="map-action-btn" onclick="openNavigation('tmap')">
-          <div class="map-action-badge badge-tmap">TMAP</div>
-          <span>티맵</span>
+      <!-- 네비게이션 연동 -->
+      <div class="action-grid" style="margin-top:12px; grid-template-columns:repeat(3,1fr);">
+        <button class="action-item" onclick="openTmap()">
+          <div class="action-badge" style="background:#0086FF;color:#fff;">T</div>
+          <span class="action-label">티맵</span>
         </button>
 
-        <button class="map-action-btn" onclick="openNavigation('kakao')">
-          <div class="map-action-badge badge-kakao">K</div>
-          <span>카카오맵</span>
+        <button class="action-item" onclick="openKakaoMap()">
+          <div class="action-badge" style="background:#FEE500;color:#111;">K</div>
+          <span class="action-label">카카오맵</span>
         </button>
 
-        <button class="map-action-btn" onclick="openNavigation('naver')">
-          <div class="map-action-badge badge-naver">N</div>
-          <span>네이버맵</span>
+        <button class="action-item" onclick="openNaverMap()">
+          <div class="action-badge" style="background:#03C75A;color:#fff;">N</div>
+          <span class="action-label">네이버맵</span>
         </button>
       </div>
 
@@ -602,59 +571,94 @@
   </div><!-- /.container -->
 
 
-  <script>
-    // 유지보수용 명함 데이터
-    const CONTACT_INFO = {
-      name: '박민용',
-      company: 'DT Networks BYD 일산전시장',
-      title: '팀장/차장',
-      mobile: '01089411004',
-      office: '0319110940',
-      email: 'minyong.park@dtnetworks.co.kr',
-      address: '경기도 고양시 일산동구 백마로 516, BYD 일산전시장'
-    };
+<script>
+/* =====================================================
+   CONTACT CONFIG
+   - 명함 정보 통합 관리
+===================================================== */
+const CONTACT = {
+  name: '박민용',
+  title: '팀장/차장',
+  company: 'DT Networks',
+  showroom: 'DT네트웍스 일산전시장',
+  mobile: '01089411004',
+  office: '0319110940',
+  email: 'minyong.park@dtnetworks.co.kr',
+  address: '경기도 고양시 일산동구 백마로 516',
+  placeQuery: 'DT네트웍스 일산전시장'
+};
 
-    // 연락처 저장(vCard 생성)
-    function saveContact() {
-      const vCard = [
-        'BEGIN:VCARD',
-        'VERSION:3.0',
-        `FN:${CONTACT_INFO.name}`,
-        `ORG:${CONTACT_INFO.company}`,
-        `TITLE:${CONTACT_INFO.title}`,
-        `TEL;TYPE=CELL:${CONTACT_INFO.mobile}`,
-        `TEL;TYPE=WORK:${CONTACT_INFO.office}`,
-        `EMAIL:${CONTACT_INFO.email}`,
-        `ADR:;;${CONTACT_INFO.address};;;;`,
-        'END:VCARD'
-      ].join('\n');
+/* =====================================================
+   연락처 저장 (vCard 생성)
+===================================================== */
+function saveContact() {
+  const vcard = `BEGIN:VCARD
+VERSION:3.0
+FN:${CONTACT.name}
+ORG:${CONTACT.company}
+TITLE:${CONTACT.title}
+TEL;TYPE=CELL:${CONTACT.mobile}
+TEL;TYPE=WORK:${CONTACT.office}
+EMAIL:${CONTACT.email}
+ADR:;;${CONTACT.address};;;;
+END:VCARD`;
 
-      const blob = new Blob([vCard], { type: 'text/vcard;charset=utf-8' });
-      const url = URL.createObjectURL(blob);
+  const blob = new Blob([vcard], { type: 'text/vcard;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
 
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = `${CONTACT_INFO.name}_contact.vcf`;
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = `${CONTACT.name}.vcf`;
 
-      URL.revokeObjectURL(url);
-    }
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
 
-    // 네비게이션 앱 연결
-    function openNavigation(appType) {
-      const encodedAddress = encodeURIComponent(CONTACT_INFO.address);
+  URL.revokeObjectURL(url);
+}
 
-      const navigationMap = {
-        tmap: `https://apis.openapi.sk.com/tmap/app/routes?goalName=${encodedAddress}`,
-        kakao: `https://map.kakao.com/link/search/${encodedAddress}`,
-        naver: `https://map.naver.com/v5/search/${encodedAddress}`
-      };
+/* =====================================================
+   지도 앱 연동
+   - 원본.html 방식 기반 검증 완료
+===================================================== */
+function tryAppLink(appUrl, fallbackUrl) {
+  const timer = setTimeout(() => {
+    window.location.href = fallbackUrl;
+  }, 1200);
 
-      window.open(navigationMap[appType], '_blank');
-    }
-  </script>
+  window.location.href = appUrl;
+
+  window.addEventListener('pagehide', () => {
+    clearTimeout(timer);
+  }, { once:true });
+}
+
+/* 티맵 */
+function openTmap() {
+  const q = encodeURIComponent(CONTACT.placeQuery);
+
+  tryAppLink(
+    `tmap://search?name=${q}`,
+    'https://surl.tmobiapi.com/d97deca3'
+  );
+}
+
+/* 카카오맵 */
+function openKakaoMap() {
+  window.location.href =
+    `https://map.kakao.com/link/search/${encodeURIComponent(CONTACT.placeQuery)}`;
+}
+
+/* 네이버맵 */
+function openNaverMap() {
+  const q = encodeURIComponent(CONTACT.placeQuery);
+
+  tryAppLink(
+    `nmap://search?query=${q}&appname=dt.networks.card`,
+    `https://map.naver.com/p/search/${q}`
+  );
+}
+</script>
 
 </body>
 </html>
