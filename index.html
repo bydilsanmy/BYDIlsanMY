@@ -1,84 +1,117 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>박민용 | DT Networks 일산전시장</title>
-  
-  <meta property="og:type" content="profile">
-  <meta property="og:title" content="박민용 팀장/차장 | DT Networks">
-  <meta property="og:description" content="Sales I Team Manager | 010-8941-1004">
-  <meta property="og:image" content="byd-logo.png">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-  <meta name="theme-color" content="#3753B1">
-  
-  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700;900&display=swap" rel="stylesheet">
-  
+
+  <meta property="og:type" content="profile" />
+  <meta property="og:title" content="박민용 팀장/차장 | DT Networks" />
+  <meta property="og:description" content="Sales I Team Manager | 010-8941-1004" />
+  <meta property="og:image" content="byd-logo.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="theme-color" content="#3753B1" />
+
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <link
+    href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"
+    rel="stylesheet"
+  />
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700;900&display=swap"
+    rel="stylesheet"
+  />
+
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
     :root {
-      --card-bg: #EFEFEF; /* 명함 배경색 */
-      --text-main: #4E5356; /* 메인 글자색 */
-      --text-mute: #7A8080; /* 일반 부가정보 글자색 */
-      --accent-deep: #3753B1;
-      --accent-light: #4F9EDD;
-      
+      --card-bg: #efefef;
+      --text-main: #4e5356;
+      --text-mute: #7a8080;
+      --accent-deep: #3753b1;
+      --accent-light: #4f9edd;
+
       --paper: #ffffff;
-      --btn-bg: #EFEFEF;
+      --btn-bg: #efefef;
       --paper-soft: #f8f9fa;
     }
-    
-    html, body { background: var(--paper-soft); }
-    
+
+    html,
     body {
-      font-family: 'Source Sans Pro', 'Pretendard', -apple-system, sans-serif;
+      background: var(--paper-soft);
+    }
+
+    body {
+      font-family: "Source Sans Pro", "Pretendard", -apple-system, sans-serif;
       color: var(--text-main);
       min-height: 100vh;
       padding: 14px 14px 60px;
       line-height: 1.5;
       -webkit-font-smoothing: antialiased;
     }
-    
-    .container { max-width: 480px; margin: 0 auto; }
-    
-    /* ===== 디지털 명함 영역 ===== */
+
+    .container {
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    /* ===== 디지털 명함 ===== */
+
     .business-card {
       position: relative;
       background: var(--card-bg);
       aspect-ratio: 1.72 / 1;
       width: 100%;
       border-radius: 14px;
-      box-shadow: 
+      box-shadow:
         0 26px 40px -12px rgba(0, 0, 0, 0.22),
         0 12px 18px -6px rgba(0, 0, 0, 0.14),
-        0 1px 0 0 rgba(255,255,255,0.6) inset;
+        0 1px 0 0 rgba(255, 255, 255, 0.6) inset;
       overflow: hidden;
       margin-bottom: 20px;
       border: 1px solid rgba(0, 0, 0, 0.05);
       animation: cardIn 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) both;
     }
-    
+
     @keyframes cardIn {
-      from { opacity: 0; transform: translateY(12px) scale(0.98); }
-      to   { opacity: 1; transform: translateY(0) scale(1); }
+      from {
+        opacity: 0;
+        transform: translateY(12px) scale(0.98);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
     }
-    
+
     .business-card::before {
-      content: '';
+      content: "";
       position: absolute;
-      left: 0; bottom: 0; right: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
       height: 6px;
-      background: linear-gradient(90deg, var(--accent-deep), var(--accent-light));
+      background: linear-gradient(
+        90deg,
+        var(--accent-deep),
+        var(--accent-light)
+      );
       pointer-events: none;
     }
-    
-    /* 변경사항: 로고 크기 약 30% 확대 조정 */
+
+    /* 로고 */
+
     .brand-logo-area {
       position: absolute;
       top: 12%;
@@ -88,16 +121,16 @@
       align-items: center;
       justify-content: flex-end;
     }
-    
+
     .byd-logo-img {
-      /* 기존 70px~95px에서 약 30% 증가된 95px~125px로 조정 */
-      width: clamp(95px, 22vw, 125px); 
+      width: clamp(95px, 22vw, 125px);
       height: auto;
       display: block;
       opacity: 0.9;
     }
-    
-    /* 명함 콘텐츠 텍스트 배치 */
+
+    /* 텍스트 */
+
     .card-content {
       position: absolute;
       left: 6%;
@@ -105,70 +138,78 @@
       bottom: 11%;
       z-index: 2;
     }
-    
+
     .name-line {
       font-weight: 700;
       font-size: clamp(20px, 4.8vw, 26px);
-      margin-bottom: 5px;
+      margin-bottom: 5px; /* 유지 */
       letter-spacing: -0.01em;
       color: var(--text-main);
       display: flex;
       align-items: baseline;
       gap: 6px;
     }
-    
+
     .name-line span.title {
       font-size: 0.52em;
       font-weight: 600;
       color: var(--text-mute);
     }
-    
-    /* 변경사항: Sales I Team Manager - 볼드 제거, 일반서체, Source Sans Pro 적용 */
+
+    /* Sales */
+
     .sub-title-line {
-      font-family: 'Source Sans Pro', sans-serif;
-      font-weight: 400; /* 일반(Regular) */
-      font-size: clamp(12px, 2.7vw, 14.5px);
-      color: var(--text-mute); /* #7A8080 */
-      margin-bottom: 1px;
+      font-family: "Source Sans Pro", sans-serif;
+      font-weight: 400;
+      font-size: clamp(10px, 2.2vw, 12px);
+      color: var(--text-mute);
+      margin-bottom: 3px;
       letter-spacing: 0.01em;
     }
-    
-    /* 변경사항: DT Networks Ilsan Showroom - 볼드 제거, 일반서체, Source Sans Pro 적용 */
+
+    /* Showroom */
+
     .showroom-line {
-      font-family: 'Source Sans Pro', sans-serif;
-      font-weight: 400; /* 일반(Regular) */
-      font-size: clamp(11.5px, 2.6vw, 14px);
-      color: var(--text-mute); /* #7A8080 */
-      margin-bottom: 9px;
+      font-family: "Source Sans Pro", sans-serif;
+      font-weight: 400;
+      font-size: clamp(10px, 2.2vw, 12px);
+      color: var(--text-mute);
+      margin-bottom: 3px;
       letter-spacing: 0.01em;
     }
-    
+
+    /* 기본 정보 */
+
     .info-line {
       font-weight: 400;
       font-size: clamp(10px, 2.2vw, 12px);
       line-height: 1.4;
-      color: var(--text-mute); 
+      color: var(--text-mute);
       letter-spacing: -0.01em;
+      margin-bottom: 3px;
     }
-    
-    /* 다이렉트 휴대폰 번호 볼드 처리 유지 */
+
+    /* 전화번호 */
+
     .info-line.phone-bold {
-      font-weight: 800; 
+      font-weight: 800;
       color: var(--text-main);
       font-size: clamp(13px, 3vw, 15.5px);
-      margin-top: 3px;
+      margin-top: 0;
+      margin-bottom: 0;
     }
-    
-    /* ===== 하단 링크/섹션 영역 ===== */
+
+    /* ===== 하단 섹션 ===== */
+
     .section {
       background: var(--btn-bg);
       border-radius: 16px;
       padding: 18px 16px;
       margin-bottom: 14px;
       border: 1px solid #e2e2e2;
-      box-shadow: 0 10px 20px -6px rgba(0,0,0,0.12);
+      box-shadow: 0 10px 20px -6px rgba(0, 0, 0, 0.12);
     }
-    
+
     .section-title {
       font-size: 11px;
       font-weight: 700;
@@ -177,14 +218,14 @@
       margin-bottom: 14px;
       text-transform: uppercase;
     }
-    
+
     .cta-row {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 10px;
       margin-bottom: 14px;
     }
-    
+
     .cta-button {
       padding: 15px 12px;
       border-radius: 12px;
@@ -197,33 +238,44 @@
       align-items: center;
       justify-content: center;
       gap: 8px;
-      transition: transform 0.12s ease, background 0.2s ease, box-shadow 0.2s ease;
+      transition:
+        transform 0.12s ease,
+        background 0.2s ease,
+        box-shadow 0.2s ease;
       letter-spacing: -0.01em;
     }
-    
-    .cta-button:active { transform: scale(0.97); }
-    
+
+    .cta-button:active {
+      transform: scale(0.97);
+    }
+
     .cta-primary {
       background: var(--accent-deep);
       color: #ffffff;
       box-shadow: 0 10px 22px -4px rgba(55, 83, 177, 0.45);
     }
-    .cta-primary:hover { background: #2b4291; }
-    
+
+    .cta-primary:hover {
+      background: #2b4291;
+    }
+
     .cta-secondary {
       background: var(--btn-bg);
       color: var(--accent-deep);
       border: 1.5px solid var(--accent-deep);
       box-shadow: 0 10px 20px -6px rgba(0, 0, 0, 0.15);
     }
-    .cta-secondary:hover { background: #e5e5e5; }
-    
+
+    .cta-secondary:hover {
+      background: #e5e5e5;
+    }
+
     .action-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 8px;
     }
-    
+
     .action-item {
       display: flex;
       flex-direction: column;
@@ -231,28 +283,30 @@
       justify-content: center;
       padding: 14px 4px 12px;
       border-radius: 12px;
-      background: #ffffff; 
+      background: #ffffff;
       cursor: pointer;
-      transition: transform 0.1s ease, background 0.2s ease;
+      transition:
+        transform 0.1s ease,
+        background 0.2s ease;
       border: none;
       color: inherit;
       text-decoration: none;
       font-family: inherit;
-      box-shadow: 0 4px 10px -2px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 10px -2px rgba(0, 0, 0, 0.1);
     }
-    
+
     .action-item:active {
       transform: scale(0.95);
       background: #edf0f2;
     }
-    
+
     .action-icon {
       width: 24px;
       height: 24px;
       margin-bottom: 8px;
       color: var(--text-main);
     }
-    
+
     .action-label {
       font-size: 11px;
       font-weight: 600;
@@ -260,7 +314,7 @@
       text-align: center;
       line-height: 1.25;
     }
-    
+
     .map-info {
       display: flex;
       align-items: center;
@@ -269,18 +323,21 @@
       background: #ffffff;
       border-radius: 12px;
       margin-top: 4px;
-      box-shadow: 0 4px 10px -2px rgba(0,0,0,0.08);
+      box-shadow: 0 4px 10px -2px rgba(0, 0, 0, 0.08);
     }
-    
+
     .map-pin {
       flex-shrink: 0;
-      width: 36px; height: 36px;
+      width: 36px;
+      height: 36px;
       background: var(--accent-light);
       border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       color: white;
     }
-    
+
     .map-text strong {
       display: block;
       font-size: 13px;
@@ -288,12 +345,12 @@
       color: var(--text-main);
       margin-bottom: 2px;
     }
-    
+
     .map-text span {
       color: var(--text-mute);
       font-size: 11.5px;
     }
-    
+
     .footer {
       text-align: center;
       padding: 32px 0 10px;
@@ -305,78 +362,68 @@
     }
   </style>
 </head>
+
 <body>
+  <div class="container">
 
-<div class="container">
-  
-  <div class="business-card" id="business-card">
-    <div class="brand-logo-area">
-      <img src="byd-logo.png" alt="BYD Logo" class="byd-logo-img">
-    </div>
-    
-    <div class="card-content">
-      <div class="name-line">박민용 <span class="title">팀장/차장</span></div>
-      
-      <div class="sub-title-line">Sales I Team Manager</div>
-      <div class="showroom-line">DT Networks Ilsan Showroom</div>
-      
-      <div class="info-line">경기 고양시 일산동구 백마로 516, BYD 일산전시장</div>
-      <div class="info-line">minyong.park@dtnetworks.co.kr</div>
-      <div class="info-line phone-bold">010-8941-1004</div>
-    </div>
-  </div>
+    <div class="business-card" id="business-card">
 
-  <div class="cta-row">
-    <button class="cta-button cta-primary" onclick="window.open('tel:+821089411004')">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-      바로 통화하기
-    </button>
-    <button class="cta-button cta-secondary" onclick="alert('연락처 저장(vCard) 연동 영역입니다.')">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
-      연락처 저장
-    </button>
-  </div>
-
-  <div class="section">
-    <div class="section-title">CONTACT HUBS</div>
-    <div class="action-grid">
-      <button class="action-item" onclick="window.open('tel:+82319110940')">
-        <svg class="action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V7l8-4v18M19 21V11l-6-4"/><path d="M9 9v.01M9 12v.01M9 15v.01M9 18v.01"/></svg>
-        <span class="action-label">전시장 유선</span>
-      </button>
-      <button class="action-item" onclick="window.open('sms:+821089411004')">
-        <svg class="action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
-        <span class="action-label">문자 보내기</span>
-      </button>
-      <button class="action-item" onclick="window.open('mailto:minyong.park@dtnetworks.co.kr')">
-        <svg class="action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-        <span class="action-label">이메일</span>
-      </button>
-      <button class="action-item" onclick="alert('명함 링크 복사 완료')">
-        <svg class="action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
-        <span class="action-label">명함 공유</span>
-      </button>
-    </div>
-  </div>
-
-  <div class="section">
-    <div class="section-title">SHOWROOM LOCATION</div>
-    <div class="map-info">
-      <div class="map-pin">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      <div class="brand-logo-area">
+        <img src="byd-logo.png" alt="BYD Logo" class="byd-logo-img" />
       </div>
-      <div class="map-text">
-        <strong>DT네트웍스 일산전시장</strong>
-        <span>경기도 고양시 일산동구 백마로 516</span>
+
+      <div class="card-content">
+
+        <div class="name-line">
+          박민용
+          <span class="title">팀장/차장</span>
+        </div>
+
+        <div class="sub-title-line">
+          Sales I Team Manager
+        </div>
+
+        <div class="showroom-line">
+          DT Networks Ilsan Showroom
+        </div>
+
+        <div class="info-line">
+          경기 고양시 일산동구 백마로 516, BYD 일산전시장
+        </div>
+
+        <div class="info-line">
+          minyong.park@dtnetworks.co.kr
+        </div>
+
+        <div class="info-line phone-bold">
+          010-8941-1004
+        </div>
+
       </div>
     </div>
+
+    <div class="cta-row">
+
+      <button
+        class="cta-button cta-primary"
+        onclick="window.open('tel:+821089411004')"
+      >
+        바로 통화하기
+      </button>
+
+      <button
+        class="cta-button cta-secondary"
+        onclick="alert('연락처 저장(vCard) 연동 영역입니다.')"
+      >
+        연락처 저장
+      </button>
+
+    </div>
+
+    <div class="footer">
+      © 2026 DT NETWORKS COMPANY LIMITED.
+    </div>
+
   </div>
-
-  <div class="footer">
-    © 2026 DT NETWORKS COMPANY LIMITED.
-  </div>
-
-</div>
-
 </body>
 </html>
