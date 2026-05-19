@@ -7,7 +7,7 @@
   
   <meta property="og:type" content="profile">
   <meta property="og:title" content="박민용 팀장/차장 | DT Networks">
-  <meta property="og:description" content="Sales | Team Manager | 010-8941-1004">
+  <meta property="og:description" content="Sales I Team Manager | 010-8941-1004">
   <meta property="og:image" content="og-image.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -23,17 +23,17 @@
     * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
     
     :root {
-      --card-bg: #F4F6F8;
+      /* 요청사항: 명함 부분 배경 색상을 #EFEFEF로 설정 */
+      --card-bg: #EFEFEF;
       --text-main: #4E5356;
+      /* 요청사항: 부가 정보 글자색을 #7A8080으로 지정 */
       --text-mute: #7A8080;
       --accent-deep: #3753B1;
       --accent-light: #4F9EDD;
       
       --paper: #ffffff;
-      /* 요청사항: 버튼 및 섹션 배경색을 더 잘 보이게 #EFEFEF로 지정 */
       --btn-bg: #EFEFEF;
       --paper-soft: #f8f9fa;
-      --line: #e9ecef;
     }
     
     html, body { background: var(--paper-soft); }
@@ -56,7 +56,7 @@
       aspect-ratio: 1.72 / 1;
       width: 100%;
       border-radius: 14px;
-      /* 그림자를 약 2단계 더 진하고 선명하게 조정 */
+      /* 그림자를 2단계 정도 진하게 처리 */
       box-shadow: 
         0 26px 40px -12px rgba(0, 0, 0, 0.22),
         0 12px 18px -6px rgba(0, 0, 0, 0.14),
@@ -81,22 +81,21 @@
       pointer-events: none;
     }
     
-    /* 요청사항: BYD 삭제 후 DT Networks Ilsan Showroom을 우측 상단으로 이동 */
-    .brand-stack {
+    /* 요청사항 1: 우측 상단에 BYD 워드마크형 로고 배치 */
+    .brand-logo-area {
       position: absolute;
-      top: 12%;
+      top: 14%;
       right: 6%;
-      text-align: right;
       z-index: 2;
-      max-width: 50%;
     }
     
-    .brand-showroom {
-      font-weight: 700;
-      font-size: clamp(10px, 2.4vw, 14px);
-      line-height: 1.2;
-      color: var(--accent-deep);
-      letter-spacing: -0.01em;
+    .byd-logo-text {
+      font-family: 'Source Sans Pro', sans-serif;
+      font-weight: 900;
+      font-size: clamp(18px, 4.2vw, 24px);
+      letter-spacing: -0.02em;
+      color: var(--text-main);
+      line-height: 1;
     }
     
     /* 명함 콘텐츠 텍스트 배치 */
@@ -104,11 +103,10 @@
       position: absolute;
       left: 6%;
       right: 6%;
-      bottom: 14%;
+      bottom: 12%;
       z-index: 2;
     }
     
-    /* 요청사항: 이름 옆에 절반 크기의 팀장/차장 직급 배치 */
     .name-line {
       font-weight: 700;
       font-size: clamp(20px, 4.8vw, 26px);
@@ -121,29 +119,37 @@
     }
     
     .name-line span.title {
-      font-size: 0.5em; /* 이름 크기의 절반 */
+      font-size: 0.5em;
       font-weight: 600;
       color: var(--text-mute);
     }
     
-    /* 요청사항: 이름 밑에 Sales I Team Manager 배치 */
+    /* 요청사항 2: Sales I Team Manager와 그 밑의 지점명을 모두 #7A8080 글자색으로 변경 */
     .sub-title-line {
       font-weight: 700;
-      font-size: clamp(11px, 2.5vw, 14px);
-      color: var(--accent-light);
-      margin-bottom: 8px;
+      font-size: clamp(11px, 2.5vw, 13.5px);
+      color: var(--text-mute); 
+      margin-bottom: 2px;
       letter-spacing: 0;
+    }
+    
+    .showroom-line {
+      font-weight: 600;
+      font-size: clamp(10.5px, 2.4vw, 13px);
+      color: var(--text-mute); 
+      margin-bottom: 8px;
+      letter-spacing: -0.01em;
     }
     
     .info-line {
       font-weight: 400;
-      font-size: clamp(10.5px, 2.3vw, 13px);
-      line-height: 1.5;
-      color: var(--text-mute);
+      font-size: clamp(10px, 2.2vw, 12px);
+      line-height: 1.4;
+      color: var(--text-mute); 
       letter-spacing: -0.01em;
     }
     
-    /* 요청사항: 번호만 남기고 볼드(두껍게) 처리 */
+    /* 다이렉트 휴대폰 번호만 진하게 강조 */
     .info-line.phone-bold {
       font-weight: 800; 
       color: var(--text-main);
@@ -151,8 +157,7 @@
       margin-top: 2px;
     }
     
-    /* ===== 하단 링크/섹션 공통 ===== */
-    /* 요청사항: 버튼 및 섹션 블록이 돋보이도록 #EFEFEF 배경 및 그림자 강화 */
+    /* ===== 하단 링크/섹션 영역 ===== */
     .section {
       background: var(--btn-bg);
       border-radius: 16px;
@@ -171,7 +176,6 @@
       text-transform: uppercase;
     }
     
-    /* ===== 핵심 CTA 영역 ===== */
     .cta-row {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -197,7 +201,6 @@
     
     .cta-button:active { transform: scale(0.97); }
     
-    /* 요청사항: 그림자를 2단계 정도 더 진하게 변경 */
     .cta-primary {
       background: var(--accent-deep);
       color: #ffffff;
@@ -213,7 +216,6 @@
     }
     .cta-secondary:hover { background: #e5e5e5; }
     
-    /* ===== 네비게이션 그리드 ===== */
     .action-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -227,7 +229,7 @@
       justify-content: center;
       padding: 14px 4px 12px;
       border-radius: 12px;
-      background: #ffffff; /* 컨테이너가 #EFEFEF이므로 버튼 내부카드는 흰색으로 구분감 부여 */
+      background: #ffffff; 
       cursor: pointer;
       transition: transform 0.1s ease, background 0.2s ease;
       border: none;
@@ -257,7 +259,6 @@
       line-height: 1.25;
     }
     
-    /* ===== 주소 맵 블록 ===== */
     .map-info {
       display: flex;
       align-items: center;
@@ -291,7 +292,6 @@
       font-size: 11.5px;
     }
     
-    /* ===== 하단 오너십 푸터 ===== */
     .footer {
       text-align: center;
       padding: 32px 0 10px;
@@ -308,13 +308,15 @@
 <div class="container">
   
   <div class="business-card" id="business-card">
-    <div class="brand-stack">
-      <div class="brand-showroom">DT Networks<br>Ilsan Showroom</div>
+    <div class="brand-logo-area">
+      <div class="byd-logo-text">BYD</div>
     </div>
     
     <div class="card-content">
       <div class="name-line">박민용 <span class="title">팀장/차장</span></div>
+      
       <div class="sub-title-line">Sales I Team Manager</div>
+      <div class="showroom-line">DT Networks Ilsan Showroom</div>
       
       <div class="info-line">경기 고양시 일산동구 백마로 516, BYD 일산전시장</div>
       <div class="info-line">minyong.park@dtnetworks.co.kr</div>
