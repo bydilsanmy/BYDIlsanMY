@@ -31,7 +31,6 @@
     href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700;900&display=swap"
     rel="stylesheet"
   />
-  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 
   <style>
     /* =====================================================
@@ -966,109 +965,81 @@ function copyLink() {
     .catch(() => showToast('복사에 실패했습니다'));
 }
 
+/* =====================================================
+   명함 이미지 URL (고정 이미지 사용)
+===================================================== */
+const CARD_IMAGE_URL = 'https://raw.githubusercontent.com/bydilsanmy/BYDIlsanMY/main/BYD_%EB%B0%95%EB%AF%BC%EC%9A%A9%EB%AA%85%ED%95%A8.jpg';
+const CARD_IMAGE_FILENAME = '박민용_BYD명함.jpg';
+
+/* 모달 "명함 이미지로 저장 후 전송" → 이미지 fetch 후 공유 or 다운로드 */
 function shareImageDirect() {
   closeShareModal();
-  downloadCardImage(true);
-}
+  showToast('이미지를 불러오는 중입니다...');
 
-/* =====================================================
-   명함 → PNG 고해상도 캡처 (html2canvas)
-===================================================== */
-function downloadCardImage(viaShare = false) {
-  showToast('이미지를 생성 중입니다...');
-
-  const original = document.getElementById('business-card');
-  const clone = original.cloneNode(true);
-
-  const captureBox = document.createElement('div');
-  captureBox.style.cssText = `
-    position: fixed;
-    top: 0; left: -9999px;
-    width: 1500px;
-    pointer-events: none;
-    z-index: -1;
-  `;
-
-  clone.style.cssText = `
-    width: 1500px;
-    max-width: 1500px;
-    margin: 0;
-    box-shadow: none;
-    border-radius: 0;
-    animation: none;
-    opacity: 1;
-    transform: none;
-  `;
-  clone.id = 'capture-card';
-
-  /* clamp() 폰트 크기를 1500px 기준 고정 px로 환산 */
-  const nameLine = clone.querySelector('.name-line');
-  if (nameLine) {
-    nameLine.style.fontSize = '72px';
-    nameLine.style.fontWeight = '700';
-    nameLine.style.marginBottom = '15px';
-  }
-
-  const subLines = clone.querySelectorAll('.sub-title-line, .showroom-line, .info-line');
-  subLines.forEach(el => {
-    el.style.fontSize = '44px';
-    el.style.lineHeight = '1.4';
-    el.style.marginBottom = '8px';
-    if (el.classList.contains('phone-bold')) {
-      el.style.fontWeight = '800';
-      el.style.fontSize = '46px';
-    }
-  });
-
-  captureBox.appendChild(clone);
-  document.body.appendChild(captureBox);
-
-  const renderCapture = () => {
-    html2canvas(clone, {
-      scale: 2,
-      backgroundColor: '#e2e3e5',
-      useCORS: true,
-      logging: false,
-      width: 1500,
-      windowWidth: 1500
-    }).then(canvas => {
-      if (captureBox.parentNode) document.body.removeChild(captureBox);
-
-      if (viaShare && navigator.canShare) {
-        canvas.toBlob(blob => {
-          const file = new File([blob], '박민용_BYD명함.png', { type: 'image/png' });
-          if (navigator.canShare({ files: [file] })) {
-            navigator.share({
-              files: [file],
-              title: '박민용 | BYD 일산전시장',
-              text: 'BYD 일산전시장 박민용 팀장 명함입니다.'
-            }).catch(() => fallbackDownload(canvas));
-          } else {
-            fallbackDownload(canvas);
-          }
-        }, 'image/png');
+  fetch(CARD_IMAGE_URL)
+    .then(res => {
+      if (!res.ok) throw new Error('fetch failed');
+      return res.blob();
+    })
+    .then(blob => {
+      const file = new File([blob], CARD_IMAGE_FILENAME, { type: blob.type || 'image/jpeg' });
+      if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        return navigator.share({
+          files: [file],
+          title: '박민용 | BYD 일산전시장',
+          text: 'BYD 일산전시장 박민용 팀장 명함입니다.'
+        });
       } else {
-        fallbackDownload(canvas);
+        /* 공유 API 미지원 → 다운로드 */
+        downloadBlobAsFile(blob);
       }
-    }).catch(err => {
-      if (captureBox.parentNode) document.body.removeChild(captureBox);
-      showToast('이미지 생성에 실패했습니다');
-      console.error(err);
+    })
+    .catch(() => {
+      /* fetch 실패 시 직접 다운로드 링크로 폴백 */
+      fallbackDownload();
     });
-  };
-
-  /* 폰트 로드 대기 후 렌더링 */
-  if (document.fonts && document.fonts.ready) {
-    document.fonts.ready.then(renderCapture);
-  } else {
-    setTimeout(renderCapture, 400);
-  }
 }
 
-function fallbackDownload(canvas) {
+/* 하단 "명함 이미지로 저장" 단독 버튼 */
+function downloadCardImage() {
+  showToast('이미지를 불러오는 중입니다...');
+
+  fetch(CARD_IMAGE_URL)
+    .then(res => {
+      if (!res.ok) throw new Error('fetch failed');
+      return res.blob();
+    })
+    .then(blob => {
+      downloadBlobAsFile(blob);
+    })
+    .catch(() => {
+      fallbackDownload();
+    });
+}
+
+function downloadBlobAsFile(blob) {
+  const url = URL.createObjectURL(blob);
   const link = document.createElement('a');
-  link.download = '박민용_BYD명함.png';
-  link.href = canvas.toDataURL('image/png');
+  link.href = url;
+  link.download = CARD_IMAGE_FILENAME;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+  showToast('명함 이미지가 저장되었습니다');
+}
+
+function fallbackDownload() {
+  /* fetch 불가 환경(CORS 등) → 새 탭에서 열기 */
+  window.open(CARD_IMAGE_URL, '_blank', 'noopener');
+  showToast('이미지를 새 탭에서 열었습니다. 길게 눌러 저장하세요.');
+}
+
+/* 하위 호환용 빈 함수 (기존 참조 방어) */
+function fallbackDownloadCanvas() {
+  const link = document.createElement('a');
+  link.download = CARD_IMAGE_FILENAME;
+  link.href = CARD_IMAGE_URL;
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
