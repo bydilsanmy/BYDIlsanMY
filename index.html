@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>박민용 | BYD DT Networks 일산전시장</title>
+  <title>박민용 | DT Networks 일산전시장</title>
   
   <meta property="og:type" content="profile">
-  <meta property="og:title" content="박민용 Sales Consultant | BYD 일산전시장">
-  <meta property="og:description" content="DT Networks | 010-8941-1004 | minyong.park@dtnetworks.co.kr">
+  <meta property="og:title" content="박민용 팀장/차장 | DT Networks">
+  <meta property="og:description" content="Sales I Team Manager | 010-8941-1004">
   <meta property="og:image" content="og-image.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -18,13 +18,11 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700;900&display=swap" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
   
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
     
     :root {
-      /* 사용자 지정 색상 반영 */
       --card-bg: #F4F6F8;
       --text-main: #4E5356;
       --text-mute: #7A8080;
@@ -32,6 +30,8 @@
       --accent-light: #4F9EDD;
       
       --paper: #ffffff;
+      /* 요청사항: 버튼 및 섹션 배경색을 더 잘 보이게 #EFEFEF로 지정 */
+      --btn-bg: #EFEFEF;
       --paper-soft: #f8f9fa;
       --line: #e9ecef;
     }
@@ -39,7 +39,6 @@
     html, body { background: var(--paper-soft); }
     
     body {
-      /* 영문 Source Sans Pro, 국문 Pretendard 하이브리드 적용 */
       font-family: 'Source Sans Pro', 'Pretendard', -apple-system, sans-serif;
       color: var(--text-main);
       min-height: 100vh;
@@ -57,13 +56,14 @@
       aspect-ratio: 1.72 / 1;
       width: 100%;
       border-radius: 14px;
+      /* 그림자를 약 2단계 더 진하고 선명하게 조정 */
       box-shadow: 
-        0 24px 48px -16px rgba(55, 83, 177, 0.15),
-        0 8px 16px -8px rgba(79, 158, 221, 0.10),
+        0 26px 40px -12px rgba(0, 0, 0, 0.22),
+        0 12px 18px -6px rgba(0, 0, 0, 0.14),
         0 1px 0 0 rgba(255,255,255,0.6) inset;
       overflow: hidden;
-      margin-bottom: 16px;
-      border: 1px solid rgba(55, 83, 177, 0.08);
+      margin-bottom: 20px;
+      border: 1px solid rgba(0, 0, 0, 0.05);
       animation: cardIn 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) both;
     }
     
@@ -72,7 +72,6 @@
       to   { opacity: 1; transform: translateY(0) scale(1); }
     }
     
-    /* 수평 포인트 레이어 디자인 */
     .business-card::before {
       content: '';
       position: absolute;
@@ -82,29 +81,22 @@
       pointer-events: none;
     }
     
-    /* 브랜드 로고 텍스트 스택 */
+    /* 요청사항: BYD 삭제 후 DT Networks Ilsan Showroom을 우측 상단으로 이동 */
     .brand-stack {
       position: absolute;
-      top: 10%;
+      top: 12%;
       right: 6%;
       text-align: right;
       z-index: 2;
+      max-width: 50%;
     }
     
-    .brand-name {
-      font-weight: 900;
-      font-size: clamp(16px, 4.5vw, 24px);
-      letter-spacing: 0.05em;
-      line-height: 1;
-      color: var(--accent-deep);
-    }
-    
-    .brand-sub {
+    .brand-showroom {
       font-weight: 700;
-      font-size: clamp(8px, 1.8vw, 10px);
-      letter-spacing: 0.02em;
-      color: var(--accent-light);
-      margin-top: 4px;
+      font-size: clamp(10px, 2.4vw, 14px);
+      line-height: 1.2;
+      color: var(--accent-deep);
+      letter-spacing: -0.01em;
     }
     
     /* 명함 콘텐츠 텍스트 배치 */
@@ -116,39 +108,58 @@
       z-index: 2;
     }
     
+    /* 요청사항: 이름 옆에 절반 크기의 팀장/차장 직급 배치 */
     .name-line {
       font-weight: 700;
-      font-size: clamp(18px, 4.2vw, 24px);
-      margin-bottom: 6px;
+      font-size: clamp(20px, 4.8vw, 26px);
+      margin-bottom: 4px;
       letter-spacing: -0.01em;
       color: var(--text-main);
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+    }
+    
+    .name-line span.title {
+      font-size: 0.5em; /* 이름 크기의 절반 */
+      font-weight: 600;
+      color: var(--text-mute);
+    }
+    
+    /* 요청사항: 이름 밑에 Sales I Team Manager 배치 */
+    .sub-title-line {
+      font-weight: 700;
+      font-size: clamp(11px, 2.5vw, 14px);
+      color: var(--accent-light);
+      margin-bottom: 8px;
+      letter-spacing: 0;
     }
     
     .info-line {
       font-weight: 400;
-      font-size: clamp(10px, 2.3vw, 13px);
-      line-height: 1.6;
+      font-size: clamp(10.5px, 2.3vw, 13px);
+      line-height: 1.5;
       color: var(--text-mute);
       letter-spacing: -0.01em;
     }
     
-    .info-line.bold { 
-      font-weight: 600; 
-      color: var(--text-main); 
-    }
-    
-    .info-line span {
-      color: var(--accent-deep);
-      font-weight: 600;
+    /* 요청사항: 번호만 남기고 볼드(두껍게) 처리 */
+    .info-line.phone-bold {
+      font-weight: 800; 
+      color: var(--text-main);
+      font-size: clamp(12px, 2.8vw, 15px);
+      margin-top: 2px;
     }
     
     /* ===== 하단 링크/섹션 공통 ===== */
+    /* 요청사항: 버튼 및 섹션 블록이 돋보이도록 #EFEFEF 배경 및 그림자 강화 */
     .section {
-      background: var(--paper);
+      background: var(--btn-bg);
       border-radius: 16px;
       padding: 18px 16px;
-      margin-bottom: 12px;
-      border: 1px solid var(--line);
+      margin-bottom: 14px;
+      border: 1px solid #e2e2e2;
+      box-shadow: 0 10px 20px -6px rgba(0,0,0,0.12);
     }
     
     .section-title {
@@ -165,7 +176,7 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 10px;
-      margin-bottom: 12px;
+      margin-bottom: 14px;
     }
     
     .cta-button {
@@ -186,19 +197,21 @@
     
     .cta-button:active { transform: scale(0.97); }
     
+    /* 요청사항: 그림자를 2단계 정도 더 진하게 변경 */
     .cta-primary {
       background: var(--accent-deep);
       color: #ffffff;
-      box-shadow: 0 8px 20px -6px rgba(55, 83, 177, 0.4);
+      box-shadow: 0 10px 22px -4px rgba(55, 83, 177, 0.45);
     }
     .cta-primary:hover { background: #2b4291; }
     
     .cta-secondary {
-      background: #ffffff;
+      background: var(--btn-bg);
       color: var(--accent-deep);
       border: 1.5px solid var(--accent-deep);
+      box-shadow: 0 10px 20px -6px rgba(0, 0, 0, 0.15);
     }
-    .cta-secondary:hover { background: var(--paper-soft); }
+    .cta-secondary:hover { background: #e5e5e5; }
     
     /* ===== 네비게이션 그리드 ===== */
     .action-grid {
@@ -214,13 +227,14 @@
       justify-content: center;
       padding: 14px 4px 12px;
       border-radius: 12px;
-      background: var(--paper-soft);
+      background: #ffffff; /* 컨테이너가 #EFEFEF이므로 버튼 내부카드는 흰색으로 구분감 부여 */
       cursor: pointer;
       transition: transform 0.1s ease, background 0.2s ease;
       border: none;
       color: inherit;
       text-decoration: none;
       font-family: inherit;
+      box-shadow: 0 4px 10px -2px rgba(0,0,0,0.1);
     }
     
     .action-item:active {
@@ -249,9 +263,10 @@
       align-items: center;
       gap: 12px;
       padding: 14px;
-      background: var(--paper-soft);
+      background: #ffffff;
       border-radius: 12px;
       margin-top: 4px;
+      box-shadow: 0 4px 10px -2px rgba(0,0,0,0.08);
     }
     
     .map-pin {
@@ -294,15 +309,16 @@
   
   <div class="business-card" id="business-card">
     <div class="brand-stack">
-      <div class="brand-name">BYD</div>
-      <div class="brand-sub">DT NETWORKS</div>
+      <div class="brand-showroom">DT Networks<br>Ilsan Showroom</div>
     </div>
+    
     <div class="card-content">
-      <div class="name-line">박민용 <span>| Sales Consultant</span></div>
-      <div class="info-line bold">DT Networks Ilsan Showroom</div>
+      <div class="name-line">박민용 <span class="title">팀장/차장</span></div>
+      <div class="sub-title-line">Sales I Team Manager</div>
+      
       <div class="info-line">경기 고양시 일산동구 백마로 516, BYD 일산전시장</div>
-      <div class="info-line">정성상담. 010-8941-1004 | 전시장. 031-911-0940</div>
       <div class="info-line">minyong.park@dtnetworks.co.kr</div>
+      <div class="info-line phone-bold">010-8941-1004</div>
     </div>
   </div>
 
@@ -311,7 +327,7 @@
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
       바로 통화하기
     </button>
-    <button class="cta-button cta-secondary" onclick="alert('연락처 데이터(vCard) 연동 영역입니다.')">
+    <button class="cta-button cta-secondary" onclick="alert('연락처 저장(vCard) 연동 영역입니다.')">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
       연락처 저장
     </button>
@@ -332,7 +348,7 @@
         <svg class="action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
         <span class="action-label">이메일</span>
       </button>
-      <button class="action-item" onclick="alert('링크가 복사되었습니다.')">
+      <button class="action-item" onclick="alert('명함 링크 복사 완료')">
         <svg class="action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
         <span class="action-label">명함 공유</span>
       </button>
@@ -346,7 +362,7 @@
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
       </div>
       <div class="map-text">
-        <strong>BYD DT네트웍스 일산전시장</strong>
+        <strong>DT네트웍스 일산전시장</strong>
         <span>경기도 고양시 일산동구 백마로 516</span>
       </div>
     </div>
