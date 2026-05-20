@@ -28,6 +28,11 @@
     rel="stylesheet"
   />
 
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Icons+Outlined"
+    rel="stylesheet"
+  />
+
   <style>
     * {
       margin: 0;
@@ -293,14 +298,17 @@
 
     .map-pin {
       flex-shrink: 0;
-      width: 36px;
-      height: 36px;
-      background: var(--accent-light);
-      border-radius: 50%;
+      width: 38px;
+      height: 38px;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: white;
+    }
+
+    .map-pin .material-icons-outlined {
+      font-size: 36px;
+      color: #4e5356;
+      line-height: 1;
     }
 
     .map-text strong {
@@ -400,7 +408,7 @@
 
   <div class="cta-row">
     <button class="cta-button cta-primary" onclick="window.open('tel:01089411004')">
-      <svg width="16" height="16" viewBox="0 0 24 24"
+      <svg width="27" height="27" viewBox="0 0 24 24"
            fill="none" stroke="currentColor" stroke-width="2.5"
            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07
@@ -414,7 +422,7 @@
     </button>
 
     <button class="cta-button cta-secondary" onclick="saveContact()">
-      <svg width="16" height="16" viewBox="0 0 24 24"
+      <svg width="27" height="27" viewBox="0 0 24 24"
            fill="none" stroke="currentColor" stroke-width="2.5"
            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/>
@@ -441,11 +449,7 @@
       </button>
 
       <button class="action-item" onclick="window.open('sms:01089411004')">
-        <svg class="action-icon" viewBox="0 0 24 24"
-             fill="none" stroke="currentColor" stroke-width="2"
-             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
-        </svg>
+        <span class="material-icons-outlined action-icon" style="width:auto;height:auto;font-size:24px;margin-bottom:8px;">textsms</span>
         <span class="action-label">문자 보내기</span>
       </button>
 
@@ -477,19 +481,19 @@
 
     <div class="action-grid" style="grid-template-columns:repeat(2,1fr); gap:10px;">
       <button class="action-item" onclick="window.open('https://www.bydauto.kr/static/file/BYD_DOLPHIN_Catalog.pdf','_blank')">
-        <span class="action-label" style="font-size:13px;font-weight:700;">DOLPHIN</span>
+        <span class="action-label" style="font-size:18px;font-weight:700;">DOLPHIN</span>
       </button>
 
       <button class="action-item" onclick="window.open('https://www.bydauto.kr/static/file/BYD_ATTO_3_Catalog.pdf','_blank')">
-        <span class="action-label" style="font-size:13px;font-weight:700;">ATTO3</span>
+        <span class="action-label" style="font-size:18px;font-weight:700;">ATTO3</span>
       </button>
 
       <button class="action-item" onclick="window.open('https://www.bydauto.kr/static/file/seal_catalog.pdf','_blank')">
-        <span class="action-label" style="font-size:13px;font-weight:700;">SEAL</span>
+        <span class="action-label" style="font-size:18px;font-weight:700;">SEAL</span>
       </button>
 
       <button class="action-item" onclick="window.open('https://www.bydauto.kr/static/file/BYD_SEALION_7_Catalog.pdf','_blank')">
-        <span class="action-label" style="font-size:13px;font-weight:700;">SEALION7</span>
+        <span class="action-label" style="font-size:18px;font-weight:700;">SEALION7</span>
       </button>
     </div>
   </div>
@@ -498,7 +502,7 @@
     <div class="section-title">SHOWROOM LOCATION</div>
 
     <div class="map-info">
-      <div class="map-pin">📍</div>
+      <div class="map-pin"><span class="material-icons-outlined">maps_home_work</span></div>
       <div class="map-text">
         <strong>BYD 일산전시장</strong>
         <span>경기도 고양시 일산동구 백마로 516</span>
@@ -525,6 +529,7 @@
 
   <div class="cta-row" style="grid-template-columns:1fr;">
     <button class="cta-button cta-secondary" onclick="downloadCardImage()">
+      <span class="material-icons-outlined" style="font-size:27px;color:var(--accent-deep);line-height:1;">save</span>
       명함 이미지로 저장
     </button>
   </div>
@@ -565,33 +570,51 @@ function showToast(msg) {
 }
 
 function saveContact() {
-  const vcard = [
+  const info = CONTACT_INFO;
+
+  // RFC 6350 / vCard 3.0 호환 — iOS & Android 모두 지원
+  // 줄바꿈은 반드시 CRLF(\r\n), BOM 없음, UTF-8 인코딩
+  const lines = [
     'BEGIN:VCARD',
     'VERSION:3.0',
-    `N:${CONTACT_INFO.lastName};${CONTACT_INFO.firstName}`,
-    `FN:${CONTACT_INFO.fullName}`,
-    `ORG:${CONTACT_INFO.company}`,
-    `TITLE:${CONTACT_INFO.title}`,
-    `TEL;TYPE=CELL:${CONTACT_INFO.mobile}`,
-    `TEL;TYPE=WORK:${CONTACT_INFO.office}`,
-    `EMAIL;TYPE=WORK:${CONTACT_INFO.email}`,
-    `ADR;TYPE=WORK:;;${CONTACT_INFO.address}`,
-    `URL:${CONTACT_INFO.website}`,
+    // N 필드: 성;이름;추가이름;경칭;접미사
+    'N:박;민용;;;',
+    'FN:박민용',
+    'ORG:BYD 일산전시장',
+    'TITLE:팀장/차장',
+    'TEL;TYPE=CELL,VOICE:+82-10-8941-1004',
+    'TEL;TYPE=WORK,VOICE:+82-31-911-0940',
+    'EMAIL;TYPE=WORK,INTERNET:minyong.park@dtnetworks.co.kr',
+    // ADR 필드: 사서함;확장주소;도로명;도시;도/주;우편번호;국가
+    'ADR;TYPE=WORK:;;백마로 516;고양시 일산동구;경기도;;대한민국',
+    'URL;TYPE=WORK:' + info.website,
     'END:VCARD'
-  ].join('\n');
+  ];
 
-  const blob = new Blob(['\uFEFF' + vcard], {
-    type: 'text/vcard;charset=utf-8'
-  });
+  const vcfText = lines.join('\r\n') + '\r\n';
 
-  const link = document.createElement('a');
-  link.href = URL.createObjectURL(blob);
-  link.download = `${CONTACT_INFO.fullName}.vcf`;
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
 
-  showToast('연락처가 저장되었습니다');
+  if (isIOS) {
+    // iOS: data URI 방식 — <a> 클릭 다운로드가 Safari에서 작동 안 함
+    // → window.open 으로 직접 열어야 연락처 앱에서 "연락처 추가" 팝업 뜸
+    const encoded = encodeURIComponent(vcfText);
+    const dataUri = 'data:text/vcard;charset=utf-8,' + encoded;
+    window.open(dataUri, '_blank');
+  } else {
+    // Android / Desktop: Blob + 링크 클릭
+    const blob = new Blob([vcfText], { type: 'text/vcard;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = '박민용_BYD.vcf';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  }
+
+  showToast('연락처를 저장하세요 📇');
 }
 
 function copyLink() {
@@ -651,4 +674,3 @@ function downloadCardImage() {
 
 </body>
 </html>
-
