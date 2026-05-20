@@ -11,9 +11,10 @@
   <meta property="og:type"        content="profile" />
   <meta property="og:title"       content="박민용 팀장 | BYD Ilsan" />
   <meta property="og:description" content="010-8941-1004" />
-  <meta property="og:image"       content="byd-logo.png" />
+  <meta property="og:image"       content="https://raw.githubusercontent.com/bydilsanmy/BYDIlsanMY/main/BYD-PMY-namecard.jpg" />
   <meta property="og:image:width"  content="1200" />
   <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt"    content="박민용 팀장 | BYD 일산전시장 명함" />
   <meta name="theme-color"        content="#3753B1" />
 
   <!-- ===== 폰트 프리커넥트: DNS 조회 선행으로 렌더링 지연 최소화 ===== -->
@@ -31,7 +32,7 @@
     href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700;900&display=swap"
     rel="stylesheet"
   />
-  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+  <!-- html2canvas 제거: 명함 이미지는 GitHub에서 직접 불러오는 방식으로 변경 -->
 
   <style>
     /* =====================================================
@@ -83,7 +84,33 @@
     }
 
     /* =====================================================
-       4. 디지털 명함 카드
+       4-A. 명함 이미지 래퍼 (이미지 방식)
+    ===================================================== */
+    .business-card-img-wrap {
+      position: relative;
+      width: 100%;
+      border-radius: 14px;
+      overflow: hidden;
+      margin-bottom: 20px;
+      box-shadow:
+        0 26px 40px -12px rgba(0, 0, 0, 0.22),
+        0 12px 18px -6px rgba(0, 0, 0, 0.14),
+        0 1px 0 0 rgba(255, 255, 255, 0.6) inset;
+      animation: cardIn 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+      background: var(--card-bg);
+      /* 이미지 로딩 전 최소 높이 보장 */
+      min-height: 60px;
+    }
+
+    .business-card-img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 14px;
+    }
+
+    /* =====================================================
+       4. 디지털 명함 카드 (기존 코드 — 하위 호환 유지)
     ===================================================== */
 
     /* 카드 외형: 황금비(1.72:1) 종횡비, 그림자, 입장 애니메이션 */
@@ -502,41 +529,17 @@
   <div class="container">
 
     <!-- ===================================================
-         디지털 명함 카드
+         디지털 명함 카드 (이미지 방식)
     =================================================== -->
-    <div class="business-card" id="business-card">
-
-      <!-- BYD 브랜드 로고 (우측 상단) -->
-      <div class="brand-logo-area">
-        <img src="byd-logo.png" alt="BYD Logo" class="byd-logo-img" />
-      </div>
-
-      <!-- 명함 텍스트 영역 (좌하단) -->
-      <div class="card-content">
-
-        <!-- 이름 + 직함 -->
-        <div class="name-line">
-          박 민 용
-          <span class="title">팀장/차장</span>
-        </div>
-
-        <!-- 직책 (영문) -->
-        <div class="sub-title-line">Sales | Team Manager</div>
-
-        <!-- 전시장명 (영문) -->
-        <div class="showroom-line">BYD Ilsan Showroom</div>
-
-        <!-- 주소 -->
-        <div class="info-line">경기 고양시 일산동구 백마로 516</div>
-
-        <!-- 이메일 -->
-        <div class="info-line">minyong.park@dtnetworks.co.kr</div>
-
-        <!-- 전화번호 (굵게 강조) -->
-        <div class="info-line phone-bold">010 - 8941 - 1004</div>
-
-      </div>
-    </div><!-- /.business-card -->
+    <div class="business-card-img-wrap" id="business-card">
+      <img
+        src="https://raw.githubusercontent.com/bydilsanmy/BYDIlsanMY/main/BYD-PMY-namecard.jpg"
+        alt="박민용 팀장 | BYD 일산전시장 명함"
+        class="business-card-img"
+        id="namecard-img"
+        crossorigin="anonymous"
+      />
+    </div><!-- /.business-card-img-wrap -->
 
     <!-- ===================================================
          주요 CTA 버튼 행 (통화 / 연락처 저장)
@@ -716,6 +719,14 @@
       </div>
 
     </div><!-- /.section SHOWROOM LOCATION -->
+
+    <!-- ============ 명함 이미지 저장 ============ -->
+    <div class="cta-row" style="grid-template-columns: 1fr;">
+      <button class="cta-button cta-secondary" onclick="downloadCardImage()">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        명함 이미지로 저장 (카톡·문자 발송용)
+      </button>
+    </div>
 
     <!-- 푸터 -->
     <div class="footer">BYD | DT NETWORKS | Ilsan</div>
@@ -964,103 +975,62 @@ function shareImageDirect() {
 }
 
 /* =====================================================
-   명함 → PNG 고해상도 캡처 (html2canvas)
+   명함 이미지 저장 / 공유
+   - html2canvas 캡처 대신 GitHub에서 직접 이미지를 가져와 저장
 ===================================================== */
-function downloadCardImage(viaShare = false) {
-  showToast('이미지를 생성 중입니다...');
+async function downloadCardImage(viaShare = false) {
+  showToast('이미지를 불러오는 중입니다...');
 
-  const original = document.getElementById('business-card');
-  const clone = original.cloneNode(true);
+  const IMG_URL = 'https://raw.githubusercontent.com/bydilsanmy/BYDIlsanMY/main/BYD-PMY-namecard.jpg';
+  const FILE_NAME = '박민용_BYD명함.jpg';
 
-  const captureBox = document.createElement('div');
-  captureBox.style.cssText = `
-    position: fixed;
-    top: 0; left: -9999px;
-    width: 1500px;
-    pointer-events: none;
-    z-index: -1;
-  `;
+  try {
+    const res = await fetch(IMG_URL);
+    if (!res.ok) throw new Error('이미지 다운로드 실패');
+    const blob = await res.blob();
 
-  clone.style.cssText = `
-    width: 1500px;
-    max-width: 1500px;
-    margin: 0;
-    box-shadow: none;
-    border-radius: 0;
-    animation: none;
-    opacity: 1;
-    transform: none;
-  `;
-  clone.id = 'capture-card';
-
-  /* clamp() 폰트 크기를 1500px 기준 고정 px로 환산 */
-  const nameLine = clone.querySelector('.name-line');
-  if (nameLine) {
-    nameLine.style.fontSize = '72px';
-    nameLine.style.fontWeight = '700';
-    nameLine.style.marginBottom = '15px';
-  }
-
-  const subLines = clone.querySelectorAll('.sub-title-line, .showroom-line, .info-line');
-  subLines.forEach(el => {
-    el.style.fontSize = '44px';
-    el.style.lineHeight = '1.4';
-    el.style.marginBottom = '8px';
-    if (el.classList.contains('phone-bold')) {
-      el.style.fontWeight = '800';
-      el.style.fontSize = '46px';
-    }
-  });
-
-  captureBox.appendChild(clone);
-  document.body.appendChild(captureBox);
-
-  const renderCapture = () => {
-    html2canvas(clone, {
-      scale: 2,
-      backgroundColor: '#e2e3e5',
-      useCORS: true,
-      logging: false,
-      width: 1500,
-      windowWidth: 1500
-    }).then(canvas => {
-      if (captureBox.parentNode) document.body.removeChild(captureBox);
-
-      if (viaShare && navigator.canShare) {
-        canvas.toBlob(blob => {
-          const file = new File([blob], '박민용_BYD명함.png', { type: 'image/png' });
-          if (navigator.canShare({ files: [file] })) {
-            navigator.share({
-              files: [file],
-              title: '박민용 | BYD 일산전시장',
-              text: 'BYD 일산전시장 박민용 팀장 명함입니다.'
-            }).catch(() => fallbackDownload(canvas));
-          } else {
-            fallbackDownload(canvas);
-          }
-        }, 'image/png');
-      } else {
-        fallbackDownload(canvas);
+    if (viaShare && navigator.canShare) {
+      const file = new File([blob], FILE_NAME, { type: blob.type || 'image/jpeg' });
+      if (navigator.canShare({ files: [file] })) {
+        await navigator.share({
+          files: [file],
+          title: '박민용 | BYD 일산전시장',
+          text: 'BYD 일산전시장 박민용 팀장 명함입니다.'
+        });
+        return;
       }
-    }).catch(err => {
-      if (captureBox.parentNode) document.body.removeChild(captureBox);
-      showToast('이미지 생성에 실패했습니다');
-      console.error(err);
-    });
-  };
+    }
 
-  /* 폰트 로드 대기 후 렌더링 */
-  if (document.fonts && document.fonts.ready) {
-    document.fonts.ready.then(renderCapture);
-  } else {
-    setTimeout(renderCapture, 400);
+    /* 파일 공유 불가 시 직접 다운로드 */
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = FILE_NAME;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+    showToast('명함 이미지가 저장되었습니다');
+
+  } catch (err) {
+    console.error(err);
+    /* fetch 실패 시 img src 직접 링크로 대체 */
+    const link = document.createElement('a');
+    link.href = IMG_URL;
+    link.download = FILE_NAME;
+    link.target = '_blank';
+    link.rel = 'noopener';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    showToast('이미지 링크로 이동합니다');
   }
 }
 
 function fallbackDownload(canvas) {
   const link = document.createElement('a');
-  link.download = '박민용_BYD명함.png';
-  link.href = canvas.toDataURL('image/png');
+  link.download = '박민용_BYD명함.jpg';
+  link.href = canvas.toDataURL('image/jpeg');
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
