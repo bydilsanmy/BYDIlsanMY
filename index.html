@@ -2,47 +2,69 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
+  <!-- 모바일 뷰포트 설정: 확대/축소 비활성화 -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
   <title>박민용|BYD 일산전시장</title>
 
-  <!-- Open Graph 메타태그 -->
+  <!-- Open Graph 메타태그: SNS 공유 시 미리보기 정보 -->
   <meta property="og:type"        content="profile" />
   <meta property="og:title"       content="박민용 팀장 | BYD Ilsan" />
   <meta property="og:description" content="010-8941-1004" />
-  <meta property="og:image"       content="https://raw.githubusercontent.com/bydilsanmy/BYDIlsanMY/main/BYD-PMY-namecard.jpg" />
+  <meta property="og:image"       content="byd-logo.png" />
   <meta property="og:image:width"  content="1200" />
   <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt"   content="박민용 팀장 | BYD 일산전시장 명함" />
   <meta name="theme-color"        content="#3753B1" />
 
+  <!-- ===== 폰트 프리커넥트: DNS 조회 선행으로 렌더링 지연 최소화 ===== -->
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700;900&display=swap" rel="stylesheet" />
-  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+
+  <!-- Pretendard (한글 본문용) -->
+  <link
+    href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"
+    rel="stylesheet"
+  />
+  <!-- Source Sans Pro (영문/숫자 강조용) -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700;900&display=swap"
+    rel="stylesheet"
+  />
 
   <style>
+    /* =====================================================
+       1. 전역 리셋 & 박스 모델
+    ===================================================== */
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent;
+      -webkit-tap-highlight-color: transparent; /* 모바일 탭 하이라이트 제거 */
     }
 
+    /* =====================================================
+       2. CSS 변수 (디자인 토큰)
+       - 색상, 배경, 강조색을 한 곳에서 관리
+    ===================================================== */
     :root {
-      --card-bg:      #e2e3e5;
-      --text-main:    #4e5356;
-      --text-mute:    #7a8080;
-      --accent-deep:  #3753b1;
-      --accent-light: #4f9edd;
-      --paper:        #efefef;
-      --btn-bg:       #e2e3e5;
-      --paper-soft:   #f8f9fa;
+      --card-bg:        #e2e3e5;  /* 명함 카드 배경 */
+      --text-main:     #4e5356;  /* 주요 텍스트 */
+      --text-mute:     #7a8080;  /* 보조 텍스트 */
+      --accent-deep: #3753b1;  /* 강조색 (딥 블루) */
+      --accent-light:  #4f9edd;  /* 강조색 (라이트 블루) */
+      --paper:            #efefef;  /* 흰 배경 (카드 내부 등) */
+      --btn-bg:         #e2e3e5;  /* 버튼/섹션 배경 */
+      --paper-soft:     #f8f9fa;  /* 페이지 전체 배경 */
     }
 
-    html, body { background: var(--paper-soft); }
+    /* =====================================================
+       3. 기본 레이아웃
+    ===================================================== */
+    html,
+    body {
+      background: var(--paper-soft);
+    }
 
     body {
       font-family: "Source Sans Pro", "Pretendard", -apple-system, sans-serif;
@@ -50,12 +72,20 @@
       min-height: 100vh;
       padding: 14px 14px 60px;
       line-height: 1.5;
-      -webkit-font-smoothing: antialiased;
+      -webkit-font-smoothing: antialiased; /* macOS/iOS 폰트 렌더링 최적화 */
     }
 
-    .container { max-width: 480px; margin: 0 auto; }
+    /* 콘텐츠 최대 너비 제한 (모바일 중심 레이아웃) */
+    .container {
+      max-width: 480px;
+      margin: 0 auto;
+    }
 
-    /* ===== 명함 카드 ===== */
+    /* =====================================================
+       4. 디지털 명함 카드
+    ===================================================== */
+
+    /* 카드 외형: 황금비(1.72:1) 종횡비, 그림자, 입장 애니메이션 */
     .business-card {
       position: relative;
       background: var(--card-bg);
@@ -63,20 +93,22 @@
       width: 100%;
       border-radius: 14px;
       box-shadow:
-        0 26px 40px -12px rgba(0,0,0,0.22),
-        0 12px 18px -6px rgba(0,0,0,0.14),
-        0 1px 0 0 rgba(255,255,255,0.6) inset;
+        0 26px 40px -12px rgba(0, 0, 0, 0.22),  /* 멀리 퍼지는 큰 그림자 */
+        0 12px 18px -6px rgba(0, 0, 0, 0.14),   /* 중간 그림자 */
+        0 1px 0 0 rgba(255, 255, 255, 0.6) inset; /* 상단 내측 하이라이트 */
       overflow: hidden;
       margin-bottom: 20px;
-      border: 1px solid rgba(0,0,0,0.05);
-      animation: cardIn 0.7s cubic-bezier(0.2,0.8,0.2,1) both;
+      border: 1px solid rgba(0, 0, 0, 0.05);
+      animation: cardIn 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) both;
     }
 
+    /* 카드 등장 키프레임: 아래서 위로 슬라이드 + 페이드인 */
     @keyframes cardIn {
       from { opacity: 0; transform: translateY(12px) scale(0.98); }
-      to   { opacity: 1; transform: translateY(0) scale(1); }
+      to   { opacity: 1; transform: translateY(0)    scale(1);    }
     }
 
+    /* 카드 하단 블루 그라디언트 포인트 라인 */
     .business-card::before {
       content: "";
       position: absolute;
@@ -86,6 +118,7 @@
       pointer-events: none;
     }
 
+    /* BYD 로고 영역: 카드 우측 상단 */
     .brand-logo-area {
       position: absolute;
       top: 12%; right: 6%;
@@ -95,6 +128,7 @@
       justify-content: flex-end;
     }
 
+    /* BYD 로고 이미지: clamp로 반응형 크기 조정 */
     .byd-logo-img {
       width: clamp(95px, 22vw, 125px);
       height: auto;
@@ -102,15 +136,17 @@
       opacity: 0.9;
     }
 
+    /* 카드 텍스트 컨테이너: 카드 좌하단에 절대 배치 */
     .card-content {
       position: absolute;
       left: 6%; right: 6%; bottom: 11%;
       z-index: 2;
     }
 
+    /* 이름 줄: 한국어 이름 + 직함 배지 */
     .name-line {
       font-weight: 700;
-      font-size: clamp(20px, 4.8vw, 26px);
+      font-size: clamp(20px, 4.8vw, 26px); /* 반응형 폰트 크기 */
       margin-bottom: 5px;
       letter-spacing: -0.01em;
       color: var(--text-main);
@@ -119,12 +155,14 @@
       gap: 6px;
     }
 
+    /* 직함 서브텍스트 (팀장/차장) */
     .name-line span.title {
-      font-size: 0.52em;
+      font-size: 0.52em;  /* 이름 폰트의 52% 크기 */
       font-weight: 600;
       color: var(--text-mute);
     }
 
+    /* 직책·전시장·정보 공통 스타일 (보조 텍스트 줄들) */
     .sub-title-line,
     .showroom-line,
     .info-line {
@@ -137,6 +175,7 @@
       line-height: 1.28;
     }
 
+    /* 전화번호 줄: 굵게 강조 */
     .info-line.phone-bold {
       font-weight: 800;
       color: var(--text-main);
@@ -145,16 +184,21 @@
       margin-bottom: 0;
     }
 
-    /* ===== 섹션 공통 ===== */
+    /* =====================================================
+       5. 하단 섹션 (버튼 그룹, 연락처 허브, 지도)
+    ===================================================== */
+
+    /* 공통 섹션 카드 스타일 */
     .section {
       background: var(--btn-bg);
       border-radius: 16px;
       padding: 18px 16px;
       margin-bottom: 14px;
       border: 1px solid #e2e2e2;
-      box-shadow: 0 10px 20px -6px rgba(0,0,0,0.12);
+      box-shadow: 0 10px 20px -6px rgba(0, 0, 0, 0.12);
     }
 
+    /* 섹션 타이틀 레이블 (소문자→대문자 자동 변환) */
     .section-title {
       font-size: 11px;
       font-weight: 700;
@@ -164,7 +208,7 @@
       text-transform: uppercase;
     }
 
-    /* ===== CTA 버튼 ===== */
+    /* CTA 버튼 2열 그리드 */
     .cta-row {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -172,6 +216,7 @@
       margin-bottom: 14px;
     }
 
+    /* CTA 버튼 공통 스타일 */
     .cta-button {
       padding: 15px 12px;
       border-radius: 12px;
@@ -188,30 +233,34 @@
       letter-spacing: -0.01em;
     }
 
+    /* 탭 시 살짝 눌리는 피드백 */
     .cta-button:active { transform: scale(0.97); }
 
+    /* 주요 CTA: 딥 블루 채운 버튼 */
     .cta-primary {
       background: var(--accent-deep);
       color: #ffffff;
-      box-shadow: 0 10px 22px -4px rgba(55,83,177,0.45);
+      box-shadow: 0 10px 22px -4px rgba(55, 83, 177, 0.45);
     }
     .cta-primary:hover { background: #2b4291; }
 
+    /* 보조 CTA: 아웃라인 버튼 */
     .cta-secondary {
       background: var(--btn-bg);
       color: var(--accent-deep);
       border: 1.5px solid var(--accent-deep);
-      box-shadow: 0 10px 20px -6px rgba(0,0,0,0.15);
+      box-shadow: 0 10px 20px -6px rgba(0, 0, 0, 0.15);
     }
     .cta-secondary:hover { background: #e5e5e5; }
 
-    /* ===== 액션 그리드 ===== */
+    /* 연락처: 4열 아이콘 그리드 */
     .action-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 8px;
     }
 
+    /* 개별 아이콘 버튼 (전시장 전화, 문자, 이메일, 명함 공유) */
     .action-item {
       display: flex;
       flex-direction: column;
@@ -226,14 +275,16 @@
       color: inherit;
       text-decoration: none;
       font-family: inherit;
-      box-shadow: 0 4px 10px -2px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 10px -2px rgba(0, 0, 0, 0.1);
     }
 
+    /* 아이콘 버튼 탭 피드백 */
     .action-item:active {
       transform: scale(0.95);
       background: #edf0f2;
     }
 
+    /* SVG 아이콘 크기 및 여백 */
     .action-icon {
       width: 24px;
       height: 24px;
@@ -241,6 +292,7 @@
       color: var(--text-main);
     }
 
+    
     .action-badge {
       width: 26px;
       height: 26px;
@@ -253,6 +305,7 @@
       font-size: 12px;
     }
 
+    /* 아이콘 하단 레이블 텍스트 */
     .action-label {
       font-size: 11px;
       font-weight: 600;
@@ -261,7 +314,7 @@
       line-height: 1.25;
     }
 
-    /* ===== 지도 ===== */
+    /* 지도 정보 행: 핀 아이콘 + 주소 텍스트 */
     .map-info {
       display: flex;
       align-items: center;
@@ -270,9 +323,10 @@
       background: #ffffff;
       border-radius: 12px;
       margin-top: 4px;
-      box-shadow: 0 4px 10px -2px rgba(0,0,0,0.08);
+      box-shadow: 0 4px 10px -2px rgba(0, 0, 0, 0.08);
     }
 
+    /* 지도 핀 원형 배경 */
     .map-pin {
       flex-shrink: 0;
       width: 36px; height: 36px;
@@ -284,6 +338,7 @@
       color: white;
     }
 
+    /* 전시장명 */
     .map-text strong {
       display: block;
       font-size: 13px;
@@ -292,12 +347,15 @@
       margin-bottom: 2px;
     }
 
+    /* 전시장 주소 */
     .map-text span {
       color: var(--text-mute);
       font-size: 12px;
     }
 
-    /* ===== 푸터 ===== */
+    /* =====================================================
+       6. 푸터
+    ===================================================== */
     .footer {
       text-align: center;
       padding: 32px 0 10px;
@@ -307,8 +365,9 @@
       font-weight: 600;
       text-transform: uppercase;
     }
-
-    /* ===== 토스트 ===== */
+    /* =====================================================
+       7. 토스트 알림
+    ===================================================== */
     .toast {
       position: fixed;
       bottom: 32px;
@@ -321,7 +380,7 @@
       font-size: 13px;
       font-weight: 600;
       opacity: 0;
-      transition: all 0.3s cubic-bezier(0.2,0.8,0.2,1);
+      transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
       z-index: 1000;
       pointer-events: none;
       box-shadow: 0 12px 32px -8px rgba(0,0,0,0.4);
@@ -332,7 +391,9 @@
       transform: translateX(-50%) translateY(0);
     }
 
-    /* ===== 공유 모달 ===== */
+    /* =====================================================
+       8. 공유 모달 (modal-overlay / modal / modal-item 등)
+    ===================================================== */
     .modal-overlay {
       position: fixed;
       inset: 0;
@@ -352,7 +413,7 @@
       max-width: 480px;
       border-radius: 22px 22px 0 0;
       padding: 22px 20px 28px;
-      animation: slideUp 0.3s cubic-bezier(0.2,0.8,0.2,1);
+      animation: slideUp 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
     }
     @keyframes slideUp {
       from { transform: translateY(100%); }
@@ -436,392 +497,448 @@
 </head>
 
 <body>
+
   <div class="container">
 
-    <!-- ===== 명함 카드 ===== -->
+    <!-- ===================================================
+         디지털 명함 카드
+    =================================================== -->
     <div class="business-card" id="business-card">
+
+      <!-- BYD 브랜드 로고 (우측 상단) -->
       <div class="brand-logo-area">
         <img src="byd-logo.png" alt="BYD Logo" class="byd-logo-img" />
       </div>
+
+      <!-- 명함 텍스트 영역 (좌하단) -->
       <div class="card-content">
+
+        <!-- 이름 + 직함 -->
         <div class="name-line">
           박 민 용
           <span class="title">팀장/차장</span>
         </div>
-        <div class="sub-title-line">Sales | Team Manager</div>
-        <div class="showroom-line">BYD Ilsan Showroom</div>
-        <div class="info-line">경기 고양시 일산동구 백마로 516</div>
-        <div class="info-line">minyong.park@dtnetworks.co.kr</div>
-        <div class="info-line phone-bold">010 - 8941 - 1004</div>
-      </div>
-    </div>
 
-    <!-- ===== 주요 CTA ===== -->
+        <!-- 직책 (영문) -->
+        <div class="sub-title-line">Sales | Team Manager</div>
+
+        <!-- 전시장명 (영문) -->
+        <div class="showroom-line">BYD Ilsan Showroom</div>
+
+        <!-- 주소 -->
+        <div class="info-line">경기 고양시 일산동구 백마로 516</div>
+
+        <!-- 이메일 -->
+        <div class="info-line">minyong.park@dtnetworks.co.kr</div>
+
+        <!-- 전화번호 (굵게 강조) -->
+        <div class="info-line phone-bold">010 - 8941 - 1004</div>
+
+      </div>
+    </div><!-- /.business-card -->
+
+    <!-- ===================================================
+         주요 CTA 버튼 행 (통화 / 연락처 저장)
+    =================================================== -->
     <div class="cta-row">
-      <button class="cta-button cta-primary" onclick="callMobile()">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+
+      <!-- [아이콘] 전화 수화기 — Feather Icons "phone" -->
+      <button class="cta-button cta-primary" onclick="window.open('tel:01089411004')">
+        <svg width="16" height="16" viewBox="0 0 24 24"
+             fill="none" stroke="currentColor" stroke-width="2.5"
+             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <!-- 수화기 경로: 좌측 발신 → 우측 수신 -->
+          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07
+                   a19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67
+                   A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72
+                   12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91
+                   a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45
+                   12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
         </svg>
         통화하기
       </button>
+
+      <!-- [아이콘] 사람 + 플러스 — Feather Icons "user-plus" 변형 -->
       <button class="cta-button cta-secondary" onclick="saveContact()">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <svg width="16" height="16" viewBox="0 0 24 24"
+             fill="none" stroke="currentColor" stroke-width="2.5"
+             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <!-- 사람 실루엣 (몸통 + 머리) -->
           <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/>
           <circle cx="12" cy="7" r="4"/>
+          <!-- 플러스 십자 (연락처 추가) -->
           <line x1="20" y1="8" x2="20" y2="14"/>
           <line x1="23" y1="11" x2="17" y2="11"/>
         </svg>
         연락처 저장
       </button>
-    </div>
 
-    <!-- ===== CONTACT 섹션 ===== -->
+    </div><!-- /.cta-row -->
+
+    <!-- ===================================================
+         CONTACT 섹션 (4개 아이콘 버튼)
+    =================================================== -->
     <div class="section">
+
       <div class="section-title">CONTACT</div>
+
       <div class="action-grid">
-        <button class="action-item" onclick="callOffice()">
-          <svg class="action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+
+        <!-- [아이콘] 건물/전화국 — Feather Icons "home" 변형 (전시장 대표번호) -->
+        <button class="action-item" onclick="window.open('tel:0319110940')">
+          <svg class="action-icon" viewBox="0 0 24 24"
+               fill="none" stroke="currentColor" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
             <polyline points="9 22 9 12 15 12 15 22"/>
           </svg>
           <span class="action-label">전시장 전화</span>
         </button>
-        <button class="action-item" onclick="sendSMS()">
-          <svg class="action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+
+        <!-- [아이콘] 말풍선 — Feather Icons "message-square" (문자 보내기) -->
+        <button class="action-item" onclick="window.open('sms:01089411004')">
+          <svg class="action-icon" viewBox="0 0 24 24"
+               fill="none" stroke="currentColor" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
           </svg>
           <span class="action-label">문자 보내기</span>
         </button>
-        <button class="action-item" onclick="sendEmail()">
-          <svg class="action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+
+        <!-- [아이콘] 편지 봉투 — Feather Icons "mail" (이메일 작성) -->
+        <button class="action-item" onclick="window.open('mailto:minyong.park@dtnetworks.co.kr')">
+          <svg class="action-icon" viewBox="0 0 24 24"
+               fill="none" stroke="currentColor" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
             <polyline points="22,6 12,13 2,6"/>
           </svg>
           <span class="action-label">이메일</span>
         </button>
+
+        <!-- [아이콘] 공유 — Feather Icons "share" 변형 (링크 복사 등) -->
         <button class="action-item" onclick="openShareModal()">
-          <svg class="action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <svg class="action-icon" viewBox="0 0 24 24"
+               fill="none" stroke="currentColor" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <!-- 공유 박스 (하단) -->
             <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/>
+            <!-- 위로 꺾이는 화살표 머리 -->
             <polyline points="16 6 12 2 8 6"/>
+            <!-- 화살표 기둥 -->
             <line x1="12" y1="2" x2="12" y2="15"/>
           </svg>
           <span class="action-label">명함 공유</span>
         </button>
-      </div>
-    </div>
 
-    <!-- ===== e-CATALOG 섹션 ===== -->
+      </div><!-- /.action-grid -->
+    </div><!-- /.section CONTACT HUBS -->
+
+    <!-- ===================================================
+         e-CATALOG 섹션
+    =================================================== -->
     <div class="section">
+
       <div class="section-title">e-Catalog</div>
+
       <div class="action-grid" style="grid-template-columns:repeat(2,1fr); gap:10px;">
-        <button class="action-item" onclick="window.open('https://www.bydauto.kr/static/file/BYD_DOLPHIN_Catalog.pdf','_blank')">
+
+        <button class="action-item"
+          onclick="window.open('https://www.bydauto.kr/static/file/BYD_DOLPHIN_Catalog.pdf','_blank')">
           <span class="action-label" style="font-size:13px;font-weight:700;">DOLPHIN</span>
         </button>
-        <button class="action-item" onclick="window.open('https://www.bydauto.kr/static/file/BYD_ATTO_3_Catalog.pdf','_blank')">
+
+        <button class="action-item"
+          onclick="window.open('https://www.bydauto.kr/static/file/BYD_ATTO_3_Catalog.pdf','_blank')">
           <span class="action-label" style="font-size:13px;font-weight:700;">ATTO3</span>
         </button>
-        <button class="action-item" onclick="window.open('https://www.bydauto.kr/static/file/seal_catalog.pdf','_blank')">
+
+        <button class="action-item"
+          onclick="window.open('https://www.bydauto.kr/static/file/seal_catalog.pdf','_blank')">
           <span class="action-label" style="font-size:13px;font-weight:700;">SEAL</span>
         </button>
-        <button class="action-item" onclick="window.open('https://www.bydauto.kr/static/file/BYD_SEALION_7_Catalog.pdf','_blank')">
+
+        <button class="action-item"
+          onclick="window.open('https://www.bydauto.kr/static/file/BYD_SEALION_7_Catalog.pdf','_blank')">
           <span class="action-label" style="font-size:13px;font-weight:700;">SEALION7</span>
         </button>
-      </div>
-    </div>
 
-    <!-- ===== SHOWROOM LOCATION 섹션 ===== -->
+      </div>
+
+    </div><!-- /.section e-CATALOG -->
+
+    <!-- ===================================================
+         SHOWROOM LOCATION 섹션
+    =================================================== -->
     <div class="section">
+
       <div class="section-title">SHOWROOM LOCATION</div>
+
+      <!-- 핀 아이콘 + 전시장 주소 -->
       <div class="map-info">
+
+        <!-- [아이콘] 지도 핀 — Feather Icons "map-pin" -->
         <div class="map-pin">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <svg width="18" height="18" viewBox="0 0 24 24"
+               fill="none" stroke="currentColor" stroke-width="2.5"
+               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <!-- 핀 외곽 (물방울 형태) -->
             <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+            <!-- 핀 중심 원 -->
             <circle cx="12" cy="10" r="3"/>
           </svg>
         </div>
+
         <div class="map-text">
           <strong>BYD 일산전시장</strong>
           <span>경기도 고양시 일산동구 백마로 516</span>
         </div>
-      </div>
+
+      </div><!-- /.map-info -->
+
+      <!-- 네비게이션 연동 -->
       <div class="action-grid" style="margin-top:12px; grid-template-columns:repeat(3,1fr);">
         <button class="action-item" onclick="openTmap()">
           <div class="action-badge" style="background:#0086FF;color:#fff;">T</div>
           <span class="action-label">티맵</span>
         </button>
+
         <button class="action-item" onclick="openKakaoMap()">
           <div class="action-badge" style="background:#FEE500;color:#111;">K</div>
           <span class="action-label">카카오맵</span>
         </button>
+
         <button class="action-item" onclick="openNaverMap()">
           <div class="action-badge" style="background:#03C75A;color:#fff;">N</div>
           <span class="action-label">네이버맵</span>
         </button>
       </div>
+
+    </div><!-- /.section SHOWROOM LOCATION -->
+
+    <!-- ============ 명함 이미지 저장 ============ -->
+    <div class="cta-row" style="grid-template-columns: 1fr;">
+      <button class="cta-button cta-secondary" onclick="downloadCardImage()">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        명함 이미지로 저장 (카톡·문자 발송용)
+      </button>
     </div>
 
+    <!-- 푸터 -->
     <div class="footer">BYD | DT NETWORKS | Ilsan</div>
 
   </div><!-- /.container -->
 
-  <!-- ===== Toast ===== -->
-  <div class="toast" id="toast"></div>
+<!-- ============ Toast 알림 ============ -->
+<div class="toast" id="toast"></div>
 
-  <!-- ===== 공유 모달 ===== -->
-  <div class="modal-overlay" id="share-modal" onclick="closeShareModal(event)">
-    <div class="modal" onclick="event.stopPropagation()">
-      <div class="modal-grip"></div>
-      <div class="modal-title">명함 공유하기</div>
-      <div class="modal-desc">카톡·문자에서 명함이 이미지로 보이게 하려면 '이미지로 저장 후 전송'을 추천드립니다.</div>
-      <div class="modal-list">
-        <button class="modal-item" onclick="shareImageDirect()">
-          <div class="modal-item-icon" style="background:#FEE500;">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="#1a1a1a"><path d="M12 3C6.48 3 2 6.48 2 10.8c0 2.76 1.86 5.18 4.66 6.6-.2.7-.74 2.6-.84 3-.13.5.18.5.38.36.16-.1 2.54-1.74 3.56-2.42.74.1 1.5.16 2.24.16 5.52 0 10-3.48 10-7.7S17.52 3 12 3z"/></svg>
-          </div>
-          <div class="modal-item-text">
-            <strong>명함 이미지로 저장 후 전송</strong>
-            <span>가장 깔끔하게 보입니다 (권장)</span>
-          </div>
-        </button>
-        <button class="modal-item" onclick="shareViaSystem()">
-          <div class="modal-item-icon" style="background:#4e5356;color:white;">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-          </div>
-          <div class="modal-item-text">
-            <strong>링크로 공유</strong>
-            <span>카톡·문자·메일 등 어디든</span>
-          </div>
-        </button>
-        <button class="modal-item" onclick="copyLink()">
-          <div class="modal-item-icon" style="background:#f8f9fa;">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
-          </div>
-          <div class="modal-item-text">
-            <strong>링크 복사</strong>
-            <span>주소창에 붙여넣기</span>
-          </div>
-        </button>
-      </div>
-      <button class="modal-close" onclick="closeShareModal()">닫기</button>
+<!-- ============ 공유 모달 ============ -->
+<div class="modal-overlay" id="share-modal" onclick="closeShareModal(event)">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="modal-grip"></div>
+    <div class="modal-title">명함 공유하기</div>
+    <div class="modal-desc">카톡·문자에서 명함이 이미지로 보이게 하려면 '이미지로 저장 후 전송'을 추천드립니다.</div>
+    <div class="modal-list">
+      <button class="modal-item" onclick="shareImageDirect()">
+        <div class="modal-item-icon" style="background:#FEE500;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="#1a1a1a"><path d="M12 3C6.48 3 2 6.48 2 10.8c0 2.76 1.86 5.18 4.66 6.6-.2.7-.74 2.6-.84 3-.13.5.18.5.38.36.16-.1 2.54-1.74 3.56-2.42.74.1 1.5.16 2.24.16 5.52 0 10-3.48 10-7.7S17.52 3 12 3z"/></svg>
+        </div>
+        <div class="modal-item-text">
+          <strong>명함 이미지로 저장 후 전송</strong>
+          <span>가장 깔끔하게 보입니다 (권장)</span>
+        </div>
+      </button>
+      <button class="modal-item" onclick="shareViaSystem()">
+        <div class="modal-item-icon" style="background:#3753b1;color:white;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+        </div>
+        <div class="modal-item-text">
+          <strong>링크로 공유</strong>
+          <span>카톡·문자·메일 등 어디든</span>
+        </div>
+      </button>
+      <button class="modal-item" onclick="copyLink()">
+        <div class="modal-item-icon" style="background:#e2e3e5;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4e5356" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+        </div>
+        <div class="modal-item-text">
+          <strong>링크 복사</strong>
+          <span>주소창에 붙여넣기</span>
+        </div>
+      </button>
     </div>
+    <button class="modal-close" onclick="closeShareModal()">닫기</button>
   </div>
+</div>
 
-  <script>
-    /* =====================================================
-       연락처 정보 (단일 출처 관리)
-    ===================================================== */
-    const CONTACT = {
-      name:       '박민용',
-      title:      '팀장/차장',
-      company:    'DT Networks',
-      showroom:   'BYD 일산전시장',
-      mobile:     '01089411004',
-      office:     '0319110940',
-      email:      'minyong.park@dtnetworks.co.kr',
-      address:    '경기도 고양시 일산동구 백마로 516',
-      placeQuery: 'BYD 일산전시장'
-    };
 
-    /* ===== Toast ===== */
-    function showToast(msg) {
-      const t = document.getElementById('toast');
-      t.textContent = msg;
-      t.classList.add('show');
-      clearTimeout(window._toastTimer);
-      window._toastTimer = setTimeout(() => t.classList.remove('show'), 2200);
-    }
+<script>
+/* =====================================================
+   공통 데이터
+===================================================== */
+const CONTACT_INFO = {
+  firstName: "박민용",
+  lastName: "BYD",
+  fullName: "BYD박민용",
+  title: "팀장/차장",
+  company: "BYD 일산전시장",
+  mobile: "01089411004",
+  office: "0319110940",
+  email: "minyong.park@dtnetworks.co.kr",
+  address: "경기 고양시 일산동구 백마로 516",
+  placeQuery: "BYD 일산전시장",
+  website: window.location.href
+};
 
-    /* ===== 전화 / 문자 / 이메일 ===== */
-    function callMobile()  { window.location.href = 'tel:' + CONTACT.mobile; }
-    function callOffice()  { window.location.href = 'tel:' + CONTACT.office; }
-    function sendSMS()     { window.location.href = 'sms:' + CONTACT.mobile; }
-    function sendEmail()   { window.location.href = 'mailto:' + CONTACT.email; }
+/* =====================================================
+   vCard 연락처 저장
+===================================================== */
+function saveContact() {
+  const vcard = [
+    "BEGIN:VCARD",
+    "VERSION:3.0",
+    `N:${CONTACT_INFO.lastName};${CONTACT_INFO.firstName}`,
+    `FN:${CONTACT_INFO.fullName}`,
+    `ORG:${CONTACT_INFO.company}`,
+    `TITLE:${CONTACT_INFO.title}`,
+    `TEL;TYPE=CELL:${CONTACT_INFO.mobile}`,
+    `TEL;TYPE=WORK:${CONTACT_INFO.office}`,
+    `EMAIL;TYPE=WORK:${CONTACT_INFO.email}`,
+    `ADR;TYPE=WORK:;;${CONTACT_INFO.address}`,
+    `URL:${CONTACT_INFO.website}`,
+    "END:VCARD"
+  ].join("\n");
 
-    /* ===== 연락처 저장 (vCard) ===== */
-    function saveContact() {
-      const vcard = [
-        'BEGIN:VCARD',
-        'VERSION:3.0',
-        'N:' + CONTACT.name + ';;;;',
-        'FN:' + CONTACT.name,
-        'ORG:' + CONTACT.company,
-        'TITLE:' + CONTACT.title,
-        'TEL;TYPE=CELL:' + CONTACT.mobile,
-        'TEL;TYPE=WORK:' + CONTACT.office,
-        'EMAIL;TYPE=WORK:' + CONTACT.email,
-        'ADR;TYPE=WORK:;;' + CONTACT.address,
-        'URL:' + window.location.href,
-        'END:VCARD'
-      ].join('\r\n');
+  const blob = new Blob(["\uFEFF" + vcard], { type: "text/vcard;charset=utf-8" });
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = `${CONTACT_INFO.fullName}.vcf`;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  setTimeout(() => URL.revokeObjectURL(link.href), 1000);
+}
 
-      const blob = new Blob(['\uFEFF' + vcard], { type: 'text/vcard;charset=utf-8' });
-      const url  = URL.createObjectURL(blob);
-      const a    = document.createElement('a');
-      a.href     = url;
-      a.download = CONTACT.name + '.vcf';
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      setTimeout(() => URL.revokeObjectURL(url), 1000);
-      showToast('연락처 파일이 저장되었습니다');
-    }
+/* =====================================================
+   지도 앱 연동
+===================================================== */
+function tryAppLink(appUrl, fallbackUrl) {
+  const timer = setTimeout(() => { window.location.href = fallbackUrl; }, 1200);
+  window.location.href = appUrl;
+  window.addEventListener('pagehide', () => { clearTimeout(timer); }, { once: true });
+}
 
-    /* ===== 지도 앱 연동 ===== */
-    function tryAppLink(appUrl, fallbackUrl) {
-      const timer = setTimeout(() => { window.location.href = fallbackUrl; }, 1200);
-      window.location.href = appUrl;
-      window.addEventListener('pagehide', () => clearTimeout(timer), { once: true });
-    }
+function openTmap() {
+  const q = encodeURIComponent(CONTACT_INFO.placeQuery);
+  tryAppLink(`tmap://search?name=${q}`, 'https://surl.tmobiapi.com/d97deca3');
+}
 
-    function openTmap() {
-      const q = encodeURIComponent(CONTACT.placeQuery);
-      tryAppLink('tmap://search?name=' + q, 'https://surl.tmobiapi.com/d97deca3');
-    }
-    function openKakaoMap() {
-      window.location.href = 'https://map.kakao.com/link/search/' + encodeURIComponent(CONTACT.placeQuery);
-    }
-    function openNaverMap() {
-      const q = encodeURIComponent(CONTACT.placeQuery);
-      tryAppLink('nmap://search?query=' + q + '&appname=dt.networks.card', 'https://map.naver.com/p/search/' + q);
-    }
+function openKakaoMap() {
+  window.location.href = `https://map.kakao.com/link/search/${encodeURIComponent(CONTACT_INFO.placeQuery)}`;
+}
 
-    /* ===== 공유 모달 ===== */
-    function openShareModal()  { document.getElementById('share-modal').classList.add('show'); }
-    function closeShareModal(e) {
-      if (!e || e.target === e.currentTarget) {
-        document.getElementById('share-modal').classList.remove('show');
-      }
-    }
+function openNaverMap() {
+  const q = encodeURIComponent(CONTACT_INFO.placeQuery);
+  tryAppLink(`nmap://search?query=${q}&appname=dt.networks.card`, `https://map.naver.com/p/search/${q}`);
+}
 
-    function shareViaSystem() {
-      closeShareModal();
-      if (navigator.share) {
-        navigator.share({
-          title: '박민용 팀장 | BYD 일산전시장',
-          text:  'BYD 일산전시장 박민용 팀장 명함',
-          url:   window.location.href
-        }).catch(function(){});
-      } else {
-        copyLink();
-      }
-    }
+/* =====================================================
+   Toast 알림
+===================================================== */
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(window._toastTimer);
+  window._toastTimer = setTimeout(() => t.classList.remove('show'), 2200);
+}
 
-    function copyLink() {
-      closeShareModal();
-      navigator.clipboard.writeText(window.location.href)
-        .then(function()  { showToast('링크가 복사되었습니다'); })
-        .catch(function() { showToast('복사에 실패했습니다'); });
-    }
+/* =====================================================
+   공유 모달 제어
+===================================================== */
+function openShareModal() {
+  document.getElementById('share-modal').classList.add('show');
+}
 
-    function shareImageDirect() {
-      closeShareModal();
-      downloadCardImage(true);
-    }
+function closeShareModal(e) {
+  if (!e || e.target === e.currentTarget) {
+    document.getElementById('share-modal').classList.remove('show');
+  }
+}
 
-    /* ===== 명함 → PNG 고해상도 캡처 (html2canvas) ===== */
-    function downloadCardImage(viaShare) {
-      viaShare = viaShare || false;
-      showToast('이미지를 생성 중입니다...');
+function shareViaSystem() {
+  closeShareModal();
+  if (navigator.share) {
+    navigator.share({
+      title: '박민용 팀장 | BYD 일산전시장',
+      text: 'BYD 일산전시장 박민용 팀장 명함',
+      url: window.location.href
+    }).catch(() => {});
+  } else {
+    copyLink();
+  }
+}
 
-      var original   = document.getElementById('business-card');
-      var clone      = original.cloneNode(true);
-      var captureBox = document.createElement('div');
+function copyLink() {
+  closeShareModal();
+  navigator.clipboard.writeText(window.location.href)
+    .then(() => showToast('링크가 복사되었습니다'))
+    .catch(() => showToast('복사에 실패했습니다'));
+}
 
-      captureBox.style.cssText = [
-        'position:fixed',
-        'top:0',
-        'left:-9999px',
-        'width:1500px',
-        'pointer-events:none',
-        'z-index:-1'
-      ].join(';');
+/* =====================================================
+   명함 이미지 (GitHub raw 고정 이미지)
+===================================================== */
+const CARD_IMAGE_URL      = 'https://raw.githubusercontent.com/bydilsanmy/BYDIlsanMY/main/BYD_%EB%B0%95%EB%AF%BC%EC%9A%A9%EB%AA%85%ED%95%A8.jpg';
+const CARD_IMAGE_FILENAME = '박민용_BYD명함.jpg';
 
-      clone.style.cssText = [
-        'width:1500px',
-        'max-width:1500px',
-        'margin:0',
-        'box-shadow:none',
-        'border-radius:0',
-        'animation:none',
-        'opacity:1',
-        'transform:none'
-      ].join(';');
-      clone.id = 'capture-card';
+/* 모달 "명함 이미지로 저장 후 전송" — 원본 패턴: shareImageDirect → downloadCardImage(true) */
+function shareImageDirect() {
+  closeShareModal();
+  downloadCardImage(true);
+}
 
-      var nameLine = clone.querySelector('.name-line');
-      if (nameLine) {
-        nameLine.style.fontSize    = '72px';
-        nameLine.style.fontWeight  = '700';
-        nameLine.style.marginBottom = '15px';
-      }
+/* 하단 단독 버튼 & 모달 공유 공통 처리 (viaShare=true 이면 네이티브 공유 시트 시도) */
+function downloadCardImage(viaShare = false) {
+  showToast('이미지를 불러오는 중입니다...');
 
-      var subLines = clone.querySelectorAll('.sub-title-line, .showroom-line, .info-line');
-      subLines.forEach(function(el) {
-        el.style.fontSize    = '44px';
-        el.style.lineHeight  = '1.4';
-        el.style.marginBottom = '8px';
-        if (el.classList.contains('phone-bold')) {
-          el.style.fontWeight = '800';
-          el.style.fontSize   = '46px';
+  fetch(CARD_IMAGE_URL)
+    .then(res => {
+      if (!res.ok) throw new Error('fetch failed');
+      return res.blob();
+    })
+    .then(blob => {
+      if (viaShare && navigator.canShare) {
+        const file = new File([blob], CARD_IMAGE_FILENAME, { type: blob.type || 'image/jpeg' });
+        if (navigator.canShare({ files: [file] })) {
+          return navigator.share({
+            files: [file],
+            title: '박민용 | BYD 일산전시장',
+            text: 'BYD 일산전시장 박민용 팀장 명함입니다.'
+          }).catch(() => fallbackDownload(blob));
         }
-      });
-
-      var logoImg = clone.querySelector('.byd-logo-img');
-      if (logoImg) { logoImg.style.width = '350px'; }
-
-      captureBox.appendChild(clone);
-      document.body.appendChild(captureBox);
-
-      function renderCapture() {
-        html2canvas(clone, {
-          scale:       2,
-          backgroundColor: '#e2e3e5',
-          useCORS:     true,
-          logging:     false,
-          width:       1500,
-          windowWidth: 1500
-        }).then(function(canvas) {
-          if (captureBox.parentNode) document.body.removeChild(captureBox);
-
-          if (viaShare && navigator.canShare) {
-            canvas.toBlob(function(blob) {
-              var file = new File([blob], '박민용_BYD명함.png', { type: 'image/png' });
-              if (navigator.canShare({ files: [file] })) {
-                navigator.share({
-                  files: [file],
-                  title: '박민용 | BYD 일산전시장',
-                  text:  'BYD 일산전시장 박민용 팀장 명함입니다.'
-                }).catch(function() { fallbackDownload(canvas); });
-              } else {
-                fallbackDownload(canvas);
-              }
-            }, 'image/png');
-          } else {
-            fallbackDownload(canvas);
-          }
-        }).catch(function(err) {
-          if (captureBox.parentNode) document.body.removeChild(captureBox);
-          showToast('이미지 생성에 실패했습니다');
-          console.error(err);
-        });
       }
+      fallbackDownload(blob);
+    })
+    .catch(() => {
+      /* CORS 등 fetch 실패 → 새 탭 열기 */
+      window.open(CARD_IMAGE_URL, '_blank', 'noopener');
+      showToast('이미지를 새 탭에서 열었습니다. 길게 눌러 저장하세요.');
+    });
+}
 
-      if (document.fonts && document.fonts.ready) {
-        document.fonts.ready.then(function() { setTimeout(renderCapture, 150); });
-      } else {
-        setTimeout(renderCapture, 400);
-      }
-    }
+function fallbackDownload(blob) {
+  const url  = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href     = url;
+  link.download = CARD_IMAGE_FILENAME;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+  showToast('명함 이미지가 저장되었습니다');
+}
+</script>
 
-    function fallbackDownload(canvas) {
-      var a      = document.createElement('a');
-      a.download = '박민용_BYD명함.png';
-      a.href     = canvas.toDataURL('image/png');
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      showToast('명함 이미지가 저장되었습니다');
-    }
-  </script>
 </body>
 </html>
