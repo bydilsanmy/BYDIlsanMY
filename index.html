@@ -889,7 +889,8 @@ function copyLink() {
 /* =====================================================
    명함 이미지 (GitHub raw 고정 이미지)
 ===================================================== */
-const CARD_IMAGE_URL      = 'https://github.com/bydilsanmy/BYDIlsanMY/blob/main/BYD-PMY-namecard.jpg';
+const CARD_IMAGE_URL = 'https://raw.githubusercontent.com/bydilsanmy/BYDIlsanMY/main/BYD-PMY-namecard.jpg';
+
 const CARD_IMAGE_FILENAME = '박민용_BYD명함.jpg';
 
 /* 모달 "명함 이미지로 저장 후 전송" — 원본 패턴: shareImageDirect → downloadCardImage(true) */
@@ -938,6 +939,38 @@ function fallbackDownload(blob) {
   setTimeout(() => URL.revokeObjectURL(url), 1000);
   showToast('명함 이미지가 저장되었습니다');
 }
+
+async function copyCardImageToClipboard() {
+  try {
+    showToast('명함 이미지를 복사하는 중입니다...');
+
+    const response = await fetch(CARD_IMAGE_URL);
+    if (!response.ok) throw new Error('fetch failed');
+
+    const blob = await response.blob();
+
+    // Clipboard API 지원 여부 확인
+    if (
+      navigator.clipboard &&
+      window.ClipboardItem
+    ) {
+      await navigator.clipboard.write([
+        new ClipboardItem({
+          [blob.type || 'image/jpeg']: blob
+        })
+      ]);
+
+      showToast('명함 이미지가 클립보드에 복사되었습니다');
+    } else {
+      // 미지원 브라우저 fallback
+      fallbackDownload(blob);
+    }
+
+  } catch (err) {
+    console.error(err);
+    showToast('이미지 복사에 실패했습니다');
+  }
+}  
 </script>
 
 </body>
