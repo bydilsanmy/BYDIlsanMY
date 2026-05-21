@@ -273,15 +273,15 @@
 
     /* 지도 앱(티맵·카카오·네이버) 색상 뱃지 */
     .action-badge {
-      width: 26px;
-      height: 26px;
+      width: 31px;        /* ★ 수정: 26px → 31px (+20%) */
+      height: 31px;       /* ★ 수정: 26px → 31px (+20%) */
       margin-bottom: 7px;
-      border-radius: 7px;
+      border-radius: 8px; /* ★ 수정: 7px → 8px (비율 조정) */
       display: flex;
       align-items: center;
       justify-content: center;
       font-weight: 800;
-      font-size: 12px;
+      font-size: 20.3px;  /* ★ 수정: 15.6px → 20.3px (+30%) */
     }
 
     /* 아이콘 버튼 하단 텍스트 레이블 */
@@ -327,12 +327,14 @@
       font-size: 13px;
       font-weight: 700;
       color: var(--text-main);
-      margin-bottom: 1px; 
+      margin-bottom: 0px;   /* ★ 수정: 1px → 0px (문장간격 50% 감소) */
+      line-height: 1.1;     /* ★ 수정: 줄높이 축소로 간격 50% 감소 */
     }
 
     .map-text span {
       color: var(--text-mute);
       font-size: 12px;
+      line-height: 1.1;     /* ★ 수정: 줄높이 축소로 간격 50% 감소 */
     }
 
     /* ── 공유 모달 오버레이 ── 바텀시트 방식 */
