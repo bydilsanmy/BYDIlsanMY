@@ -12,8 +12,9 @@
   <meta property="og:title"       content="박민용 팀장 | BYD Ilsan" />
   <meta property="og:description" content="010-8941-1004" />
   <meta property="og:image"       content="https://raw.githubusercontent.com/bydilsanmy/BYDIlsanMY/main/BYD-PMY-namecard.jpg" />
-  <meta property="og:image:width"  content="1200" />
-  <meta property="og:image:height" content="630" />
+  <meta property="og:image:width"  content="1024" />
+  <meta property="og:image:height" content="595" />
+  <meta property="og:image:alt"    content="박민용 팀장 명함 | BYD 일산전시장" />
   <!-- 브라우저 상단 주소창 색상 (Android Chrome 등) -->
   <meta name="theme-color" content="#3753B1" />
 
@@ -549,7 +550,7 @@
   <!-- ── 통화하기 / 연락처 저장 메인 CTA 버튼 ── -->
   <div class="cta-row">
     <!-- tel: 링크로 바로 전화 앱 실행 -->
-    <button class="cta-button cta-primary" onclick="window.open('tel:01089411004')">
+    <button class="cta-button cta-secondary" onclick="window.open('tel:01089411004')">
       <svg width="20" height="20" viewBox="0 0 24 24"
            fill="none" stroke="currentColor" stroke-width="2.5"
            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -575,6 +576,42 @@
       </svg>
       연락처 저장
     </button>
+  </div>
+
+  <!-- ── 명함 이미지 저장 버튼 (1열 전체 너비) ── -->
+  <div class="cta-row" style="grid-template-columns:1fr;">
+    <button class="cta-button cta-primary" onclick="downloadCardImage()">
+      <span class="material-icons-outlined"
+            style="font-size:27px;color:#ffffff;line-height:1;">save</span>
+      명함 이미지로 저장
+    </button>
+  </div>
+
+  <!-- ── e-Catalog 섹션: 차종별 PDF 카탈로그 링크 (2열 그리드) ── -->
+  <div class="section">
+    <div class="section-title">e-Catalog</div>
+
+    <div class="action-grid" style="grid-template-columns:repeat(2,1fr); gap:10px;">
+      <button class="action-item"
+              onclick="window.open('https://www.bydauto.kr/static/file/BYD_DOLPHIN_Catalog.pdf','_blank')">
+        <span class="action-label" style="font-size:18px;font-weight:700;">DOLPHIN</span>
+      </button>
+
+      <button class="action-item"
+              onclick="window.open('https://www.bydauto.kr/static/file/BYD_ATTO_3_Catalog.pdf','_blank')">
+        <span class="action-label" style="font-size:18px;font-weight:700;">ATTO3</span>
+      </button>
+
+      <button class="action-item"
+              onclick="window.open('https://www.bydauto.kr/static/file/seal_catalog.pdf','_blank')">
+        <span class="action-label" style="font-size:18px;font-weight:700;">SEAL</span>
+      </button>
+
+      <button class="action-item"
+              onclick="window.open('https://www.bydauto.kr/static/file/BYD_SEALION_7_Catalog.pdf','_blank')">
+        <span class="action-label" style="font-size:18px;font-weight:700;">SEALION7</span>
+      </button>
+    </div>
   </div>
 
   <!-- ── CONTACT 섹션: 전시장 전화 / 문자 / 이메일 / 링크 복사 ── -->
@@ -625,33 +662,6 @@
     </div>
   </div>
 
-  <!-- ── e-Catalog 섹션: 차종별 PDF 카탈로그 링크 (2열 그리드) ── -->
-  <div class="section">
-    <div class="section-title">e-Catalog</div>
-
-    <div class="action-grid" style="grid-template-columns:repeat(2,1fr); gap:10px;">
-      <button class="action-item"
-              onclick="window.open('https://www.bydauto.kr/static/file/BYD_DOLPHIN_Catalog.pdf','_blank')">
-        <span class="action-label" style="font-size:18px;font-weight:700;">DOLPHIN</span>
-      </button>
-
-      <button class="action-item"
-              onclick="window.open('https://www.bydauto.kr/static/file/BYD_ATTO_3_Catalog.pdf','_blank')">
-        <span class="action-label" style="font-size:18px;font-weight:700;">ATTO3</span>
-      </button>
-
-      <button class="action-item"
-              onclick="window.open('https://www.bydauto.kr/static/file/seal_catalog.pdf','_blank')">
-        <span class="action-label" style="font-size:18px;font-weight:700;">SEAL</span>
-      </button>
-
-      <button class="action-item"
-              onclick="window.open('https://www.bydauto.kr/static/file/BYD_SEALION_7_Catalog.pdf','_blank')">
-        <span class="action-label" style="font-size:18px;font-weight:700;">SEALION7</span>
-      </button>
-    </div>
-  </div>
-
   <!-- ── SHOWROOM LOCATION 섹션: 주소 + 지도 앱 연결 ── -->
   <div class="section">
     <div class="section-title">SHOWROOM LOCATION</div>
@@ -684,16 +694,6 @@
         <span class="action-label">네이버맵</span>
       </button>
     </div>
-  </div>
-
-  <!-- ── 명함 이미지 저장 버튼 (1열 전체 너비) ── -->
-  <!-- save 아이콘(27px, accent-deep색) + 텍스트 -->
-  <div class="cta-row" style="grid-template-columns:1fr;">
-    <button class="cta-button cta-secondary" onclick="downloadCardImage()">
-      <span class="material-icons-outlined"
-            style="font-size:27px;color:var(--accent-deep);line-height:1;">save</span>
-      명함 이미지로 저장
-    </button>
   </div>
 
   <div class="footer">BYD | DT NETWORKS | Ilsan</div>
