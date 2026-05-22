@@ -1127,7 +1127,8 @@ function showToast(msg) {
    iOS Safari: Blob URL 다운로드 미지원 → data URI + window.open 방식
    Android / Desktop: Blob + <a> 임시 클릭 방식 */
 function saveContact() {
-  const vcfLines = [
+  const BOM = '\uFEFF';
+  const vcfText = BOM + [
     'BEGIN:VCARD',
     'VERSION:3.0',
     'N:박;민용;;;',
@@ -1137,42 +1138,52 @@ function saveContact() {
     'TEL;TYPE=CELL,VOICE:010-8941-1004',
     'TEL;TYPE=WORK,VOICE:031-932-9108',
     'EMAIL;TYPE=WORK,INTERNET:minyong.park@dtnetworks.co.kr',
-    'ADR;TYPE=WORK:;;경기도 고양시 일산동구 백마로 516',
+    'ADR;TYPE=WORK:;;경기도 고양시 일산동구 백마로 516;;;;',
     'URL;TYPE=WORK:' + CONTACT_INFO.website,
     'END:VCARD'
-  ];
-  const vcfText = vcfLines.join('\r\n') + '\r\n';
-  const filename = '박민용_BYD.vcf';
+  ].join('\r\n') + '\r\n';
 
-  /* ── 방법 1: <a download> + data URI (iOS Safari 13.4+ / Android Chrome) ── */
-  try {
-    const dataUri = 'data:text/vcard;charset=utf-8,' + encodeURIComponent(vcfText);
+  const filename = '박민용_BYD.vcf';
+  const dataUri  = 'data:text/vcard;charset=utf-8,' + encodeURIComponent(vcfText);
+  const ua       = navigator.userAgent || '';
+  const isIOS    = /iPad|iPhone|iPod/.test(ua) && !window.MSStream;
+  const isInApp  = /KAKAOTALK|Line\/|Instagram|FBAN|FBAV|NaverApp/i.test(ua);
+
+  if (isInApp) {
+    showToast('외부 브라우저(Safari/Chrome)에서 열어 저장하세요');
+    return;
+  }
+
+  if (isIOS) {
     const a = document.createElement('a');
-    a.href     = dataUri;
+    a.href = dataUri;
     a.download = filename;
     a.style.display = 'none';
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
-    showToast('연락처를 저장하세요 📇');
-    return;
-  } catch(e) {}
+  } else {
+    try {
+      const blob = new Blob([vcfText], { type: 'text/vcard;charset=utf-8' });
+      const url  = URL.createObjectURL(blob);
+      const a    = Object.assign(document.createElement('a'), {
+        href: url, download: filename, style: 'display:none'
+      });
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    } catch (e) {
+      const a = document.createElement('a');
+      a.href = dataUri;
+      a.download = filename;
+      a.style.display = 'none';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }
+  }
 
-  /* ── 방법 2: Blob + <a download> (Android fallback) ── */
-  try {
-    const blob = new Blob([vcfText], { type: 'text/vcard;charset=utf-8' });
-    const url  = URL.createObjectURL(blob);
-    const a    = Object.assign(document.createElement('a'), { href: url, download: filename });
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    setTimeout(() => URL.revokeObjectURL(url), 1000);
-    showToast('연락처를 저장하세요 📇');
-    return;
-  } catch(e) {}
-
-  /* ── 방법 3: 새 탭으로 열기 (최후 폴백) ── */
-  window.open('data:text/vcard;charset=utf-8,' + encodeURIComponent(vcfText), '_blank');
   showToast('연락처를 저장하세요 📇');
 }
 
@@ -1403,3 +1414,4 @@ function runCalc() {
 
 </body>
 </html>
+
