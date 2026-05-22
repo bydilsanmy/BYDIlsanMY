@@ -30,6 +30,14 @@
   <!-- Material Icons Outlined: maps_home_work·textsms·save 아이콘 사용 -->
   <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Outlined" rel="stylesheet" />
 
+  <!-- Material Symbols Outlined: 전기차 계산기(laptop_car) / 쇼룸(distance) 아이콘 -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=distance,laptop_car" />
+  <style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+  </style>
+
   <style>
     /* ── 전역 초기화 ── */
     * {
@@ -305,7 +313,7 @@
       box-shadow: 0 4px 10px -2px rgba(0,0,0,0.08);
     }
 
-    /* 주소 앞 maps_home_work 아이콘 컨테이너 */
+    /* 주소 앞 아이콘 컨테이너 */
     .map-pin {
       flex-shrink: 0;
       width: 38px;
@@ -315,8 +323,8 @@
       justify-content: center;
     }
 
-    /* maps_home_work Material Icon: 테두리 없음, 색상 #4e5356 */
-    .map-pin .material-icons-outlined {
+    /* Material Symbols Outlined: 테두리 없음, 색상 #4e5356 */
+    .map-pin .material-symbols-outlined {
       font-size: 36px;
       color: #4e5356;
       line-height: 1;
@@ -616,23 +624,92 @@
     </div>
   </div>
 
-  <!-- ── 인사 박스: e-Catalog 아래, CONTACT 위 ── -->
-  <div style="background:#686D71;border-radius:16px;padding:22px 20px;margin-bottom:14px;box-shadow:0 10px 20px -6px rgba(0,0,0,0.12);text-align:center;">
-    <p style="font-family:'Pretendard','Source Sans Pro',sans-serif;font-size:18px;color:#ffffff;line-height:1.85;margin:0;letter-spacing:-0.01em;">
-      안녕하십니까 BYD Auto 일산전시장<br>
-      박민용팀장입니다.<br>
-      <br>
-      BYD는 30년 이상 축적된 기술로<br>
-      세계 최대 전기차 및 배터리 제조기업으로<br>
-      성장하였습니다.<br>
-      <br>
-      세련되고 우아하며 때론 경쾌한 디자인.<br>
-      최첨단 스마트 기능을 합리적인 가격으로 만나는<br>
-      새로운 전기차의 기준.<br>
-      <br>
-      BYD가 고객님의 일상을<br>
-      새로운 차원으로 안내할 것입니다.
-    </p>
+  <!-- ── ICE vs EV 비교표 섹션 ── -->
+  <div style="background:#111111;border-radius:16px;padding:20px 16px 0;margin-bottom:14px;overflow:hidden;box-shadow:0 10px 20px -6px rgba(0,0,0,0.22);">
+
+    <!-- 제목 -->
+    <div style="text-align:center;padding-bottom:16px;">
+      <span style="font-family:'Pretendard','Source Sans Pro',sans-serif;font-size:17px;font-weight:700;color:#ffffff;letter-spacing:-0.02em;">
+        ICE와 EV 유지·관리비 비교
+      </span>
+      <span style="font-family:'Pretendard','Source Sans Pro',sans-serif;font-size:11px;color:#999999;margin-left:6px;letter-spacing:-0.01em;">
+        (연 25,000Km 주행 기준)
+      </span>
+    </div>
+
+    <!-- 표 -->
+    <table style="width:100%;border-collapse:collapse;font-family:'Pretendard','Source Sans Pro',sans-serif;">
+
+      <!-- 헤더 -->
+      <thead>
+        <tr>
+          <th style="background:#686D71;color:#ffffff;font-size:13px;font-weight:700;padding:10px 8px;text-align:center;border:1px solid #333;width:36%;">비교항목</th>
+          <th style="background:#686D71;color:#ffffff;font-size:13px;font-weight:700;padding:10px 8px;text-align:center;border:1px solid #333;width:32%;">ICE</th>
+          <th style="background:#686D71;color:#ffffff;font-size:13px;font-weight:700;padding:10px 8px;text-align:center;border:1px solid #333;width:32%;">EV</th>
+        </tr>
+      </thead>
+
+      <!-- 바디 -->
+      <tbody>
+        <tr>
+          <td style="color:#cccccc;font-size:12px;padding:10px 8px;text-align:center;border:1px solid #333;">연간 자동차세</td>
+          <td style="color:#aaaaaa;font-size:12px;padding:10px 8px;text-align:right;border:1px solid #333;">290,000 원</td>
+          <td style="color:#4f9edd;font-size:12px;font-weight:700;padding:10px 8px;text-align:right;border:1px solid #333;">130,000 원</td>
+        </tr>
+        <tr>
+          <td style="color:#cccccc;font-size:12px;padding:10px 8px;text-align:center;border:1px solid #333;">연간 연료/충전비</td>
+          <td style="color:#aaaaaa;font-size:12px;padding:10px 8px;text-align:right;border:1px solid #333;">약 3,900,000 원</td>
+          <td style="color:#4f9edd;font-size:12px;font-weight:700;padding:10px 8px;text-align:right;border:1px solid #333;">약 1,500,000 원</td>
+        </tr>
+        <tr>
+          <td style="color:#cccccc;font-size:12px;padding:10px 8px;text-align:center;border:1px solid #333;">연간 소모품 교체비</td>
+          <td style="color:#aaaaaa;font-size:12px;padding:10px 8px;text-align:right;border:1px solid #333;">약 450,000 원</td>
+          <td style="color:#4f9edd;font-size:12px;font-weight:700;padding:10px 8px;text-align:right;border:1px solid #333;">약 30,000 원</td>
+        </tr>
+        <tr>
+          <td style="color:#cccccc;font-size:12px;padding:10px 8px;text-align:center;border:1px solid #333;">취득세 지원</td>
+          <td style="color:#aaaaaa;font-size:12px;padding:10px 8px;text-align:right;border:1px solid #333;">혜택없음</td>
+          <td style="color:#4f9edd;font-size:12px;font-weight:700;padding:10px 8px;text-align:right;border:1px solid #333;">- 1,400,000 원</td>
+        </tr>
+        <tr>
+          <td style="color:#cccccc;font-size:12px;padding:10px 8px;text-align:center;border:1px solid #333;">공영주차장 할인</td>
+          <td style="color:#aaaaaa;font-size:12px;padding:10px 8px;text-align:right;border:1px solid #333;">혜택없음</td>
+          <td style="color:#4f9edd;font-size:12px;font-weight:700;padding:10px 8px;text-align:right;border:1px solid #333;">50% 할인</td>
+        </tr>
+        <tr>
+          <td style="color:#cccccc;font-size:12px;padding:10px 8px;text-align:center;border:1px solid #333;">고속도로 통행료 할인</td>
+          <td style="color:#aaaaaa;font-size:12px;padding:10px 8px;text-align:right;border:1px solid #333;">혜택없음</td>
+          <td style="color:#4f9edd;font-size:12px;font-weight:700;padding:10px 8px;text-align:right;border:1px solid #333;">30% 할인</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- 하단 절감액 배너 -->
+    <div style="background:#3753b1;margin:0 -16px;padding:16px 20px;text-align:center;">
+      <div style="font-family:'Pretendard','Source Sans Pro',sans-serif;font-size:12px;color:#ffffff;margin-bottom:6px;letter-spacing:-0.01em;">5년 보유 시 총 절감 예상액</div>
+      <div style="font-family:'Pretendard','Source Sans Pro',sans-serif;color:#ffffff;letter-spacing:-0.02em;display:flex;align-items:baseline;justify-content:center;gap:4px;">
+        <span style="font-size:13px;font-weight:400;">약</span>
+        <span style="font-size:28px;font-weight:800;">14,900,000</span>
+        <span style="font-size:13px;font-weight:400;">원</span>
+        <span style="font-size:28px;font-weight:800;">+ α</span>
+      </div>
+    </div>
+
+    <!-- 주석 -->
+    <div style="text-align:center;padding:10px 0 12px;">
+      <span style="font-family:'Pretendard','Source Sans Pro',sans-serif;font-size:10px;color:#666666;">상기 이미지 및 내용은 실제 판매차량과 상이할 수 있습니다.</span>
+    </div>
+
+  </div>
+
+  <!-- ── 전기차 전환비용 계산기 버튼 ── -->
+  <div style="margin-bottom:14px;">
+    <button onclick="window.open('https://www.bydauto.kr/purchase/conversion-cost-calculator/dolphin','_blank')"
+            style="width:100%;background:#80c9ff;border:none;border-radius:16px;padding:16px 20px;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;box-shadow:0 10px 20px -6px rgba(128,201,255,0.35);font-family:'Pretendard','Source Sans Pro',sans-serif;font-size:17px;font-weight:700;color:#ffffff;letter-spacing:-0.02em;">
+      <span class="material-symbols-outlined"
+            style="font-size:27px;color:#ffffff;line-height:1;">laptop_car</span>
+      전기차 전환비용 계산기
+    </button>
   </div>
 
   <!-- ── CONTACT 섹션: 전시장 전화 / 문자 / 이메일 / 링크 복사 ── -->
@@ -690,7 +767,7 @@
     <!-- 주소 영역: maps_home_work 아이콘(36px, #4e5356) + 텍스트 -->
     <div class="map-info">
       <div class="map-pin">
-        <span class="material-icons-outlined">maps_home_work</span>
+        <span class="material-symbols-outlined">distance</span>
       </div>
       <div class="map-text">
         <strong>BYD Auto 일산전시장</strong>
