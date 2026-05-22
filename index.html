@@ -14,7 +14,7 @@
   <meta property="og:image"       content="https://raw.githubusercontent.com/bydilsanmy/BYDIlsanMY/main/BYD-PMY-namecard.jpg" />
   <meta property="og:image:width"  content="1024" />
   <meta property="og:image:height" content="595" />
-  <meta property="og:image:alt"    content="박민용 팀장 | BYD일산전시장" />
+  <meta property="og:image:alt"    content="박민용 팀장 명함 | BYD일산전시장" />
   <!-- 브라우저 상단 주소창 색상 (Android Chrome 등) -->
   <meta name="theme-color" content="#3753B1" />
 
@@ -697,19 +697,207 @@
 
     <!-- 주석 -->
     <div style="text-align:center;padding:10px 0 12px;">
-      <span style="font-family:'Pretendard','Source Sans Pro',sans-serif;font-size:10px;color:#666666;">본자료는 참고용입니다.실제 절감액은 운전습관 및 운행환경에 따라 달라질수 있습니다.</span>
+      <span style="font-family:'Pretendard','Source Sans Pro',sans-serif;font-size:10px;color:#666666;">상기 이미지 및 내용은 실제 판매차량과 상이할 수 있습니다.</span>
     </div>
 
   </div>
 
-  <!-- ── 전기차 전환비용 계산기 버튼 ── -->
+  <!-- ── 전기차 전환비용 계산기 ── -->
+  <style>
+    .calc-label {
+      font-size: clamp(10px, 2.5vw, 11px);
+      font-weight: 600;
+      color: #555;
+      font-family: 'Pretendard','Source Sans Pro',sans-serif;
+      margin-bottom: 4px;
+      display: block;
+    }
+    .calc-input {
+      width: 100%;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: clamp(6px, 2vw, 9px) clamp(7px, 2vw, 10px);
+      font-size: clamp(11px, 3vw, 13px);
+      font-family: 'Pretendard','Source Sans Pro',sans-serif;
+      color: #333;
+      outline: none;
+      box-sizing: border-box;
+      -webkit-appearance: none;
+    }
+    .calc-input:focus { border-color: #80c9ff; }
+    .calc-select {
+      width: 100%;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: clamp(6px, 2vw, 9px) clamp(7px, 2vw, 10px);
+      font-size: clamp(11px, 3vw, 13px);
+      font-family: 'Pretendard','Source Sans Pro',sans-serif;
+      color: #333;
+      outline: none;
+      background: #fff;
+      box-sizing: border-box;
+    }
+    .period-btn {
+      flex: 1;
+      padding: clamp(6px, 2vw, 9px) 0;
+      border: 1.5px solid #ddd;
+      border-radius: 8px;
+      background: #fff;
+      font-size: clamp(11px, 3vw, 13px);
+      font-family: 'Pretendard','Source Sans Pro',sans-serif;
+      color: #555;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-weight: 600;
+    }
+    .period-btn.active {
+      background: #3753b1;
+      color: #fff;
+      border-color: #3753b1;
+    }
+    .calc-th {
+      padding: clamp(5px,1.5vw,8px);
+      font-size: clamp(10px,2.5vw,12px);
+      font-weight: 600;
+      border-bottom: 1px solid #ddd;
+      text-align: center;
+    }
+    .calc-td-label {
+      padding: clamp(5px,1.5vw,8px);
+      font-size: clamp(10px,2.5vw,11px);
+      color: #555;
+      font-family: 'Pretendard','Source Sans Pro',sans-serif;
+    }
+    .calc-td {
+      padding: clamp(5px,1.5vw,8px);
+      font-size: clamp(10px,2.5vw,11px);
+      text-align: right;
+      font-family: 'Pretendard','Source Sans Pro',sans-serif;
+      white-space: nowrap;
+    }
+  </style>
+
   <div style="margin-bottom:14px;">
-    <button onclick="window.open('https://www.bydauto.kr/purchase/conversion-cost-calculator/dolphin','_blank')"
+
+    <!-- 토글 버튼 -->
+    <button id="calc-toggle" onclick="toggleCalc()"
             style="width:100%;background:#80c9ff;border:none;border-radius:16px;padding:16px 20px;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;box-shadow:0 10px 20px -6px rgba(128,201,255,0.35);font-family:'Pretendard','Source Sans Pro',sans-serif;font-size:17px;font-weight:700;color:#ffffff;letter-spacing:-0.02em;">
-      <span class="material-symbols-outlined"
-            style="font-size:27px;color:#ffffff;line-height:1;">laptop_car</span>
+      <span class="material-symbols-outlined" style="font-size:27px;color:#ffffff;line-height:1;">laptop_car</span>
       전기차 전환비용 계산기
+      <span id="calc-arrow" style="font-size:18px;transition:transform 0.3s;">▾</span>
     </button>
+
+    <!-- 계산기 패널 -->
+    <div id="calc-panel" style="display:none;background:#ffffff;border-radius:0 0 16px 16px;padding:16px 14px 16px;box-shadow:0 10px 20px -6px rgba(0,0,0,0.10);border:1px solid #e0e0e0;border-top:none;">
+
+      <p style="font-family:'Pretendard','Source Sans Pro',sans-serif;font-size:11px;color:#999;text-align:center;margin-bottom:14px;">현재 차량 정보를 입력하고 BYD 전기차 전환 시 절감 비용을 확인하세요.</p>
+
+      <!-- 입력 2열 그리드 -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;">
+        <div>
+          <label class="calc-label">배기량 (cc)</label>
+          <input id="c-cc" class="calc-input" type="number" inputmode="numeric" placeholder="예) 2000"/>
+        </div>
+        <div>
+          <label class="calc-label">연비 (km/L)</label>
+          <input id="c-mpg" class="calc-input" type="number" inputmode="decimal" placeholder="예) 12"/>
+        </div>
+        <div>
+          <label class="calc-label">연료 단가 (원/L)</label>
+          <input id="c-fuel" class="calc-input" type="number" inputmode="numeric" placeholder="예) 1650"/>
+        </div>
+        <div>
+          <label class="calc-label">연간 주행거리 (km)</label>
+          <input id="c-km" class="calc-input" type="number" inputmode="numeric" placeholder="예) 20000"/>
+        </div>
+      </div>
+
+      <!-- BYD 모델 선택 -->
+      <div style="margin-bottom:8px;">
+        <label class="calc-label">BYD 모델 선택</label>
+        <select id="c-model" class="calc-select">
+          <option value="dolphin">BYD DOLPHIN</option>
+          <option value="dolphin_active">BYD DOLPHIN Active</option>
+          <option value="atto3">BYD ATTO 3</option>
+          <option value="seal">BYD SEAL</option>
+          <option value="seal_plus">BYD SEAL PLUS</option>
+          <option value="seal_awd">BYD SEAL AWD</option>
+          <option value="sealion7">BYD SEALION 7</option>
+        </select>
+      </div>
+
+      <!-- 비교 기간 -->
+      <div style="margin-bottom:14px;">
+        <label class="calc-label">비교 기간</label>
+        <div style="display:flex;gap:6px;">
+          <button class="period-btn" data-year="1" onclick="setPeriod(1)">1년</button>
+          <button class="period-btn" data-year="3" onclick="setPeriod(3)">3년</button>
+          <button class="period-btn active" data-year="5" onclick="setPeriod(5)">5년</button>
+        </div>
+      </div>
+
+      <!-- 계산 버튼 -->
+      <button onclick="runCalc()"
+              style="width:100%;background:#3753b1;color:#fff;border:none;border-radius:10px;padding:12px;font-family:'Pretendard','Source Sans Pro',sans-serif;font-size:clamp(13px,3.5vw,15px);font-weight:700;cursor:pointer;letter-spacing:-0.01em;">
+        전환 비용 계산하기
+      </button>
+
+      <!-- 결과 영역 -->
+      <div id="calc-result" style="display:none;margin-top:14px;">
+
+        <!-- 총 절감액 배너 -->
+        <div style="background:#3753b1;border-radius:12px;padding:14px;text-align:center;margin-bottom:12px;">
+          <div id="res-period" style="font-family:'Pretendard','Source Sans Pro',sans-serif;font-size:11px;color:#aac4ff;margin-bottom:3px;"></div>
+          <div style="font-family:'Pretendard','Source Sans Pro',sans-serif;font-size:11px;color:#ccdeff;margin-bottom:5px;">총 절감 예상액</div>
+          <div id="res-total" style="font-family:'Pretendard','Source Sans Pro',sans-serif;font-size:clamp(20px,5vw,26px);font-weight:800;color:#ffffff;"></div>
+        </div>
+
+        <!-- 상세 테이블 -->
+        <table style="width:100%;border-collapse:collapse;font-family:'Pretendard','Source Sans Pro',sans-serif;table-layout:fixed;">
+          <colgroup>
+            <col style="width:38%">
+            <col style="width:31%">
+            <col style="width:31%">
+          </colgroup>
+          <thead>
+            <tr style="background:#f0f4ff;">
+              <th class="calc-th" style="text-align:left;color:#555;">항목</th>
+              <th class="calc-th" style="color:#555;">내 차(ICE)</th>
+              <th class="calc-th" style="color:#3753b1;">BYD EV</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom:1px solid #eee;">
+              <td class="calc-td-label">연간 연료·충전비</td>
+              <td id="r-ice-fuel" class="calc-td" style="color:#333;"></td>
+              <td id="r-ev-fuel"  class="calc-td" style="color:#3753b1;font-weight:700;"></td>
+            </tr>
+            <tr style="border-bottom:1px solid #eee;">
+              <td class="calc-td-label">자동차세+환경부담금</td>
+              <td id="r-ice-tax"  class="calc-td" style="color:#333;"></td>
+              <td id="r-ev-tax"   class="calc-td" style="color:#3753b1;font-weight:700;"></td>
+            </tr>
+            <tr style="border-bottom:1px solid #eee;">
+              <td class="calc-td-label">소모품 교체비</td>
+              <td id="r-ice-parts" class="calc-td" style="color:#333;"></td>
+              <td id="r-ev-parts"  class="calc-td" style="color:#3753b1;font-weight:700;"></td>
+            </tr>
+            <tr>
+              <td class="calc-td-label">취득세 감면 (1회)</td>
+              <td class="calc-td" style="color:#333;">-</td>
+              <td id="r-ev-acq"   class="calc-td" style="color:#3753b1;font-weight:700;"></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p style="font-size:10px;color:#bbb;margin-top:10px;font-family:'Pretendard','Source Sans Pro',sans-serif;line-height:1.6;">
+          ※ 충전비: 완속 285원/kWh 기준<br>
+          ※ 자동차세: 배기량 기준 현행법 / 환경개선부담금: 연 9만원 기준<br>
+          ※ 취득세 감면 140만원 (2026년 현행법)<br>
+          ※ 본 결과는 참고용이며 실제와 다를 수 있습니다.
+        </p>
+      </div>
+    </div>
   </div>
 
   <!-- ── CONTACT 섹션: 전시장 전화 / 문자 / 이메일 / 링크 복사 ── -->
@@ -1093,6 +1281,104 @@ function downloadCardImage() {
       window.open(CARD_IMAGE_URL, '_blank');
       showToast('이미지를 새 탭에서 저장하세요');
     });
+}
+
+/* ══════════════════════════════════════════════
+   전기차 전환비용 계산기
+══════════════════════════════════════════════ */
+let calcPeriod = 5;
+
+function toggleCalc() {
+  const panel = document.getElementById('calc-panel');
+  const arrow = document.getElementById('calc-arrow');
+  const btn   = document.getElementById('calc-toggle');
+  const open  = panel.style.display === 'none';
+  panel.style.display = open ? 'block' : 'none';
+  arrow.style.transform = open ? 'rotate(180deg)' : 'rotate(0deg)';
+  btn.style.borderRadius = open ? '16px 16px 0 0' : '16px';
+}
+
+function setPeriod(y) {
+  calcPeriod = y;
+  document.querySelectorAll('.period-btn').forEach(b => {
+    b.classList.toggle('active', parseInt(b.dataset.year) === y);
+  });
+}
+
+function fmtW(n) {
+  return Math.round(n).toLocaleString('ko-KR') + '원';
+}
+function fmtMan(n) {
+  const man = Math.round(n / 10000);
+  return '약 ' + man.toLocaleString('ko-KR') + '만원';
+}
+
+/* 배기량 → 연간 자동차세 (현행 cc당 세율) */
+function carTax(cc) {
+  if (cc <= 1000) return cc * 80;
+  if (cc <= 1600) return cc * 140;
+  return cc * 200;
+}
+
+const BYD_MODELS = {
+  dolphin:      { efficiency: 5.5 },
+  dolphin_active:{ efficiency: 5.1 },
+  atto3:        { efficiency: 4.7 },
+  seal:         { efficiency: 4.7 },
+  seal_plus:    { efficiency: 4.7 },
+  seal_awd:     { efficiency: 4.2 },
+  sealion7:     { efficiency: 4.3 },
+};
+
+const EV_TAX_YEAR  = 130000;   // EV 연간 자동차세
+const EV_ENV_YEAR  = 0;        // EV 환경개선부담금 면제
+const ICE_ENV_YEAR = 90000;    // ICE 연간 환경개선부담금
+const EV_ACQ       = 1400000;  // 취득세 감면 1회
+const CHARGE_RATE  = 285;      // 완속 충전단가 원/kWh
+const ICE_PARTS_PER_10K = 200000; // ICE 소모품 10,000km당 20만원
+const EV_PARTS_YEAR     = 25000;  // EV 연간 소모품 25,000원
+
+function runCalc() {
+  const cc    = parseFloat(document.getElementById('c-cc').value)  || 0;
+  const mpg   = parseFloat(document.getElementById('c-mpg').value) || 0;
+  const fuelP = parseFloat(document.getElementById('c-fuel').value)|| 0;
+  const km    = parseFloat(document.getElementById('c-km').value)  || 0;
+  const model = document.getElementById('c-model').value;
+  const m     = BYD_MODELS[model];
+  const period = calcPeriod;
+
+  if (!cc || !mpg || !fuelP || !km) {
+    alert('모든 항목을 입력해 주세요.'); return;
+  }
+
+  // 연간 계산
+  const iceFuelYear  = (km / mpg) * fuelP;
+  const evFuelYear   = (km / m.efficiency) * CHARGE_RATE;
+  const iceTaxYear   = carTax(cc) + ICE_ENV_YEAR;
+  const evTaxYear    = EV_TAX_YEAR + EV_ENV_YEAR;
+  const icePartsYear = (km / 10000) * ICE_PARTS_PER_10K;
+  const evPartsYear  = EV_PARTS_YEAR;
+
+  // 기간 합산 절감액
+  const fuelSaving  = (iceFuelYear  - evFuelYear)  * period;
+  const taxSaving   = (iceTaxYear   - evTaxYear)   * period;
+  const partsSaving = (icePartsYear - evPartsYear) * period;
+  const acqSaving   = EV_ACQ;
+  const total       = fuelSaving + taxSaving + partsSaving + acqSaving;
+
+  // 결과 표시
+  document.getElementById('res-period').textContent  = period + '년 보유 시 총 절감 예상액';
+  document.getElementById('res-total').textContent   = fmtMan(total);
+
+  document.getElementById('r-ice-fuel').textContent  = fmtW(iceFuelYear);
+  document.getElementById('r-ev-fuel').textContent   = fmtW(evFuelYear);
+  document.getElementById('r-ice-tax').textContent   = fmtW(iceTaxYear);
+  document.getElementById('r-ev-tax').textContent    = fmtW(evTaxYear);
+  document.getElementById('r-ice-parts').textContent = fmtW(icePartsYear);
+  document.getElementById('r-ev-parts').textContent  = fmtW(evPartsYear);
+  document.getElementById('r-ev-acq').textContent    = '- ' + fmtW(EV_ACQ);
+
+  document.getElementById('calc-result').style.display = 'block';
 }
 </script>
 
