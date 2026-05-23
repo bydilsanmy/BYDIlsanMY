@@ -574,7 +574,7 @@
       통화하기
     </button>
 
-    <!-- vCard 저장: iOS는 data URI / Android·Desktop은 Blob 방식 분기 -->
+    <!-- vCard 저장: iPhone은 공유 시트·연락처 가져오기 / Android·PC는 파일 다운로드 -->
     <button class="cta-button cta-secondary" onclick="saveContact()">
       <svg width="20" height="20" viewBox="0 0 24 24"
            fill="none" stroke="currentColor" stroke-width="2.5"
@@ -994,10 +994,10 @@
 
 <!-- 토스트 메시지 컨테이너 -->
 <!-- ============ 명함 공유 모달 (바텀시트) ============
-     원본 방식 동일: 3가지 옵션 제공
      ① 명함 이미지 저장 후 전송 (카톡·문자 권장)
      ② 링크로 공유 (Web Share API)
-     ③ 링크 복사
+     ③ 연락처 파일(.vcf) 공유 — iPhone 연락처 앱에 바로 추가
+     ④ 링크 복사
 -->
 <div class="modal-overlay" id="share-modal" onclick="closeShareModal(event)">
   <div class="modal" onclick="event.stopPropagation()">
@@ -1035,7 +1035,22 @@
         </div>
       </button>
 
-      <!-- ③ 링크 복사 -->
+      <!-- ③ 연락처 파일로 공유 (iPhone 연락처 앱에 바로 추가) -->
+      <button class="modal-item" onclick="shareContactFile()">
+        <div class="modal-item-icon" style="background:#34C759;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+               stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/>
+            <circle cx="12" cy="7" r="4"/>
+          </svg>
+        </div>
+        <div class="modal-item-text">
+          <strong>연락처 파일로 공유</strong>
+          <span>iPhone·카톡에 연락처로 전달 (추천)</span>
+        </div>
+      </button>
+
+      <!-- ④ 링크 복사 -->
       <button class="modal-item" onclick="copyLink()">
         <div class="modal-item-icon" style="background:#e2e3e5;">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
@@ -1123,50 +1138,101 @@ function showToast(msg) {
   window.toastTimer = setTimeout(() => t.classList.remove('show'), 2200);
 }
 
-/* ── 연락처 저장 (vCard 3.0) ──
-   iOS Safari: Blob URL 다운로드 미지원 → data URI + window.open 방식
-   Android / Desktop: Blob + <a> 임시 클릭 방식 */
-function saveContact() {
-  // RFC 6350 준수: CRLF 줄바꿈, BOM 없음, UTF-8
-  const vcfText = [
+/* ── iOS / iPadOS 감지 (데스크톱 모드 iPad 포함) ── */
+function isAppleMobile() {
+  return /iPad|iPhone|iPod/.test(navigator.userAgent)
+    || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+}
+
+/* ── vCard 3.0 텍스트 생성 (CONTACT_INFO 기준) ── */
+function buildVCard() {
+  const mobileFmt = CONTACT_INFO.mobile.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
+  const officeFmt = CONTACT_INFO.office.replace(/(\d{3})(\d{3,4})(\d{4})/, '$1-$2-$3');
+  return [
     'BEGIN:VCARD',
     'VERSION:3.0',
-    'N:박;민용;;;',                                            // 성;이름;추가이름;경칭;접미사
-    'FN:박민용',
-    'ORG:BYD Auto 일산전시장',
-    'TITLE:팀장/차장',
-    'TEL;TYPE=CELL,VOICE:010-8941-1004',                   // 휴대폰
-    'TEL;TYPE=WORK,VOICE:031-932-9108',                    // 전시장 대표 번호
-    'EMAIL;TYPE=WORK,INTERNET:minyong.park@dtnetworks.co.kr',
-    'ADR;TYPE=WORK:;;경기도 고양시 일산동구 백마로 516', // 사서함;확장;도로;도시;도/주;우편;국가
-    'URL;TYPE=WORK:' + CONTACT_INFO.website,
+    `N:${CONTACT_INFO.lastName};${CONTACT_INFO.firstName};;;`,
+    `FN:${CONTACT_INFO.fullName}`,
+    `ORG:${CONTACT_INFO.company}`,
+    `TITLE:${CONTACT_INFO.title}`,
+    `TEL;TYPE=CELL,VOICE:${mobileFmt}`,
+    `TEL;TYPE=WORK,VOICE:${officeFmt}`,
+    `EMAIL;TYPE=WORK,INTERNET:${CONTACT_INFO.email}`,
+    `ADR;TYPE=WORK:;;${CONTACT_INFO.address}`,
+    `URL;TYPE=WORK:${CONTACT_INFO.website}`,
     'END:VCARD'
   ].join('\r\n') + '\r\n';
+}
 
-  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+/* ── 연락처 저장 (vCard 3.0) ──
+   iPhone: Web Share API(파일) → data URI 폴백
+   Android / Desktop: Blob + <a download> */
+function saveContact() {
+  const vcfText = buildVCard();
+  const vcfFilename = `${CONTACT_INFO.fullName}_BYD.vcf`;
+  const blob = new Blob([vcfText], { type: 'text/vcard;charset=utf-8' });
+  const vcfFile = new File([blob], vcfFilename, { type: 'text/vcard' });
 
-  if (isIOS) {
-    // iOS: data URI → Safari가 연락처 앱 "추가" 팝업 자동 실행
-    window.open('data:text/vcard;charset=utf-8,' + encodeURIComponent(vcfText), '_blank');
-  } else {
-    // Android / Desktop: Blob 객체 URL → <a download> 클릭 트릭
-    const url = URL.createObjectURL(new Blob([vcfText], { type: 'text/vcard;charset=utf-8' }));
-    const a = Object.assign(document.createElement('a'), { href: url, download: '박민용_BYD.vcf' });
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    setTimeout(() => URL.revokeObjectURL(url), 1000); // 메모리 해제
+  if (navigator.canShare && navigator.canShare({ files: [vcfFile] })) {
+    navigator.share({ files: [vcfFile], title: CONTACT_INFO.fullName })
+      .then(() => showToast('연락처 앱에서 저장하세요 📇'))
+      .catch(err => {
+        if (err.name !== 'AbortError') saveContactFallback(vcfText, vcfFilename, blob);
+      });
+    return;
   }
 
+  saveContactFallback(vcfText, vcfFilename, blob);
+}
+
+function saveContactFallback(vcfText, vcfFilename, blob) {
+  if (isAppleMobile()) {
+    if (vcfText.length < 180000) {
+      window.location.href = 'data:text/vcard;charset=utf-8,' + encodeURIComponent(vcfText);
+      showToast('연락처 추가 화면이 열리면 저장하세요 📇');
+    } else {
+      showToast('HTTPS 페이지에서 다시 시도해 주세요');
+    }
+    return;
+  }
+
+  const url = URL.createObjectURL(blob);
+  const a = Object.assign(document.createElement('a'), { href: url, download: vcfFilename });
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
   showToast('연락처를 저장하세요 📇');
 }
 
-/* ── 현재 페이지 URL 클립보드 복사 ── */
+/* ── 현재 페이지 URL 클립보드 복사 (iOS 폴백 포함) ── */
 function copyLink() {
   closeShareModal();
-  navigator.clipboard.writeText(window.location.href)
-    .then(() => showToast('링크가 복사되었습니다'))
-    .catch(() => showToast('복사에 실패했습니다'));
+  const url = window.location.href;
+
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(url)
+      .then(() => showToast('링크가 복사되었습니다'))
+      .catch(() => copyLinkFallback(url));
+  } else {
+    copyLinkFallback(url);
+  }
+}
+
+function copyLinkFallback(url) {
+  const ta = Object.assign(document.createElement('textarea'), {
+    value: url,
+    readOnly: true,
+    style: 'position:fixed;left:-9999px;top:0;opacity:0'
+  });
+  document.body.appendChild(ta);
+  ta.focus();
+  ta.select();
+  ta.setSelectionRange(0, url.length);
+  let ok = false;
+  try { ok = document.execCommand('copy'); } catch (_) {}
+  document.body.removeChild(ta);
+  showToast(ok ? '링크가 복사되었습니다' : '길게 눌러 링크를 복사하세요');
 }
 
 /* ── 앱 딥링크 범용 헬퍼 ──
@@ -1240,6 +1306,30 @@ function shareImageDirect() {
     });
 }
 
+/* ── 연락처(.vcf) 파일 공유 — iPhone에서 연락처 앱으로 바로 추가 ── */
+function shareContactFile() {
+  closeShareModal();
+  const vcfText = buildVCard();
+  const vcfFilename = `${CONTACT_INFO.fullName}_BYD.vcf`;
+  const blob = new Blob([vcfText], { type: 'text/vcard;charset=utf-8' });
+  const vcfFile = new File([blob], vcfFilename, { type: 'text/vcard' });
+
+  if (navigator.canShare && navigator.canShare({ files: [vcfFile] })) {
+    navigator.share({
+      files: [vcfFile],
+      title: CONTACT_INFO.fullName,
+      text: `${CONTACT_INFO.company} ${CONTACT_INFO.fullName}`
+    })
+      .then(() => showToast('받는 분이 연락처에 추가할 수 있습니다 📇'))
+      .catch(err => {
+        if (err.name !== 'AbortError') saveContactFallback(vcfText, vcfFilename, blob);
+      });
+    return;
+  }
+
+  saveContact();
+}
+
 /* ── ② 링크 공유 (모달 옵션 2) ──
    Web Share API로 URL 공유, 미지원 환경은 링크 복사로 폴백 */
 function shareViaSystem() {
@@ -1257,8 +1347,32 @@ function shareViaSystem() {
   }
 }
 
-/* ── 명함 이미지 다운로드 (Blob → <a download>) ── */
+/* ── 명함 이미지 저장 (iPhone: 공유 시트 우선, 그 외: 다운로드) ── */
 function fallbackDownload(blob) {
+  const file = new File([blob], CARD_IMAGE_FILENAME, { type: blob.type || 'image/jpeg' });
+
+  if (navigator.canShare && navigator.canShare({ files: [file] })) {
+    return navigator.share({
+      files: [file],
+      title: SHARE_TITLE,
+      text: SHARE_TEXT
+    })
+      .then(() => showToast('사진 앱·메시지 등으로 저장·전송하세요'))
+      .catch(err => {
+        if (err.name !== 'AbortError') fallbackDownloadAnchor(blob);
+      });
+  }
+
+  fallbackDownloadAnchor(blob);
+}
+
+function fallbackDownloadAnchor(blob) {
+  if (isAppleMobile()) {
+    window.open(CARD_IMAGE_URL, '_blank');
+    showToast('이미지를 길게 눌러 "이미지 저장" 하세요');
+    return;
+  }
+
   const url = URL.createObjectURL(blob);
   const a = Object.assign(document.createElement('a'), {
     href: url,
@@ -1388,3 +1502,4 @@ function runCalc() {
 
 </body>
 </html>
+
