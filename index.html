@@ -207,11 +207,11 @@
 
     /* CTA 버튼 공통: 아이콘 + 텍스트 수평 중앙 정렬 */
     .cta-button {
-      padding: 15px 12px;
+      padding: 13.5px 12px;
       border-radius: 12px;
       border: none;
       font-family: inherit;
-      font-size: 17px; /* 통화하기·연락처 저장 글씨 크기 */
+      font-size: 15px;
       font-weight: 700;
       cursor: pointer;
       display: flex;
@@ -508,25 +508,47 @@
       transform: translateX(-50%) translateY(0); /* 표시: 원위치로 슬라이드 업 */
     }
 
-    /* ── 플로팅 전화 버튼 ── 화면 우하단 고정 */
-    .floating-call {
-      position: fixed;
-      right: 18px; bottom: 24px;
-      width: 58px; height: 58px;
-      border-radius: 50%;
-      border: none;
-      background: linear-gradient(135deg, #3753b1, #4f9edd);
-      color: white;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 14px 28px rgba(55,83,177,0.35);
-      z-index: 999;
-      cursor: pointer;
-    }
 
-    .floating-call:active {
-      transform: scale(0.94);
+    /* ICE vs EV 비교표: 화면 반응형 글꼴 */
+    .ice-ev-compare-section table {
+      table-layout: fixed;
+      width: 100%;
+    }
+    .ice-ev-compare-section thead th {
+      font-size: clamp(10px, 2.8vw, 13px) !important;
+      font-weight: 700 !important;
+      padding: clamp(6px, 2vw, 10px) clamp(4px, 1.5vw, 8px) !important;
+    }
+    .ice-ev-compare-section tbody td {
+      font-size: clamp(9px, 2.6vw, 12px) !important;
+      padding: clamp(6px, 2vw, 10px) clamp(4px, 1.5vw, 8px) !important;
+    }
+    .ice-ev-compare-section > div:first-child span:first-child {
+      font-size: clamp(14px, 3.8vw, 17px) !important;
+      font-weight: 700 !important;
+    }
+    .ice-ev-compare-section > div:first-child span:last-child {
+      font-size: clamp(9px, 2.5vw, 11px) !important;
+    }
+    .ice-ev-compare-section .ice-ev-savings-banner {
+      padding: 13px 20px !important;
+    }
+    .ice-ev-compare-section .ice-ev-savings-banner > div:first-child {
+      font-size: clamp(10px, 2.6vw, 12px) !important;
+      margin-bottom: 4px !important;
+    }
+    .ice-ev-compare-section .ice-ev-savings-banner > div:last-child span:nth-child(1),
+    .ice-ev-compare-section .ice-ev-savings-banner > div:last-child span:nth-child(3) {
+      font-size: clamp(10px, 2.8vw, 13px) !important;
+      font-weight: 400 !important;
+    }
+    .ice-ev-compare-section .ice-ev-savings-banner > div:last-child span:nth-child(2),
+    .ice-ev-compare-section .ice-ev-savings-banner > div:last-child span:nth-child(4) {
+      font-size: clamp(18px, 5.5vw, 28px) !important;
+      font-weight: 800 !important;
+    }
+    .ice-ev-compare-section > div:last-child span {
+      font-size: clamp(8px, 2.2vw, 10px) !important;
     }
   </style>
 </head>
@@ -592,10 +614,200 @@
   <div class="cta-row" style="grid-template-columns:1fr;">
     <button class="cta-button cta-primary" onclick="downloadCardImage()">
       <span class="material-icons-outlined"
-            style="font-size:27px;color:#ffffff;line-height:1;">save</span>
+            style="font-size:24px;color:#ffffff;line-height:1;">save</span>
       명함 이미지로 저장
     </button>
   </div>
+
+  <!-- ── BYD 홈페이지 차량 슬라이더 (무한루프, 돌핀 시작) ── -->
+  <div style="width:100%;margin:0 auto 18px;overflow:hidden;position:relative;" id="byd-slider-wrap">
+
+    <!-- 무한루프: [SEAL 복사] DOLPHIN ATTO3 SEAL SEALION7 [DOLPHIN 복사] -->
+    <div id="byd-slider-track" style="display:flex;will-change:transform;">
+
+      <!-- 클론: SEAL (맨 앞) -->
+      <div class="byd-slide" style="min-width:100%;">
+        <div style="width:100%;aspect-ratio:16/5.852;overflow:hidden;display:flex;align-items:center;justify-content:center;">
+          <img src="https://www.bydauto.kr/static/images/main/model_seal.png" alt="BYD SEAL" style="width:100%;height:100%;object-fit:contain;display:block;" />
+        </div>
+        <div style="padding:8px 2px 4px;">
+          <div style="font-family:'Pretendard','Source Sans Pro',sans-serif;font-size:10px;font-weight:700;color:#4e5356;letter-spacing:0.08em;margin-bottom:1px;">BYD</div>
+          <div style="font-family:'Pretendard','Source Sans Pro',sans-serif;font-size:15px;font-weight:800;color:#4e5356;letter-spacing:-0.02em;line-height:1.1;">SEAL</div>
+          <div style="font-family:'Pretendard','Source Sans Pro',sans-serif;font-size:11px;color:#4e5356;margin-top:3px;opacity:0.7;">지능적이면서도 역동적인 세단</div>
+        </div>
+      </div>
+
+      <!-- 실제 슬라이드 1: DOLPHIN -->
+      <div class="byd-slide" style="min-width:100%;">
+        <div style="width:100%;aspect-ratio:16/5.852;overflow:hidden;display:flex;align-items:center;justify-content:center;">
+          <img src="https://www.bydauto.kr/static/images/main/model_dolphin.png" alt="BYD DOLPHIN" style="width:100%;height:100%;object-fit:contain;display:block;" />
+        </div>
+        <div style="padding:8px 2px 4px;">
+          <div style="font-family:'Pretendard','Source Sans Pro',sans-serif;font-size:10px;font-weight:700;color:#4e5356;letter-spacing:0.08em;margin-bottom:1px;">BYD</div>
+          <div style="font-family:'Pretendard','Source Sans Pro',sans-serif;font-size:15px;font-weight:800;color:#4e5356;letter-spacing:-0.02em;line-height:1.1;">DOLPHIN</div>
+          <div style="font-family:'Pretendard','Source Sans Pro',sans-serif;font-size:11px;color:#4e5356;margin-top:3px;opacity:0.7;">감각적인 디자인과 실용성을 겸비한 소형 해치백</div>
+        </div>
+      </div>
+
+      <!-- 실제 슬라이드 2: ATTO 3 -->
+      <div class="byd-slide" style="min-width:100%;">
+        <div style="width:100%;aspect-ratio:16/5.852;overflow:hidden;display:flex;align-items:center;justify-content:center;">
+          <img src="https://www.bydauto.kr/static/images/main/model_atto3_my26.png" alt="BYD ATTO 3" style="width:100%;height:100%;object-fit:contain;display:block;" />
+        </div>
+        <div style="padding:8px 2px 4px;">
+          <div style="font-family:'Pretendard','Source Sans Pro',sans-serif;font-size:10px;font-weight:700;color:#4e5356;letter-spacing:0.08em;margin-bottom:1px;">BYD</div>
+          <div style="font-family:'Pretendard','Source Sans Pro',sans-serif;font-size:15px;font-weight:800;color:#4e5356;letter-spacing:-0.02em;line-height:1.1;">ATTO 3</div>
+          <div style="font-family:'Pretendard','Source Sans Pro',sans-serif;font-size:11px;color:#4e5356;margin-top:3px;opacity:0.7;">개성과 역동성을 겸비한 C-SUV</div>
+        </div>
+      </div>
+
+      <!-- 실제 슬라이드 3: SEAL -->
+      <div class="byd-slide" style="min-width:100%;">
+        <div style="width:100%;aspect-ratio:16/5.852;overflow:hidden;display:flex;align-items:center;justify-content:center;">
+          <img src="https://www.bydauto.kr/static/images/main/model_seal.png" alt="BYD SEAL" style="width:100%;height:100%;object-fit:contain;display:block;" />
+        </div>
+        <div style="padding:8px 2px 4px;">
+          <div style="font-family:'Pretendard','Source Sans Pro',sans-serif;font-size:10px;font-weight:700;color:#4e5356;letter-spacing:0.08em;margin-bottom:1px;">BYD</div>
+          <div style="font-family:'Pretendard','Source Sans Pro',sans-serif;font-size:15px;font-weight:800;color:#4e5356;letter-spacing:-0.02em;line-height:1.1;">SEAL</div>
+          <div style="font-family:'Pretendard','Source Sans Pro',sans-serif;font-size:11px;color:#4e5356;margin-top:3px;opacity:0.7;">지능적이면서도 역동적인 세단</div>
+        </div>
+      </div>
+
+      <!-- 실제 슬라이드 4: SEALION 7 -->
+      <div class="byd-slide" style="min-width:100%;">
+        <div style="width:100%;aspect-ratio:16/5.852;overflow:hidden;display:flex;align-items:center;justify-content:center;">
+          <img src="https://www.bydauto.kr/static/images/main/model_sealion7.png" alt="BYD SEALION 7" style="width:100%;height:100%;object-fit:contain;display:block;" />
+        </div>
+        <div style="padding:8px 2px 4px;">
+          <div style="font-family:'Pretendard','Source Sans Pro',sans-serif;font-size:10px;font-weight:700;color:#4e5356;letter-spacing:0.08em;margin-bottom:1px;">BYD</div>
+          <div style="font-family:'Pretendard','Source Sans Pro',sans-serif;font-size:15px;font-weight:800;color:#4e5356;letter-spacing:-0.02em;line-height:1.1;">SEALION 7</div>
+          <div style="font-family:'Pretendard','Source Sans Pro',sans-serif;font-size:11px;color:#4e5356;margin-top:3px;opacity:0.7;">스포티함과 전기 퍼포먼스를 겸비한 SUV 쿠페</div>
+        </div>
+      </div>
+
+      <!-- 클론: DOLPHIN (맨 뒤) -->
+      <div class="byd-slide" style="min-width:100%;">
+        <div style="width:100%;aspect-ratio:16/5.852;overflow:hidden;display:flex;align-items:center;justify-content:center;">
+          <img src="https://www.bydauto.kr/static/images/main/model_dolphin.png" alt="BYD DOLPHIN" style="width:100%;height:100%;object-fit:contain;display:block;" />
+        </div>
+        <div style="padding:8px 2px 4px;">
+          <div style="font-family:'Pretendard','Source Sans Pro',sans-serif;font-size:10px;font-weight:700;color:#4e5356;letter-spacing:0.08em;margin-bottom:1px;">BYD</div>
+          <div style="font-family:'Pretendard','Source Sans Pro',sans-serif;font-size:15px;font-weight:800;color:#4e5356;letter-spacing:-0.02em;line-height:1.1;">DOLPHIN</div>
+          <div style="font-family:'Pretendard','Source Sans Pro',sans-serif;font-size:11px;color:#4e5356;margin-top:3px;opacity:0.7;">감각적인 디자인과 실용성을 겸비한 소형 해치백</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 도트 인디케이터 (실제 슬라이드 4개 기준) -->
+    <div style="display:flex;justify-content:flex-end;gap:5px;padding:0 2px 6px;" id="byd-dots">
+      <span class="byd-dot byd-dot-active"></span>
+      <span class="byd-dot"></span>
+      <span class="byd-dot"></span>
+      <span class="byd-dot"></span>
+    </div>
+  </div>
+
+  <style>
+    .byd-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: rgba(78,83,86,0.25);
+      display: inline-block;
+      transition: background 0.3s, width 0.3s;
+      cursor: pointer;
+    }
+    .byd-dot-active {
+      background: #4e5356;
+      width: 18px;
+      border-radius: 3px;
+    }
+  </style>
+
+  <script>
+    (function() {
+      /* 슬라이드 구성: [클론SEAL] DOLPHIN ATTO3 SEAL SEALION7 [클론DOLPHIN]
+         트랙 인덱스:       0         1       2     3    4          5
+         실제 인덱스:                 0       1     2    3                   */
+      var total = 4;          // 실제 슬라이드 수
+      var trackIdx = 1;       // DOLPHIN(index 1)에서 시작
+      var realIdx  = 0;       // 도트 기준 인덱스
+      var autoTimer = null;
+      var transitioning = false;
+      var track = document.getElementById('byd-slider-track');
+
+      // 트랜지션 없이 즉시 이동 (무한루프 점프용)
+      function jumpTo(idx) {
+        track.style.transition = 'none';
+        track.style.transform = 'translateX(-' + (idx * 100) + '%)';
+        trackIdx = idx;
+      }
+
+      // 애니메이션과 함께 이동
+      function slideTo(idx) {
+        if (transitioning) return;
+        transitioning = true;
+        track.style.transition = 'transform 0.55s cubic-bezier(0.4,0,0.2,1)';
+        track.style.transform = 'translateX(-' + (idx * 100) + '%)';
+        trackIdx = idx;
+      }
+
+      // 트랜지션 끝난 후 무한루프 처리
+      track.addEventListener('transitionend', function() {
+        transitioning = false;
+        // 클론 끝(5 = 클론 DOLPHIN) → 실제 DOLPHIN(1)으로 점프
+        if (trackIdx === total + 1) { jumpTo(1); realIdx = 0; }
+        // 클론 앞(0 = 클론 SEAL) → 실제 SEAL(4)로 점프
+        if (trackIdx === 0)         { jumpTo(total); realIdx = total - 1; }
+        updateDots();
+      });
+
+      function updateDots() {
+        document.querySelectorAll('.byd-dot').forEach(function(d, i) {
+          d.classList.toggle('byd-dot-active', i === realIdx);
+        });
+      }
+
+      function next() {
+        realIdx = (realIdx + 1) % total;
+        slideTo(trackIdx + 1);
+      }
+
+      // 도트 클릭
+      document.querySelectorAll('.byd-dot').forEach(function(d, i) {
+        d.addEventListener('click', function() {
+          resetAuto();
+          var diff = i - realIdx;
+          realIdx = i;
+          slideTo(trackIdx + diff);
+          updateDots();
+        });
+      });
+
+      // 터치 스와이프
+      var touchStartX = 0;
+      document.getElementById('byd-slider-wrap').addEventListener('touchstart', function(e) {
+        touchStartX = e.touches[0].clientX;
+      }, {passive:true});
+      document.getElementById('byd-slider-wrap').addEventListener('touchend', function(e) {
+        var dx = e.changedTouches[0].clientX - touchStartX;
+        if (Math.abs(dx) > 40) {
+          resetAuto();
+          if (dx < 0) { realIdx = (realIdx + 1) % total; slideTo(trackIdx + 1); }
+          else        { realIdx = (realIdx - 1 + total) % total; slideTo(trackIdx - 1); }
+          updateDots();
+        }
+      }, {passive:true});
+
+      function startAuto() { autoTimer = setInterval(next, 3500); }
+      function resetAuto()  { clearInterval(autoTimer); startAuto(); }
+
+      // 초기 위치: DOLPHIN(trackIdx=1)
+      jumpTo(1);
+      updateDots();
+      startAuto();
+    })();
+  </script>
 
   <!-- ── e-Catalog 섹션: 차종별 PDF 카탈로그 링크 (2열 그리드) ── -->
   <div class="section">
@@ -625,7 +837,7 @@
   </div>
 
   <!-- ── ICE vs EV 비교표 섹션 ── -->
-  <div style="background:#111111;border-radius:16px;padding:20px 16px 0;margin-bottom:14px;overflow:hidden;box-shadow:0 10px 20px -6px rgba(0,0,0,0.22);">
+  <div class="ice-ev-compare-section" style="background:#111111;border-radius:16px;padding:20px 16px 0;margin-bottom:14px;overflow:hidden;box-shadow:0 10px 20px -6px rgba(0,0,0,0.22);">
 
     <!-- 제목 -->
     <div style="text-align:center;padding-bottom:16px;">
@@ -685,7 +897,7 @@
     </table>
 
     <!-- 하단 절감액 배너 -->
-    <div style="background:#3753b1;margin:0 -16px;padding:16px 20px;text-align:center;">
+    <div class="ice-ev-savings-banner" style="background:#3753b1;margin:0 -16px;padding:16px 20px;text-align:center;">
       <div style="font-family:'Pretendard','Source Sans Pro',sans-serif;font-size:12px;color:#ffffff;margin-bottom:6px;letter-spacing:-0.01em;">5년 보유 시 총 절감 예상액</div>
       <div style="font-family:'Pretendard','Source Sans Pro',sans-serif;color:#ffffff;letter-spacing:-0.02em;display:flex;align-items:baseline;justify-content:center;gap:4px;">
         <span style="font-size:13px;font-weight:400;">약</span>
@@ -988,9 +1200,6 @@
   <div class="footer">BYD | DT NETWORKS | Ilsan</div>
 </div>
 
-<!-- 플로팅 전화 버튼: 스크롤 중에도 항상 우하단 고정 -->
-<button class="floating-call" onclick="window.open('tel:01089411004')">☎</button>
-
 <!-- 토스트 메시지 컨테이너 -->
 <!-- ============ 명함 공유 모달 (바텀시트) ============
      ① 명함 이미지 저장 후 전송 (카톡·문자 권장)
@@ -1112,7 +1321,7 @@ const CONTACT_INFO = {
   email:      'minyong.park@dtnetworks.co.kr', /* ★ 이메일 */
   address:    '경기 고양시 일산동구 백마로 516',  /* ★ 주소 */
   placeQuery: 'BYD Auto 일산전시장', /* ★ 지도 앱 검색어 */
-  website:    window.location.href
+  website:    'https://bydilsanmy.github.io/BYDIlsanMY/'
 };
 
 /* ── 명함 이미지 URL / 파일명 ──
