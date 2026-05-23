@@ -796,19 +796,19 @@
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;">
         <div>
           <label class="calc-label">배기량 (cc)</label>
-          <input id="c-cc" class="calc-input" type="number" inputmode="numeric" placeholder="예) 2000"/>
+          <input id="c-cc" class="calc-input" type="text" inputmode="numeric" placeholder="예) 2000" autocomplete="off"/>
         </div>
         <div>
-          <label class="calc-label">연비 (km/L)</label>
-          <input id="c-mpg" class="calc-input" type="number" inputmode="decimal" placeholder="예) 12"/>
+          <label class="calc-label">연비 (km/L, 복합연비)</label>
+          <input id="c-mpg" class="calc-input" type="text" inputmode="decimal" placeholder="예) 12" autocomplete="off"/>
         </div>
         <div>
           <label class="calc-label">연료 단가 (원/L)</label>
-          <input id="c-fuel" class="calc-input" type="number" inputmode="numeric" placeholder="예) 1650"/>
+          <input id="c-fuel" class="calc-input" type="text" inputmode="numeric" placeholder="예) 1650" autocomplete="off"/>
         </div>
         <div>
           <label class="calc-label">연간 주행거리 (km)</label>
-          <input id="c-km" class="calc-input" type="number" inputmode="numeric" placeholder="예) 20000"/>
+          <input id="c-km" class="calc-input" type="text" inputmode="numeric" placeholder="예) 20000" autocomplete="off"/>
         </div>
       </div>
 
@@ -877,7 +877,7 @@
               <td id="r-ev-fuel"  class="calc-td" style="color:#3753b1;font-weight:700;"></td>
             </tr>
             <tr style="border-bottom:1px solid #eee;">
-              <td class="calc-td-label">자동차세+환경부담금</td>
+              <td class="calc-td-label">자동차세</td>
               <td id="r-ice-tax"  class="calc-td" style="color:#333;"></td>
               <td id="r-ev-tax"   class="calc-td" style="color:#3753b1;font-weight:700;"></td>
             </tr>
@@ -896,7 +896,6 @@
 
         <p style="font-size:10px;color:#bbb;margin-top:10px;font-family:'Pretendard','Source Sans Pro',sans-serif;line-height:1.6;">
           ※ 충전비: 완속 285원/kWh 기준<br>
-          ※ 자동차세: 배기량 기준 현행법 / 환경개선부담금: 연 9만원 기준<br>
           ※ 취득세 감면 140만원 (2026년 현행법)<br>
           ※ 본 결과는 참고용이며 실제와 다를 수 있습니다.
         </p>
@@ -1424,18 +1423,79 @@ function setPeriod(y) {
 }
 
 function fmtW(n) {
+  if (!Number.isFinite(n)) return '-';
   return Math.round(n).toLocaleString('ko-KR') + '원';
 }
 function fmtMan(n) {
+  if (!Number.isFinite(n)) return '-';
   const man = Math.round(n / 10000);
   return '약 ' + man.toLocaleString('ko-KR') + '만원';
 }
 
-/* 배기량 → 연간 자동차세 (현행 cc당 세율) */
-function carTax(cc) {
-  if (cc <= 1000) return cc * 80;
-  if (cc <= 1600) return cc * 140;
-  return cc * 200;
+/* 입력값 파싱: 쉼표·공백 제거 (20,000 → 20000) */
+function parseCalcInput(id) {
+  const el = document.getElementById(id);
+  if (!el) return NaN;
+  const cleaned = String(el.value).replace(/[,\s]/g, '').trim();
+  if (cleaned === '') return NaN;
+  return parseFloat(cleaned);
+}
+
+/* 내 차(ICE) 연간 연료비 = (연간 km ÷ km/L) × 원/L */
+function iceFuelCostAnnual(km, kmPerLiter, pricePerLiter) {
+  if (!Number.isFinite(km) || !Number.isFinite(kmPerLiter) || !Number.isFinite(pricePerLiter)) return NaN;
+  if (km <= 0 || kmPerLiter <= 0 || pricePerLiter <= 0) return NaN;
+  return (km / kmPerLiter) * pricePerLiter;
+}
+
+/* EV 연간 충전비 = (연간 km ÷ km/kWh) × 원/kWh */
+function evChargeCostAnnual(km, kmPerKwh) {
+  if (!Number.isFinite(km) || !Number.isFinite(kmPerKwh)) return NaN;
+  if (km <= 0 || kmPerKwh <= 0) return NaN;
+  return (km / kmPerKwh) * CHARGE_RATE;
+}
+
+const EDU_TAX_RATE = 0.3;        // 교육세 = 자동차세 × 30%
+const EV_AUTO_TAX  = 130000;       // 전기차 연간 자동차세 (고정)
+
+/* 비영업 승용차 연간 자동차세(본세) — 1,000cc↓80원/cc, 1,600cc↓140원/cc, 초과 200원/cc */
+function carTaxBase(cc) {
+  const displacement = Math.max(0, Number(cc) || 0);
+  if (displacement <= 1000) return displacement * 80;
+  if (displacement <= 1600) return displacement * 140;
+  return displacement * 200;
+}
+
+/* 차령별 자동차세 경감율 (등록 1년차 5%…최대 50%) */
+function getTaxReductionRate(carAgeYears) {
+  const age = Math.floor(Math.max(0, carAgeYears));
+  if (age < 1) return 0;
+  return Math.min(0.5, age * 0.05);
+}
+
+/* 자동차세(본세) + 교육세(30%) */
+function taxWithEducation(autoTax) {
+  return Math.round(autoTax * (1 + EDU_TAX_RATE));
+}
+
+/* ICE: 해당 차령 1년분 — 본세(경감) + 교육세 */
+function iceTaxAnnualAtAge(cc, carAgeYears) {
+  const autoTax = Math.round(carTaxBase(cc) * (1 - getTaxReductionRate(carAgeYears)));
+  return taxWithEducation(autoTax);
+}
+
+/* EV: 1년분 — 본세 13만 + 교육세 */
+function evTaxAnnual() {
+  return EV_AUTO_TAX;
+}
+
+/* 비교 기간 합산 ICE 세금 (기간=차령 시작, 매년 +1) */
+function iceTaxSumForPeriod(cc, period) {
+  let sum = 0;
+  for (let i = 0; i < period; i++) {
+    sum += iceTaxAnnualAtAge(cc, period + i);
+  }
+  return sum;
 }
 
 const BYD_MODELS = {
@@ -1448,38 +1508,51 @@ const BYD_MODELS = {
   sealion7:     { efficiency: 4.3 },
 };
 
-const EV_TAX_YEAR  = 130000;   // EV 연간 자동차세
-const EV_ENV_YEAR  = 0;        // EV 환경개선부담금 면제
-const ICE_ENV_YEAR = 90000;    // ICE 연간 환경개선부담금
 const EV_ACQ       = 1400000;  // 취득세 감면 1회
 const CHARGE_RATE  = 285;      // 완속 충전단가 원/kWh
 const ICE_PARTS_PER_10K = 200000; // ICE 소모품 10,000km당 20만원
 const EV_PARTS_YEAR     = 25000;  // EV 연간 소모품 25,000원
 
 function runCalc() {
-  const cc    = parseFloat(document.getElementById('c-cc').value)  || 0;
-  const mpg   = parseFloat(document.getElementById('c-mpg').value) || 0;
-  const fuelP = parseFloat(document.getElementById('c-fuel').value)|| 0;
-  const km    = parseFloat(document.getElementById('c-km').value)  || 0;
+  const cc    = parseCalcInput('c-cc');
+  const mpg   = parseCalcInput('c-mpg');
+  const fuelP = parseCalcInput('c-fuel');
+  const km    = parseCalcInput('c-km');
   const model = document.getElementById('c-model').value;
   const m     = BYD_MODELS[model];
   const period = calcPeriod;
 
-  if (!cc || !mpg || !fuelP || !km) {
-    alert('모든 항목을 입력해 주세요.'); return;
+  if (!Number.isFinite(cc) || cc <= 0) {
+    alert('배기량(cc)을 입력해 주세요.'); return;
+  }
+  if (!Number.isFinite(mpg) || mpg <= 0) {
+    alert('연비(km/L)를 입력해 주세요.'); return;
+  }
+  if (!Number.isFinite(fuelP) || fuelP <= 0) {
+    alert('연료 단가(원/L)를 입력해 주세요.'); return;
+  }
+  if (!Number.isFinite(km) || km <= 0) {
+    alert('연간 주행거리(km)를 입력해 주세요.'); return;
+  }
+  if (!m) {
+    alert('BYD 모델을 선택해 주세요.'); return;
   }
 
   // 연간 계산
-  const iceFuelYear  = (km / mpg) * fuelP;
-  const evFuelYear   = (km / m.efficiency) * CHARGE_RATE;
-  const iceTaxYear   = carTax(cc) + ICE_ENV_YEAR;
-  const evTaxYear    = EV_TAX_YEAR + EV_ENV_YEAR;
+  const iceFuelYear  = iceFuelCostAnnual(km, mpg, fuelP);
+  const evFuelYear   = evChargeCostAnnual(km, m.efficiency);
+  if (!Number.isFinite(iceFuelYear) || !Number.isFinite(evFuelYear)) {
+    alert('계산에 실패했습니다. 입력값을 확인해 주세요.'); return;
+  }
+  const iceTaxYear   = iceTaxAnnualAtAge(cc, period);
+  const evTaxYear    = evTaxAnnual();
+  const iceTaxPeriod = iceTaxSumForPeriod(cc, period);
+  const evTaxPeriod  = evTaxYear * period;
   const icePartsYear = (km / 10000) * ICE_PARTS_PER_10K;
   const evPartsYear  = EV_PARTS_YEAR;
 
-  // 기간 합산 절감액
   const fuelSaving  = (iceFuelYear  - evFuelYear)  * period;
-  const taxSaving   = (iceTaxYear   - evTaxYear)   * period;
+  const taxSaving   = iceTaxPeriod - evTaxPeriod;
   const partsSaving = (icePartsYear - evPartsYear) * period;
   const acqSaving   = EV_ACQ;
   const total       = fuelSaving + taxSaving + partsSaving + acqSaving;
@@ -1502,4 +1575,3 @@ function runCalc() {
 
 </body>
 </html>
-
