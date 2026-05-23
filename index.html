@@ -1327,7 +1327,7 @@ const CONTACT_INFO = {
 /* ── 명함 이미지 URL / 파일명 ──
    이미지 생성 없이 GitHub Raw 파일을 직접 사용합니다 */
 const CARD_IMAGE_URL      = 'https://raw.githubusercontent.com/bydilsanmy/BYDIlsanMY/main/BYD-PMY-namecard.jpg';
-const CARD_IMAGE_FILENAME = '박민용_BYD명함.jpg';
+const CARD_IMAGE_FILENAME = `${CONTACT_INFO.fullName}_BYD 일산.jpg`;
 
 /* ── 공유 텍스트 ── */
 const SHARE_TITLE = `${CONTACT_INFO.fullName} | ${CONTACT_INFO.company}`;
@@ -1555,6 +1555,18 @@ function shareViaSystem() {
   }
 }
 
+/* ── 명함 이미지 직접 저장 (공유 창 없이 파일 다운로드) ── */
+function saveCardImageDirect(blob) {
+  const filename = `${CONTACT_INFO.fullName}_BYD 일산.jpg`;
+  const url = URL.createObjectURL(blob);
+  const a = Object.assign(document.createElement('a'), { href: url, download: filename });
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+  showToast('다운로드가 완료되었습니다.');
+}
+
 /* ── 명함 이미지 저장 (iPhone: 공유 시트 우선, 그 외: 다운로드) ── */
 function fallbackDownload(blob) {
   const file = new File([blob], CARD_IMAGE_FILENAME, { type: blob.type || 'image/jpeg' });
@@ -1593,8 +1605,7 @@ function fallbackDownloadAnchor(blob) {
   showToast('명함 이미지가 저장되었습니다');
 }
 
-/* ── 명함 이미지로 저장 버튼 (하단 단독 버튼) ──
-   모달 경유 없이 바로 다운로드 */
+/* ── 명함 이미지로 저장 버튼 — 공유 창 없이 바로 저장 ── */
 function downloadCardImage() {
   showToast('이미지를 준비 중입니다...');
   fetch(CARD_IMAGE_URL)
@@ -1602,11 +1613,8 @@ function downloadCardImage() {
       if (!res.ok) throw new Error('fetch failed');
       return res.blob();
     })
-    .then(blob => fallbackDownload(blob))
-    .catch(() => {
-      window.open(CARD_IMAGE_URL, '_blank');
-      showToast('이미지를 새 탭에서 저장하세요');
-    });
+    .then(blob => saveCardImageDirect(blob))
+    .catch(() => showToast('다운로드에 실패했습니다. 다시 시도해 주세요.'));
 }
 
 /* ══════════════════════════════════════════════
