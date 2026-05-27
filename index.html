@@ -9,12 +9,12 @@
 
   <!-- SNS 공유 시 미리보기 메타 정보 (Open Graph) -->
   <meta property="og:type"        content="profile" />
-  <meta property="og:title"       content="박민용 팀장 | BYD Ilsan" />
+  <meta property="og:title"       content="박민용 차장 | BYD Ilsan" />
   <meta property="og:description" content="010-8941-1004" />
   <meta property="og:image"       content="https://raw.githubusercontent.com/bydilsanmy/BYDIlsanMY/main/BYD-PMY-namecard.jpg" />
   <meta property="og:image:width"  content="1024" />
   <meta property="og:image:height" content="595" />
-  <meta property="og:image:alt"    content="박민용 팀장 명함 | BYD일산전시장" />
+  <meta property="og:image:alt"    content="박민용 차장 명함 | BYD일산전시장" />
   <!-- 브라우저 상단 주소창 색상 (Android Chrome 등) -->
   <meta name="theme-color" content="#3753B1" />
 
@@ -31,7 +31,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Outlined" rel="stylesheet" />
 
   <!-- Material Symbols Outlined: 전기차 계산기(laptop_car) / 쇼룸(distance) 아이콘 -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=distance,laptop_car" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=build,distance,expand_more,laptop_car" />
   <style>
     .material-symbols-outlined {
       font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
@@ -345,6 +345,360 @@
       line-height: 1.1;     /* ★ 수정: 줄높이 축소로 간격 50% 감소 */
     }
 
+    /* ── SERVICE CENTER 운영시간·문의 카드 ── */
+    .service-detail-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .service-detail-card {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 12px 10px;
+      box-shadow: 0 4px 10px -2px rgba(0,0,0,0.08);
+      text-align: center;
+    }
+
+    .service-detail-card-call {
+      border: none;
+      font-family: inherit;
+      cursor: pointer;
+      transition: transform 0.1s ease, background 0.2s ease;
+    }
+
+    .service-detail-card-call:active {
+      transform: scale(0.97);
+      background: #edf0f2;
+    }
+
+    .service-detail-label {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--text-mute);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .service-detail-value {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-main);
+      line-height: 1.3;
+    }
+
+    .service-detail-sub {
+      font-size: 10px;
+      color: var(--text-mute);
+      margin-top: 3px;
+      line-height: 1.25;
+    }
+
+    .map-info-clickable {
+      width: 100%;
+      border: none;
+      text-align: left;
+      font-family: inherit;
+      cursor: pointer;
+      transition: transform 0.12s ease, box-shadow 0.2s ease;
+    }
+
+    .map-info-clickable:active {
+      transform: scale(0.985);
+    }
+
+    .map-info-clickable .map-text strong {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .map-info-chevron {
+      font-size: 20px;
+      color: var(--text-mute);
+      flex-shrink: 0;
+    }
+
+    /* ── SERVICE CENTER 섹션: 세로 높이 30% 축소 ── */
+    #service-center-section .section-title {
+      margin-bottom: 10px;
+    }
+
+    #service-center-section .map-info {
+      gap: 8px;
+      padding: 10px 48px 10px 12px;
+      margin-top: 0;
+      border-radius: 10px;
+    }
+
+    #service-center-section .map-pin {
+      width: 27px;
+      height: 27px;
+    }
+
+    #service-center-section .map-pin .material-symbols-outlined {
+      font-size: 25px;
+    }
+
+    #service-center-section .map-text strong {
+      font-size: 12px;
+      line-height: 1.05;
+      display: block;
+    }
+
+    #service-center-section .map-text span {
+      font-size: 11px;
+      line-height: 1.05;
+    }
+
+    #service-center-section .map-text {
+      flex: 1;
+      min-width: 0;
+    }
+
+    #service-center-section .map-info-chevron {
+      font-size: 30px;
+      margin-left: 4px;
+      align-self: center;
+      flex-shrink: 0;
+      color: var(--text-mute);
+      line-height: 1;
+    }
+
+    #service-center-section .service-detail-grid {
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    #service-center-section .service-detail-card {
+      padding: 8px 8px;
+      border-radius: 10px;
+    }
+
+    #service-center-section .service-detail-label {
+      font-size: 9px;
+      margin-bottom: 4px;
+    }
+
+    #service-center-section .service-detail-value {
+      font-size: 11px;
+      line-height: 1.15;
+    }
+
+    #service-center-section .service-detail-sub {
+      font-size: 9px;
+      margin-top: 2px;
+      line-height: 1.1;
+    }
+
+    #service-center-section .action-grid {
+      margin-top: 8px !important;
+    }
+
+    #service-center-section .action-item {
+      padding: 10px 4px 8px;
+    }
+
+    #service-center-section .action-badge {
+      width: 26px;
+      height: 26px;
+      margin-bottom: 5px;
+      font-size: 17px;
+    }
+
+    /* ── SERVICE CENTER 선택 모달 (BYD 좌측 패널 스타일) ── */
+    .sc-modal {
+      background: #ffffff;
+      width: 100%;
+      max-width: 480px;
+      max-height: 88vh;
+      border-radius: 22px 22px 0 0;
+      padding: 18px 0 0;
+      animation: slideUp 0.3s cubic-bezier(0.2,0.8,0.2,1);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .sc-modal-head {
+      padding: 0 18px 14px;
+      border-bottom: 1px solid #ececec;
+    }
+
+    .sc-modal-head .modal-title {
+      margin-bottom: 2px;
+    }
+
+    .sc-modal-head .modal-desc {
+      margin-bottom: 0;
+      font-size: 12px;
+    }
+
+    .sc-filter-wrap {
+      position: relative;
+      padding: 12px 18px;
+      border-bottom: 1px solid #ececec;
+      background: #fafafa;
+    }
+
+    .sc-region-btn {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 12px 14px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      background: #ffffff;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-main);
+      cursor: pointer;
+    }
+
+    .sc-region-btn .material-symbols-outlined {
+      font-size: 22px;
+      color: var(--text-mute);
+      transition: transform 0.2s ease;
+    }
+
+    .sc-region-btn.open .material-symbols-outlined {
+      transform: rotate(180deg);
+    }
+
+    .sc-region-panel {
+      display: none;
+      position: absolute;
+      left: 18px;
+      right: 18px;
+      top: calc(100% - 4px);
+      background: #ffffff;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      box-shadow: 0 12px 28px -8px rgba(0,0,0,0.18);
+      z-index: 5;
+      max-height: 220px;
+      overflow-y: auto;
+    }
+
+    .sc-region-panel.show {
+      display: block;
+    }
+
+    .sc-region-option {
+      display: block;
+      width: 100%;
+      padding: 11px 14px;
+      border: none;
+      background: transparent;
+      text-align: left;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-main);
+      cursor: pointer;
+    }
+
+    .sc-region-option.active,
+    .sc-region-option:active {
+      background: #f0f4ff;
+      color: var(--accent-deep);
+    }
+
+    .sc-result-count {
+      padding: 10px 18px;
+      font-size: 12px;
+      color: var(--text-mute);
+      background: #ffffff;
+      border-bottom: 1px solid #ececec;
+    }
+
+    .sc-result-count strong {
+      color: var(--text-main);
+      font-weight: 800;
+    }
+
+    .sc-list {
+      flex: 1;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .sc-item {
+      display: block;
+      width: 100%;
+      padding: 16px 18px;
+      border: none;
+      border-bottom: 1px solid #ececec;
+      background: #ffffff;
+      text-align: left;
+      font-family: inherit;
+      cursor: pointer;
+      transition: background 0.15s ease;
+    }
+
+    .sc-item:active {
+      background: #f5f7fa;
+    }
+
+    .sc-item.active {
+      background: #f0f4ff;
+      box-shadow: inset 3px 0 0 var(--accent-deep);
+    }
+
+    .sc-item-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #252728;
+      line-height: 1.35;
+      margin-bottom: 6px;
+    }
+
+    .sc-item-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      margin-bottom: 8px;
+    }
+
+    .sc-tag {
+      font-size: 11px;
+      font-weight: 600;
+      color: #666666;
+      line-height: 1.2;
+    }
+
+    .sc-item-tel {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 4px;
+    }
+
+    .sc-item-address {
+      font-size: 12px;
+      color: var(--text-mute);
+      line-height: 1.35;
+      margin-bottom: 4px;
+    }
+
+    .sc-item-hours {
+      font-size: 11px;
+      color: #888888;
+      line-height: 1.4;
+    }
+
+    .sc-modal-footer {
+      padding: 10px 18px 18px;
+      border-top: 1px solid #ececec;
+      background: #ffffff;
+    }
+
     /* ── 공유 모달 오버레이 ── 바텀시트 방식 */
     .modal-overlay {
       position: fixed;
@@ -569,7 +923,7 @@
     <div class="card-content">
       <div class="name-line">
         박 민 용
-        <span class="title">팀장/차장</span>
+        <span class="title">차장</span>
       </div>
       <div class="sub-title-line">Sales | Deputy General Manager</div>
       <div class="showroom-line">BYD Auto Ilsan Showroom</div>
@@ -1197,10 +1551,82 @@
     </div>
   </div>
 
+  <!-- ── SERVICE CENTER 섹션: 주소 + 운영정보 + 지도 앱 (UI) ── -->
+  <div class="section" id="service-center-section">
+    <div class="section-title">SERVICE CENTER</div>
+
+    <button type="button" class="map-info map-info-clickable" id="service-center-card" onclick="openServiceCenterModal()">
+      <div class="map-pin">
+        <span class="material-symbols-outlined">build</span>
+      </div>
+      <div class="map-text">
+        <strong><span id="sc-card-name">BYD Auto 일산 서비스센터</span></strong>
+        <span id="sc-card-address">경기도 고양시 일산동구 백마로 516</span>
+      </div>
+      <span class="material-symbols-outlined map-info-chevron">expand_more</span>
+    </button>
+
+    <div class="service-detail-grid">
+      <div class="service-detail-card">
+        <div class="service-detail-label">Hours</div>
+        <div class="service-detail-value" id="sc-card-hours">평일 09:00 – 18:00</div>
+        <div class="service-detail-sub" id="sc-card-hours-sub">토·일·공휴일 휴무</div>
+      </div>
+      <button type="button" class="service-detail-card service-detail-card-call" onclick="callServiceCenter()" aria-label="서비스센터 전화 연결">
+        <div class="service-detail-label">Contact</div>
+        <div class="service-detail-value" id="sc-card-tel">031-904-2051</div>
+        <div class="service-detail-sub">정비·AS 문의</div>
+      </button>
+    </div>
+
+    <div class="action-grid" style="grid-template-columns:repeat(3,1fr);">
+      <button type="button" class="action-item" onclick="openServiceTmap()" aria-label="티맵으로 서비스센터 길찾기">
+        <div class="action-badge" style="background:#0086FF;color:#fff;">T</div>
+        <span class="action-label">티맵</span>
+      </button>
+
+      <button type="button" class="action-item" onclick="openServiceKakaoMap()" aria-label="카카오맵으로 서비스센터 길찾기">
+        <div class="action-badge" style="background:#FEE500;color:#111;">K</div>
+        <span class="action-label">카카오맵</span>
+      </button>
+
+      <button type="button" class="action-item" onclick="openServiceNaverMap()" aria-label="네이버맵으로 서비스센터 길찾기">
+        <div class="action-badge" style="background:#03C75A;color:#fff;">N</div>
+        <span class="action-label">네이버맵</span>
+      </button>
+    </div>
+  </div>
+
   <div class="footer">BYD | DT NETWORKS | Ilsan</div>
 </div>
 
 <!-- 토스트 메시지 컨테이너 -->
+<!-- ============ 서비스센터 선택 모달 (BYD 좌측 패널) ============ -->
+<div class="modal-overlay" id="sc-modal" onclick="closeServiceCenterModal(event)">
+  <div class="sc-modal" onclick="event.stopPropagation()">
+    <div class="modal-grip"></div>
+    <div class="sc-modal-head">
+      <div class="modal-title">서비스센터 찾기</div>
+      <div class="modal-desc">BYD 서비스센터 네트워크를 확인하세요.</div>
+    </div>
+
+    <div class="sc-filter-wrap">
+      <button type="button" class="sc-region-btn" id="sc-region-btn" onclick="toggleServiceRegionPanel(event)">
+        <span id="sc-region-label">지역 전체</span>
+        <span class="material-symbols-outlined">expand_more</span>
+      </button>
+      <div class="sc-region-panel" id="sc-region-panel"></div>
+    </div>
+
+    <div class="sc-result-count" id="sc-result-count"></div>
+    <div class="sc-list" id="sc-list"></div>
+
+    <div class="sc-modal-footer">
+      <button type="button" class="modal-close" onclick="closeServiceCenterModal()">닫기</button>
+    </div>
+  </div>
+</div>
+
 <!-- ============ 명함 공유 모달 (바텀시트) ============
      ① 명함 이미지 저장 후 전송 (카톡·문자 권장)
      ② 링크로 공유 (Web Share API)
@@ -1314,7 +1740,7 @@ const CONTACT_INFO = {
   firstName:  '민용',           /* ★ 이름 */
   lastName:   '박',             /* ★ 성 */
   fullName:   '박민용',         /* ★ 표시 이름 */
-  title:      '팀장/차장',      /* ★ 직책 */
+  title:      '차장',      /* ★ 직책 */
   company:    'BYD Auto 일산전시장', /* ★ 회사명 */
   mobile:     '01089411004',    /* ★ 휴대폰 (하이픈 없이) */
   office:     '0319329108',     /* ★ 전시장 대표번호 (하이픈 없이) */
@@ -1373,43 +1799,88 @@ function buildVCard() {
 }
 
 /* ── 연락처 저장 (vCard 3.0) ──
-   iPhone: Web Share API(파일) → data URI 폴백
-   Android / Desktop: Blob + <a download> */
+   공유 시트 없이 플랫폼별로 연락처 앱·추가 화면을 바로 엽니다.
+   (브라우저 보안상 최종 '저장' 확인 1회는 OS에서 필요합니다) */
 function saveContact() {
   const vcfText = buildVCard();
   const vcfFilename = `${CONTACT_INFO.fullName}_BYD.vcf`;
   const blob = new Blob([vcfText], { type: 'text/vcard;charset=utf-8' });
-  const vcfFile = new File([blob], vcfFilename, { type: 'text/vcard' });
 
-  if (navigator.canShare && navigator.canShare({ files: [vcfFile] })) {
-    navigator.share({ files: [vcfFile], title: CONTACT_INFO.fullName })
-      .then(() => showToast('연락처 앱에서 저장하세요 📇'))
-      .catch(err => {
-        if (err.name !== 'AbortError') saveContactFallback(vcfText, vcfFilename, blob);
-      });
+  if (isAppleMobile()) {
+    openVCardOnApple(vcfText);
     return;
   }
 
-  saveContactFallback(vcfText, vcfFilename, blob);
+  if (/Android/i.test(navigator.userAgent)) {
+    openVCardOnAndroid(blob, vcfFilename);
+    return;
+  }
+
+  downloadVCardFile(blob, vcfFilename);
+  showToast('다운로드된 연락처 파일을 열어 저장하세요 📇');
 }
 
-function saveContactFallback(vcfText, vcfFilename, blob) {
-  if (isAppleMobile()) {
-    if (vcfText.length < 180000) {
-      window.location.href = 'data:text/vcard;charset=utf-8,' + encodeURIComponent(vcfText);
-      showToast('연락처 추가 화면이 열리면 저장하세요 📇');
-    } else {
-      showToast('HTTPS 페이지에서 다시 시도해 주세요');
-    }
+function openVCardOnApple(vcfText) {
+  if (vcfText.length >= 180000) {
+    showToast('HTTPS 페이지에서 다시 시도해 주세요');
     return;
   }
 
+  const dataUri = 'data:text/vcard;charset=utf-8,' + encodeURIComponent(vcfText);
+
+  /* iframe 방식: 페이지 이탈 없이 iOS 연락처 추가 화면 호출 */
+  const iframe = document.createElement('iframe');
+  iframe.style.display = 'none';
+  iframe.src = dataUri;
+  document.body.appendChild(iframe);
+  setTimeout(() => document.body.removeChild(iframe), 3000);
+
+  /* 일부 iOS 버전 폴백 */
+  setTimeout(() => { window.location.href = dataUri; }, 250);
+  showToast('연락처 추가 화면에서 저장을 눌러주세요 📇');
+}
+
+function openVCardOnAndroid(blob, vcfFilename) {
+  const url = URL.createObjectURL(blob);
+
+  /* Blob URL로 연락처 앱 실행 시도 */
+  const link = document.createElement('a');
+  link.href = url;
+  link.type = 'text/vcard';
+  link.style.display = 'none';
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+
+  /* 앱 실행이 안 되면 vCard 파일 다운로드 */
+  setTimeout(() => {
+    downloadVCardFile(blob, vcfFilename);
+    showToast('연락처 앱이 열리면 저장, 아니면 파일을 열어주세요 📇');
+    URL.revokeObjectURL(url);
+  }, 700);
+}
+
+function downloadVCardFile(blob, vcfFilename) {
   const url = URL.createObjectURL(blob);
   const a = Object.assign(document.createElement('a'), { href: url, download: vcfFilename });
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
   setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+function saveContactFallback(vcfText, vcfFilename, blob) {
+  if (isAppleMobile()) {
+    openVCardOnApple(vcfText);
+    return;
+  }
+
+  if (/Android/i.test(navigator.userAgent)) {
+    openVCardOnAndroid(blob, vcfFilename);
+    return;
+  }
+
+  downloadVCardFile(blob, vcfFilename);
   showToast('연락처를 저장하세요 📇');
 }
 
@@ -1465,6 +1936,31 @@ function openKakaoMap() {
 function openNaverMap() {
   const q = encodeURIComponent(CONTACT_INFO.placeQuery);
   tryAppLink(`nmap://search?query=${q}&appname=dt.networks.card`, `https://map.naver.com/p/search/${q}`);
+}
+
+function getServiceCenterPlaceQuery() {
+  const center = getServiceCenterByCode(scSelectedCode);
+  return center ? center.name : 'BYD Auto 일산 서비스';
+}
+
+function openServiceTmap() {
+  const q = encodeURIComponent(getServiceCenterPlaceQuery());
+  tryAppLink(`tmap://search?name=${q}`, `https://map.kakao.com/link/search/${q}`);
+}
+
+function openServiceKakaoMap() {
+  window.location.href = `https://map.kakao.com/link/search/${encodeURIComponent(getServiceCenterPlaceQuery())}`;
+}
+
+function openServiceNaverMap() {
+  const q = encodeURIComponent(getServiceCenterPlaceQuery());
+  tryAppLink(`nmap://search?query=${q}&appname=dt.networks.card`, `https://map.naver.com/p/search/${q}`);
+}
+
+function callServiceCenter() {
+  const center = getServiceCenterByCode(scSelectedCode);
+  if (!center || !center.tel) return;
+  window.open('tel:' + center.tel.replace(/-/g, ''));
 }
 
 /* ── 공유 모달 열기 / 닫기 ── */
@@ -1788,7 +2284,157 @@ function runCalc() {
 
   document.getElementById('calc-result').style.display = 'block';
 }
+
+/* ══════════════════════════════════════════════
+   SERVICE CENTER 선택 (BYD 공식 좌측 패널 UI)
+══════════════════════════════════════════════ */
+const SERVICE_REGIONS = ['지역 전체', '강원', '경기', '경북', '광주', '대구', '대전', '부산', '서울', '인천', '전북', '제주'];
+
+const SERVICE_CENTERS = [
+  { code: 'gwangju-service', name: 'BYD Auto 광주 서비스', tel: '062-942-4568', address: '광주광역시 광산구 사암로 151', hours: '평일 09:00 ~ 18:00', hoursSub: '토/일/공휴일 휴무', categories: ['일반수리'], region: '광주' },
+  { code: 'gimpo-service', name: 'BYD Auto 김포 서비스', tel: '031-984-8311', address: '경기도 김포시 김포한강11로 139-35', hours: '평일 09:00 ~ 18:00', hoursSub: '토/일/공휴일 휴무', categories: ['일반수리'], region: '경기' },
+  { code: 'daegu-service', name: 'BYD Auto 대구 서비스', tel: '053-763-8001', address: '대구시 수성구 동대구로 129', hours: '평일 09:00 ~ 18:00', hoursSub: '토/일/공휴일 휴무', categories: ['일반수리'], region: '대구' },
+  { code: 'daejeon-service', name: 'BYD Auto 대전 서비스', tel: '042-822-4758', address: '대전광역시 유성구 현충원로 535', hours: '평일 09:00 ~ 18:00', hoursSub: '토/일/공휴일 휴무', categories: ['일반수리'], region: '대전' },
+  { code: 'dongrae-service', name: 'BYD Auto 부산 동래 서비스', tel: '051-867-8752', address: '부산광역시 연제구 거제대로 289', hours: '평일 09:00 ~ 18:00', hoursSub: '토/일/공휴일 휴무', categories: ['일반수리'], region: '부산' },
+  { code: 'busan-service', name: 'BYD Auto 부산 사상 서비스', tel: '051-312-9655', address: '부산광역시 사상구 낙동대로 932', hours: '평일 09:00 ~ 18:00', hoursSub: '토/일/공휴일 휴무', categories: ['일반수리', '사고수리'], region: '부산' },
+  { code: 'bupyeong-service', name: 'BYD Auto 부평 서비스', tel: '032-277-3002', address: '인천 계양구 아나지로148번길 13', hours: '평일 08:30 ~ 17:30', hoursSub: '토/일/공휴일 휴무', categories: ['일반수리', '사고수리'], region: '인천' },
+  { code: 'bundang-service', name: 'BYD Auto 분당 서비스', tel: '031-8022-7503', address: '경기 성남시 분당구 대왕판교로 305', hours: '평일 09:00 ~ 18:00', hoursSub: '토/일/공휴일 휴무', categories: ['일반수리'], region: '경기' },
+  { code: 'seocho-service', name: 'BYD Auto 서초 서비스', tel: '02-598-9123', address: '서울 서초구 반포대로 49', hours: '평일 09:00 ~ 18:00', hoursSub: '토/일/공휴일 휴무', categories: ['일반수리'], region: '서울' },
+  { code: 'suwon-service', name: 'BYD Auto 수원 서비스', tel: '031-5174-0680', address: '경기 수원시 권선구 권선로 308-5, B1058-B1062', hours: '평일 09:00 ~ 18:00', hoursSub: '토/일/공휴일 휴무', categories: ['일반수리', '사고수리'], region: '경기' },
+  { code: 'anyang-service', name: 'BYD Auto 안양 서비스', tel: '031-503-3002', address: '경기도 군포시 산본로 90', hours: '평일 08:30 ~ 17:30', hoursSub: '토/일/공휴일 휴무', categories: ['일반수리', '사고수리'], region: '경기' },
+  { code: 'yangcheon-service', name: 'BYD Auto 양천 서비스', tel: '02-6337-3002', address: '서울특별시 금천구 시흥대로 491', hours: '평일 08:30 ~ 17:30', hoursSub: '토/일/공휴일 휴무', categories: ['일반수리', '사고수리'], region: '서울' },
+  { code: 'yeongdeungpo-service', name: 'BYD Auto 영등포 서비스', tel: '02-2631-8311', address: '서울특별시 영등포구 양평로 30길 30', hours: '평일 08:30 ~ 17:30', hoursSub: '토/일/공휴일 휴무', categories: ['일반수리'], region: '서울' },
+  { code: 'wonju-service', name: 'BYD Auto 원주 서비스', tel: '033-747-6560', address: '강원도 원주시 북원로 2568', hours: '평일 09:00 ~ 18:00', hoursSub: '토/일/공휴일 휴무', categories: ['일반수리'], region: '강원' },
+  { code: 'ilsan-service', name: 'BYD Auto 일산 서비스', tel: '031-904-2051', address: '경기도 고양시 일산동구 백마로 516', hours: '평일 09:00 ~ 18:00', hoursSub: '토/일/공휴일 휴무', categories: ['일반수리'], region: '경기' },
+  { code: 'jeonju-service', name: 'BYD Auto 전주 서비스', tel: '063-211-4550', address: '전북 전주시 덕진구 기린대로 885', hours: '평일 09:00 ~ 18:00', hoursSub: '토/일/공휴일 휴무', categories: ['일반수리'], region: '전북' },
+  { code: 'jeju-service', name: 'BYD Auto 제주 서비스', tel: '064-723-8312', address: '제주특별자치도 제주시 연삼로 238', hours: '평일 09:00 ~ 18:00', hoursSub: '토/일/공휴일 휴무', categories: ['일반수리'], region: '제주' },
+  { code: 'pohang-service', name: 'BYD Auto 포항 서비스', tel: '054-283-8885', address: '경상북도 포항시 북구 새천년대로 592', hours: '평일 09:00 ~ 18:00', hoursSub: '토/일/공휴일 휴무', categories: ['일반수리'], region: '경북' }
+];
+
+let scSelectedCode = 'ilsan-service';
+let scSelectedRegion = '지역 전체';
+
+function getServiceCenterByCode(code) {
+  return SERVICE_CENTERS.find(item => item.code === code) || SERVICE_CENTERS.find(item => item.code === 'ilsan-service');
+}
+
+function getFilteredServiceCenters(region) {
+  if (region === '지역 전체') return SERVICE_CENTERS.slice();
+  return SERVICE_CENTERS.filter(item => item.region === region);
+}
+
+function renderServiceRegionPanel() {
+  const panel = document.getElementById('sc-region-panel');
+  panel.innerHTML = SERVICE_REGIONS.map(region => `
+    <button type="button"
+            class="sc-region-option${region === scSelectedRegion ? ' active' : ''}"
+            onclick="selectServiceRegion('${region}')">${region}</button>
+  `).join('');
+}
+
+function renderServiceCenterList() {
+  const list = getFilteredServiceCenters(scSelectedRegion);
+  const listEl = document.getElementById('sc-list');
+  const countEl = document.getElementById('sc-result-count');
+
+  countEl.innerHTML = `<strong>${list.length}건</strong>의 검색 결과가 있습니다.`;
+
+  if (!list.length) {
+    listEl.innerHTML = '<div style="padding:28px 18px;text-align:center;font-size:13px;color:#999;">해당 지역의 서비스센터가 없습니다.</div>';
+    return;
+  }
+
+  listEl.innerHTML = list.map(item => `
+    <button type="button"
+            class="sc-item${item.code === scSelectedCode ? ' active' : ''}"
+            data-code="${item.code}"
+            onclick="selectServiceCenter('${item.code}')">
+      <div class="sc-item-title">${item.name}</div>
+      <div class="sc-item-tags">
+        ${item.categories.map(tag => `<span class="sc-tag">${tag}</span>`).join('')}
+      </div>
+      <div class="sc-item-tel">${item.tel}</div>
+      <div class="sc-item-address">${item.address}</div>
+      <div class="sc-item-hours">${item.hours}<br>${item.hoursSub}</div>
+    </button>
+  `).join('');
+}
+
+function formatServiceCenterName(name) {
+  if (name.includes('서비스센터')) return name;
+  if (name.endsWith('서비스')) return name + '센터';
+  return name;
+}
+
+function updateServiceCenterCard(center) {
+  document.getElementById('sc-card-name').textContent = formatServiceCenterName(center.name);
+  document.getElementById('sc-card-address').textContent = center.address;
+  document.getElementById('sc-card-hours').textContent = center.hours.replace(' ~ ', ' – ');
+  document.getElementById('sc-card-hours-sub').textContent = center.hoursSub.replace(/\//g, '·');
+  document.getElementById('sc-card-tel').textContent = center.tel;
+}
+
+function openServiceCenterModal() {
+  renderServiceRegionPanel();
+  renderServiceCenterList();
+  document.getElementById('sc-region-label').textContent = scSelectedRegion;
+  document.getElementById('sc-modal').classList.add('show');
+  document.body.style.overflow = 'hidden';
+
+  requestAnimationFrame(() => {
+    const activeItem = document.querySelector(`.sc-item[data-code="${scSelectedCode}"]`);
+    if (activeItem) activeItem.scrollIntoView({ block: 'nearest' });
+  });
+}
+
+function closeServiceCenterModal(e) {
+  if (e && e.target !== e.currentTarget) return;
+  document.getElementById('sc-modal').classList.remove('show');
+  document.getElementById('sc-region-panel').classList.remove('show');
+  document.getElementById('sc-region-btn').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function toggleServiceRegionPanel(e) {
+  e.stopPropagation();
+  const panel = document.getElementById('sc-region-panel');
+  const btn = document.getElementById('sc-region-btn');
+  const open = !panel.classList.contains('show');
+  panel.classList.toggle('show', open);
+  btn.classList.toggle('open', open);
+}
+
+function selectServiceRegion(region) {
+  scSelectedRegion = region;
+  document.getElementById('sc-region-label').textContent = region;
+  document.getElementById('sc-region-panel').classList.remove('show');
+  document.getElementById('sc-region-btn').classList.remove('open');
+  renderServiceRegionPanel();
+  renderServiceCenterList();
+}
+
+function selectServiceCenter(code) {
+  scSelectedCode = code;
+  const center = getServiceCenterByCode(code);
+  updateServiceCenterCard(center);
+  renderServiceCenterList();
+  closeServiceCenterModal();
+  showToast(`${center.name} 선택됨`);
+}
+
+document.addEventListener('click', function(e) {
+  const panel = document.getElementById('sc-region-panel');
+  const btn = document.getElementById('sc-region-btn');
+  if (!panel || !btn) return;
+  if (!panel.contains(e.target) && !btn.contains(e.target)) {
+    panel.classList.remove('show');
+    btn.classList.remove('open');
+  }
+});
+
+updateServiceCenterCard(getServiceCenterByCode(scSelectedCode));
 </script>
 
 </body>
 </html>
+
