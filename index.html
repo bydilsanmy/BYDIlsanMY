@@ -22,6 +22,8 @@
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://raw.githubusercontent.com" crossorigin />
+  <link rel="preconnect" href="https://www.bydauto.kr" crossorigin />
 
   <!-- 한글 폰트: Pretendard (CDN), 영문 보조: Source Sans Pro -->
   <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" rel="stylesheet" />
@@ -502,6 +504,52 @@
       padding: 10px 4px 8px;
     }
 
+    /* ── SERVICE CENTER 접기/펼치기 ── */
+    .sc-collapse-head {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      background: none;
+      border: none;
+      padding: 0;
+      margin: 0;
+      cursor: pointer;
+      font-family: inherit;
+      text-align: left;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .sc-collapse-head:active {
+      opacity: 0.88;
+    }
+
+    .sc-collapse-head .section-title {
+      margin-bottom: 0;
+      flex: 1;
+    }
+
+    .sc-collapse-chevron {
+      font-size: 28px;
+      color: var(--text-mute);
+      flex-shrink: 0;
+      transition: transform 0.25s ease;
+      line-height: 1;
+    }
+
+    #service-center-section.is-open .sc-collapse-chevron {
+      transform: rotate(180deg);
+    }
+
+    .sc-collapse-body {
+      margin-top: 14px;
+    }
+
+    #service-center-section:not(.is-open) .sc-collapse-body {
+      display: none;
+    }
+
     #service-center-section .action-badge {
       width: 26px;
       height: 26px;
@@ -916,7 +964,7 @@
 
     <!-- BYD 로고 (우상단) -->
     <div class="brand-logo-area">
-      <img src="byd-logo.png" alt="BYD Logo" class="byd-logo-img" />
+      <img src="byd-logo.png" alt="BYD Logo" class="byd-logo-img" width="125" height="48" decoding="async" fetchpriority="high" />
     </div>
 
     <!-- 명함 텍스트 정보 (좌하단) -->
@@ -982,7 +1030,7 @@
       <!-- 클론: SEAL (맨 앞) -->
       <div class="byd-slide" style="min-width:100%;">
         <div style="width:100%;aspect-ratio:16/5.852;overflow:hidden;display:flex;align-items:center;justify-content:center;">
-          <img src="https://www.bydauto.kr/static/images/main/model_seal.png" alt="BYD SEAL" style="width:100%;height:100%;object-fit:contain;display:block;" />
+          <img src="https://www.bydauto.kr/static/images/main/model_seal.png" alt="BYD SEAL" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:contain;display:block;" />
         </div>
         <div style="padding:8px 2px 4px;">
           <div style="font-family:'Pretendard','Source Sans Pro',sans-serif;font-size:10px;font-weight:700;color:#4e5356;letter-spacing:0.08em;margin-bottom:1px;">BYD</div>
@@ -994,7 +1042,7 @@
       <!-- 실제 슬라이드 1: DOLPHIN -->
       <div class="byd-slide" style="min-width:100%;">
         <div style="width:100%;aspect-ratio:16/5.852;overflow:hidden;display:flex;align-items:center;justify-content:center;">
-          <img src="https://www.bydauto.kr/static/images/main/model_dolphin.png" alt="BYD DOLPHIN" style="width:100%;height:100%;object-fit:contain;display:block;" />
+          <img src="https://www.bydauto.kr/static/images/main/model_dolphin.png" alt="BYD DOLPHIN" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:contain;display:block;" />
         </div>
         <div style="padding:8px 2px 4px;">
           <div style="font-family:'Pretendard','Source Sans Pro',sans-serif;font-size:10px;font-weight:700;color:#4e5356;letter-spacing:0.08em;margin-bottom:1px;">BYD</div>
@@ -1006,7 +1054,7 @@
       <!-- 실제 슬라이드 2: ATTO 3 -->
       <div class="byd-slide" style="min-width:100%;">
         <div style="width:100%;aspect-ratio:16/5.852;overflow:hidden;display:flex;align-items:center;justify-content:center;">
-          <img src="https://www.bydauto.kr/static/images/main/model_atto3_my26.png" alt="BYD ATTO 3" style="width:100%;height:100%;object-fit:contain;display:block;" />
+          <img src="https://www.bydauto.kr/static/images/main/model_atto3_my26.png" alt="BYD ATTO 3" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:contain;display:block;" />
         </div>
         <div style="padding:8px 2px 4px;">
           <div style="font-family:'Pretendard','Source Sans Pro',sans-serif;font-size:10px;font-weight:700;color:#4e5356;letter-spacing:0.08em;margin-bottom:1px;">BYD</div>
@@ -1018,7 +1066,7 @@
       <!-- 실제 슬라이드 3: SEAL -->
       <div class="byd-slide" style="min-width:100%;">
         <div style="width:100%;aspect-ratio:16/5.852;overflow:hidden;display:flex;align-items:center;justify-content:center;">
-          <img src="https://www.bydauto.kr/static/images/main/model_seal.png" alt="BYD SEAL" style="width:100%;height:100%;object-fit:contain;display:block;" />
+          <img src="https://www.bydauto.kr/static/images/main/model_seal.png" alt="BYD SEAL" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:contain;display:block;" />
         </div>
         <div style="padding:8px 2px 4px;">
           <div style="font-family:'Pretendard','Source Sans Pro',sans-serif;font-size:10px;font-weight:700;color:#4e5356;letter-spacing:0.08em;margin-bottom:1px;">BYD</div>
@@ -1030,7 +1078,7 @@
       <!-- 실제 슬라이드 4: SEALION 7 -->
       <div class="byd-slide" style="min-width:100%;">
         <div style="width:100%;aspect-ratio:16/5.852;overflow:hidden;display:flex;align-items:center;justify-content:center;">
-          <img src="https://www.bydauto.kr/static/images/main/model_sealion7.png" alt="BYD SEALION 7" style="width:100%;height:100%;object-fit:contain;display:block;" />
+          <img src="https://www.bydauto.kr/static/images/main/model_sealion7.png" alt="BYD SEALION 7" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:contain;display:block;" />
         </div>
         <div style="padding:8px 2px 4px;">
           <div style="font-family:'Pretendard','Source Sans Pro',sans-serif;font-size:10px;font-weight:700;color:#4e5356;letter-spacing:0.08em;margin-bottom:1px;">BYD</div>
@@ -1042,7 +1090,7 @@
       <!-- 클론: DOLPHIN (맨 뒤) -->
       <div class="byd-slide" style="min-width:100%;">
         <div style="width:100%;aspect-ratio:16/5.852;overflow:hidden;display:flex;align-items:center;justify-content:center;">
-          <img src="https://www.bydauto.kr/static/images/main/model_dolphin.png" alt="BYD DOLPHIN" style="width:100%;height:100%;object-fit:contain;display:block;" />
+          <img src="https://www.bydauto.kr/static/images/main/model_dolphin.png" alt="BYD DOLPHIN" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:contain;display:block;" />
         </div>
         <div style="padding:8px 2px 4px;">
           <div style="font-family:'Pretendard','Source Sans Pro',sans-serif;font-size:10px;font-weight:700;color:#4e5356;letter-spacing:0.08em;margin-bottom:1px;">BYD</div>
@@ -1089,6 +1137,8 @@
       var autoTimer = null;
       var transitioning = false;
       var track = document.getElementById('byd-slider-track');
+      var dots = document.querySelectorAll('.byd-dot');
+      var sliderWrap = document.getElementById('byd-slider-wrap');
 
       // 트랜지션 없이 즉시 이동 (무한루프 점프용)
       function jumpTo(idx) {
@@ -1117,9 +1167,9 @@
       });
 
       function updateDots() {
-        document.querySelectorAll('.byd-dot').forEach(function(d, i) {
-          d.classList.toggle('byd-dot-active', i === realIdx);
-        });
+        for (var i = 0; i < dots.length; i++) {
+          dots[i].classList.toggle('byd-dot-active', i === realIdx);
+        }
       }
 
       function next() {
@@ -1128,22 +1178,24 @@
       }
 
       // 도트 클릭
-      document.querySelectorAll('.byd-dot').forEach(function(d, i) {
-        d.addEventListener('click', function() {
-          resetAuto();
-          var diff = i - realIdx;
-          realIdx = i;
-          slideTo(trackIdx + diff);
-          updateDots();
-        });
-      });
+      for (var di = 0; di < dots.length; di++) {
+        (function(i) {
+          dots[i].addEventListener('click', function() {
+            resetAuto();
+            var diff = i - realIdx;
+            realIdx = i;
+            slideTo(trackIdx + diff);
+            updateDots();
+          });
+        })(di);
+      }
 
       // 터치 스와이프
       var touchStartX = 0;
-      document.getElementById('byd-slider-wrap').addEventListener('touchstart', function(e) {
+      sliderWrap.addEventListener('touchstart', function(e) {
         touchStartX = e.touches[0].clientX;
       }, {passive:true});
-      document.getElementById('byd-slider-wrap').addEventListener('touchend', function(e) {
+      sliderWrap.addEventListener('touchend', function(e) {
         var dx = e.changedTouches[0].clientX - touchStartX;
         if (Math.abs(dx) > 40) {
           resetAuto();
@@ -1155,6 +1207,15 @@
 
       function startAuto() { autoTimer = setInterval(next, 3500); }
       function resetAuto()  { clearInterval(autoTimer); startAuto(); }
+
+      document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+          clearInterval(autoTimer);
+          autoTimer = null;
+        } else if (!autoTimer) {
+          startAuto();
+        }
+      });
 
       // 초기 위치: DOLPHIN(trackIdx=1)
       jumpTo(1);
@@ -1551,10 +1612,14 @@
     </div>
   </div>
 
-  <!-- ── SERVICE CENTER 섹션: 주소 + 운영정보 + 지도 앱 (UI) ── -->
+  <!-- ── SERVICE CENTER 섹션: 접힘 기본, 터치 시 펼침 ── -->
   <div class="section" id="service-center-section">
-    <div class="section-title">SERVICE CENTER</div>
+    <button type="button" class="sc-collapse-head" id="sc-collapse-toggle" onclick="toggleServiceCenterSection()" aria-expanded="false" aria-controls="sc-collapse-body">
+      <div class="section-title">SERVICE CENTER</div>
+      <span class="material-symbols-outlined sc-collapse-chevron" aria-hidden="true">expand_more</span>
+    </button>
 
+    <div class="sc-collapse-body" id="sc-collapse-body">
     <button type="button" class="map-info map-info-clickable" id="service-center-card" onclick="openServiceCenterModal()">
       <div class="map-pin">
         <span class="material-symbols-outlined">build</span>
@@ -1594,6 +1659,7 @@
         <div class="action-badge" style="background:#03C75A;color:#fff;">N</div>
         <span class="action-label">네이버맵</span>
       </button>
+    </div>
     </div>
   </div>
 
@@ -1759,13 +1825,66 @@ const CARD_IMAGE_FILENAME = `${CONTACT_INFO.fullName}_BYD 일산.jpg`;
 const SHARE_TITLE = `${CONTACT_INFO.fullName} | ${CONTACT_INFO.company}`;
 const SHARE_TEXT  = `${CONTACT_INFO.company} ${CONTACT_INFO.fullName} ${CONTACT_INFO.title} 명함`;
 
+/* ── DOM·플랫폼·리소스 캐시 ── */
+const EL = {
+  toast: document.getElementById('toast'),
+  shareModal: document.getElementById('share-modal'),
+  scModal: document.getElementById('sc-modal'),
+  scRegionPanel: document.getElementById('sc-region-panel'),
+  scRegionBtn: document.getElementById('sc-region-btn'),
+  scRegionLabel: document.getElementById('sc-region-label'),
+  scList: document.getElementById('sc-list'),
+  scResultCount: document.getElementById('sc-result-count'),
+  scCard: {
+    name: document.getElementById('sc-card-name'),
+    address: document.getElementById('sc-card-address'),
+    hours: document.getElementById('sc-card-hours'),
+    hoursSub: document.getElementById('sc-card-hours-sub'),
+    tel: document.getElementById('sc-card-tel'),
+  },
+  calc: {
+    panel: document.getElementById('calc-panel'),
+    arrow: document.getElementById('calc-arrow'),
+    toggle: document.getElementById('calc-toggle'),
+    model: document.getElementById('c-model'),
+    result: document.getElementById('calc-result'),
+    resPeriod: document.getElementById('res-period'),
+    resTotal: document.getElementById('res-total'),
+    iceFuel: document.getElementById('r-ice-fuel'),
+    evFuel: document.getElementById('r-ev-fuel'),
+    iceTax: document.getElementById('r-ice-tax'),
+    evTax: document.getElementById('r-ev-tax'),
+    iceParts: document.getElementById('r-ice-parts'),
+    evParts: document.getElementById('r-ev-parts'),
+    evAcq: document.getElementById('r-ev-acq'),
+  },
+};
+
+const UA = navigator.userAgent;
+const IS_APPLE_MOBILE = /iPad|iPhone|iPod/.test(UA)
+  || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+const IS_ANDROID = /Android/i.test(UA);
+
+let _cardImageBlobPromise = null;
+function fetchCardImageBlob() {
+  if (!_cardImageBlobPromise) {
+    _cardImageBlobPromise = fetch(CARD_IMAGE_URL)
+      .then(res => {
+        if (!res.ok) throw new Error('fetch failed');
+        return res.blob();
+      });
+  }
+  return _cardImageBlobPromise;
+}
+
 /* ============================================================
-   이하 함수는 수정 불필요
+   이하 함수는 수정 불필요 (성능: EL 캐시 · Map 조회 · fetch 재사용)
 ============================================================ */
 
 /* ── 토스트 메시지 표시 (2.2초 후 자동 소멸) ── */
 function showToast(msg) {
-  const t = document.getElementById('toast');
+  const t = EL.toast;
+  if (!t) return;
   t.textContent = msg;
   t.classList.add('show');
   clearTimeout(window.toastTimer);
@@ -1774,8 +1893,7 @@ function showToast(msg) {
 
 /* ── iOS / iPadOS 감지 (데스크톱 모드 iPad 포함) ── */
 function isAppleMobile() {
-  return /iPad|iPhone|iPod/.test(navigator.userAgent)
-    || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  return IS_APPLE_MOBILE;
 }
 
 /* ── vCard 3.0 텍스트 생성 (CONTACT_INFO 기준) ── */
@@ -1811,7 +1929,7 @@ function saveContact() {
     return;
   }
 
-  if (/Android/i.test(navigator.userAgent)) {
+  if (IS_ANDROID) {
     openVCardOnAndroid(blob, vcfFilename);
     return;
   }
@@ -1875,7 +1993,7 @@ function saveContactFallback(vcfText, vcfFilename, blob) {
     return;
   }
 
-  if (/Android/i.test(navigator.userAgent)) {
+  if (IS_ANDROID) {
     openVCardOnAndroid(blob, vcfFilename);
     return;
   }
@@ -1965,14 +2083,14 @@ function callServiceCenter() {
 
 /* ── 공유 모달 열기 / 닫기 ── */
 function openShareModal() {
-  document.getElementById('share-modal').classList.add('show');
+  EL.shareModal?.classList.add('show');
 }
 
 function closeShareModal(e) {
   /* 오버레이 클릭 또는 버튼 직접 호출 시 닫힘
      modal 본체 클릭은 stopPropagation으로 차단되어 닫히지 않음 */
   if (!e || e.target === e.currentTarget) {
-    document.getElementById('share-modal').classList.remove('show');
+    EL.shareModal?.classList.remove('show');
   }
 }
 
@@ -1983,11 +2101,7 @@ function shareImageDirect() {
   closeShareModal();
   showToast('이미지를 준비 중입니다...');
 
-  fetch(CARD_IMAGE_URL)
-    .then(res => {
-      if (!res.ok) throw new Error('fetch failed');
-      return res.blob();
-    })
+  fetchCardImageBlob()
     .then(blob => {
       const file = new File([blob], CARD_IMAGE_FILENAME, { type: 'image/jpeg' });
 
@@ -1998,13 +2112,11 @@ function shareImageDirect() {
           title: SHARE_TITLE,
           text: SHARE_TEXT
         }).catch(() => fallbackDownload(blob)); // 공유 취소 시 다운로드
-      } else {
-        // 파일 공유 미지원 → 다운로드로 폴백
-        fallbackDownload(blob);
       }
+      fallbackDownload(blob);
     })
     .catch(() => {
-      // 네트워크 오류 → 새 탭으로 열기
+      _cardImageBlobPromise = null;
       window.open(CARD_IMAGE_URL, '_blank');
       showToast('이미지를 새 탭에서 저장하세요');
     });
@@ -2104,24 +2216,24 @@ function fallbackDownloadAnchor(blob) {
 /* ── 명함 이미지로 저장 버튼 — 공유 창 없이 바로 저장 ── */
 function downloadCardImage() {
   showToast('이미지를 준비 중입니다...');
-  fetch(CARD_IMAGE_URL)
-    .then(res => {
-      if (!res.ok) throw new Error('fetch failed');
-      return res.blob();
-    })
+  fetchCardImageBlob()
     .then(blob => saveCardImageDirect(blob))
-    .catch(() => showToast('다운로드에 실패했습니다. 다시 시도해 주세요.'));
+    .catch(() => {
+      _cardImageBlobPromise = null;
+      showToast('다운로드에 실패했습니다. 다시 시도해 주세요.');
+    });
 }
 
 /* ══════════════════════════════════════════════
    전기차 전환비용 계산기
 ══════════════════════════════════════════════ */
 let calcPeriod = 5;
+const periodBtns = document.querySelectorAll('.period-btn');
 
 function toggleCalc() {
-  const panel = document.getElementById('calc-panel');
-  const arrow = document.getElementById('calc-arrow');
-  const btn   = document.getElementById('calc-toggle');
+  const panel = EL.calc.panel;
+  const arrow = EL.calc.arrow;
+  const btn   = EL.calc.toggle;
   const open  = panel.style.display === 'none';
   panel.style.display = open ? 'block' : 'none';
   arrow.style.transform = open ? 'rotate(180deg)' : 'rotate(0deg)';
@@ -2130,8 +2242,8 @@ function toggleCalc() {
 
 function setPeriod(y) {
   calcPeriod = y;
-  document.querySelectorAll('.period-btn').forEach(b => {
-    b.classList.toggle('active', parseInt(b.dataset.year) === y);
+  periodBtns.forEach(b => {
+    b.classList.toggle('active', parseInt(b.dataset.year, 10) === y);
   });
 }
 
@@ -2231,9 +2343,10 @@ function runCalc() {
   const mpg   = parseCalcInput('c-mpg');
   const fuelP = parseCalcInput('c-fuel');
   const km    = parseCalcInput('c-km');
-  const model = document.getElementById('c-model').value;
+  const model = EL.calc.model.value;
   const m     = BYD_MODELS[model];
   const period = calcPeriod;
+  const out   = EL.calc;
 
   if (!Number.isFinite(cc) || cc <= 0) {
     alert('배기량(cc)을 입력해 주세요.'); return;
@@ -2271,18 +2384,16 @@ function runCalc() {
   const total       = fuelSaving + taxSaving + partsSaving + acqSaving;
 
   // 결과 표시
-  document.getElementById('res-period').textContent  = period + '년 보유 시 총 절감 예상액';
-  document.getElementById('res-total').textContent   = fmtMan(total);
-
-  document.getElementById('r-ice-fuel').textContent  = fmtW(iceFuelYear);
-  document.getElementById('r-ev-fuel').textContent   = fmtW(evFuelYear);
-  document.getElementById('r-ice-tax').textContent   = fmtW(iceTaxYear);
-  document.getElementById('r-ev-tax').textContent    = fmtW(evTaxYear);
-  document.getElementById('r-ice-parts').textContent = fmtW(icePartsYear);
-  document.getElementById('r-ev-parts').textContent  = fmtW(evPartsYear);
-  document.getElementById('r-ev-acq').textContent    = '- ' + fmtW(EV_ACQ);
-
-  document.getElementById('calc-result').style.display = 'block';
+  out.resPeriod.textContent  = period + '년 보유 시 총 절감 예상액';
+  out.resTotal.textContent   = fmtMan(total);
+  out.iceFuel.textContent    = fmtW(iceFuelYear);
+  out.evFuel.textContent     = fmtW(evFuelYear);
+  out.iceTax.textContent     = fmtW(iceTaxYear);
+  out.evTax.textContent      = fmtW(evTaxYear);
+  out.iceParts.textContent   = fmtW(icePartsYear);
+  out.evParts.textContent    = fmtW(evPartsYear);
+  out.evAcq.textContent      = '- ' + fmtW(EV_ACQ);
+  out.result.style.display = 'block';
 }
 
 /* ══════════════════════════════════════════════
@@ -2314,28 +2425,45 @@ const SERVICE_CENTERS = [
 let scSelectedCode = 'ilsan-service';
 let scSelectedRegion = '지역 전체';
 
+const SERVICE_CENTER_BY_CODE = Object.fromEntries(
+  SERVICE_CENTERS.map(item => [item.code, item])
+);
+const SERVICE_CENTERS_BY_REGION = Object.fromEntries(
+  SERVICE_REGIONS.map(region => [
+    region,
+    region === '지역 전체'
+      ? SERVICE_CENTERS
+      : SERVICE_CENTERS.filter(item => item.region === region)
+  ])
+);
+const DEFAULT_SERVICE_CENTER = SERVICE_CENTER_BY_CODE['ilsan-service'];
+
 function getServiceCenterByCode(code) {
-  return SERVICE_CENTERS.find(item => item.code === code) || SERVICE_CENTERS.find(item => item.code === 'ilsan-service');
+  return SERVICE_CENTER_BY_CODE[code] || DEFAULT_SERVICE_CENTER;
 }
 
 function getFilteredServiceCenters(region) {
-  if (region === '지역 전체') return SERVICE_CENTERS.slice();
-  return SERVICE_CENTERS.filter(item => item.region === region);
+  return SERVICE_CENTERS_BY_REGION[region] || SERVICE_CENTERS;
 }
 
-function renderServiceRegionPanel() {
-  const panel = document.getElementById('sc-region-panel');
-  panel.innerHTML = SERVICE_REGIONS.map(region => `
+function initServiceRegionPanel() {
+  EL.scRegionPanel.innerHTML = SERVICE_REGIONS.map(region => `
     <button type="button"
             class="sc-region-option${region === scSelectedRegion ? ' active' : ''}"
-            onclick="selectServiceRegion('${region}')">${region}</button>
+            data-region="${region}">${region}</button>
   `).join('');
+}
+
+function updateServiceRegionActive() {
+  EL.scRegionPanel.querySelectorAll('.sc-region-option').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.region === scSelectedRegion);
+  });
 }
 
 function renderServiceCenterList() {
   const list = getFilteredServiceCenters(scSelectedRegion);
-  const listEl = document.getElementById('sc-list');
-  const countEl = document.getElementById('sc-result-count');
+  const listEl = EL.scList;
+  const countEl = EL.scResultCount;
 
   countEl.innerHTML = `<strong>${list.length}건</strong>의 검색 결과가 있습니다.`;
 
@@ -2347,8 +2475,7 @@ function renderServiceCenterList() {
   listEl.innerHTML = list.map(item => `
     <button type="button"
             class="sc-item${item.code === scSelectedCode ? ' active' : ''}"
-            data-code="${item.code}"
-            onclick="selectServiceCenter('${item.code}')">
+            data-code="${item.code}">
       <div class="sc-item-title">${item.name}</div>
       <div class="sc-item-tags">
         ${item.categories.map(tag => `<span class="sc-tag">${tag}</span>`).join('')}
@@ -2367,49 +2494,58 @@ function formatServiceCenterName(name) {
 }
 
 function updateServiceCenterCard(center) {
-  document.getElementById('sc-card-name').textContent = formatServiceCenterName(center.name);
-  document.getElementById('sc-card-address').textContent = center.address;
-  document.getElementById('sc-card-hours').textContent = center.hours.replace(' ~ ', ' – ');
-  document.getElementById('sc-card-hours-sub').textContent = center.hoursSub.replace(/\//g, '·');
-  document.getElementById('sc-card-tel').textContent = center.tel;
+  const card = EL.scCard;
+  card.name.textContent = formatServiceCenterName(center.name);
+  card.address.textContent = center.address;
+  card.hours.textContent = center.hours.replace(' ~ ', ' – ');
+  card.hoursSub.textContent = center.hoursSub.replace(/\//g, '·');
+  card.tel.textContent = center.tel;
 }
 
 function openServiceCenterModal() {
-  renderServiceRegionPanel();
+  updateServiceRegionActive();
   renderServiceCenterList();
-  document.getElementById('sc-region-label').textContent = scSelectedRegion;
-  document.getElementById('sc-modal').classList.add('show');
+  EL.scRegionLabel.textContent = scSelectedRegion;
+  EL.scModal.classList.add('show');
   document.body.style.overflow = 'hidden';
 
   requestAnimationFrame(() => {
-    const activeItem = document.querySelector(`.sc-item[data-code="${scSelectedCode}"]`);
+    const activeItem = EL.scList.querySelector(`.sc-item[data-code="${scSelectedCode}"]`);
     if (activeItem) activeItem.scrollIntoView({ block: 'nearest' });
   });
 }
 
 function closeServiceCenterModal(e) {
   if (e && e.target !== e.currentTarget) return;
-  document.getElementById('sc-modal').classList.remove('show');
-  document.getElementById('sc-region-panel').classList.remove('show');
-  document.getElementById('sc-region-btn').classList.remove('open');
+  EL.scModal.classList.remove('show');
+  EL.scRegionPanel.classList.remove('show');
+  EL.scRegionBtn.classList.remove('open');
   document.body.style.overflow = '';
+  document.documentElement.style.overflow = '';
+}
+
+function toggleServiceCenterSection() {
+  const section = document.getElementById('service-center-section');
+  const btn = document.getElementById('sc-collapse-toggle');
+  if (!section) return;
+  const open = !section.classList.contains('is-open');
+  section.classList.toggle('is-open', open);
+  if (btn) btn.setAttribute('aria-expanded', open ? 'true' : 'false');
 }
 
 function toggleServiceRegionPanel(e) {
   e.stopPropagation();
-  const panel = document.getElementById('sc-region-panel');
-  const btn = document.getElementById('sc-region-btn');
-  const open = !panel.classList.contains('show');
-  panel.classList.toggle('show', open);
-  btn.classList.toggle('open', open);
+  const open = !EL.scRegionPanel.classList.contains('show');
+  EL.scRegionPanel.classList.toggle('show', open);
+  EL.scRegionBtn.classList.toggle('open', open);
 }
 
 function selectServiceRegion(region) {
   scSelectedRegion = region;
-  document.getElementById('sc-region-label').textContent = region;
-  document.getElementById('sc-region-panel').classList.remove('show');
-  document.getElementById('sc-region-btn').classList.remove('open');
-  renderServiceRegionPanel();
+  EL.scRegionLabel.textContent = region;
+  EL.scRegionPanel.classList.remove('show');
+  EL.scRegionBtn.classList.remove('open');
+  updateServiceRegionActive();
   renderServiceCenterList();
 }
 
@@ -2417,24 +2553,102 @@ function selectServiceCenter(code) {
   scSelectedCode = code;
   const center = getServiceCenterByCode(code);
   updateServiceCenterCard(center);
-  renderServiceCenterList();
   closeServiceCenterModal();
   showToast(`${center.name} 선택됨`);
 }
 
-document.addEventListener('click', function(e) {
-  const panel = document.getElementById('sc-region-panel');
-  const btn = document.getElementById('sc-region-btn');
-  if (!panel || !btn) return;
-  if (!panel.contains(e.target) && !btn.contains(e.target)) {
-    panel.classList.remove('show');
-    btn.classList.remove('open');
-  }
-});
+(function initServiceCenterUI() {
+  initServiceRegionPanel();
+  EL.scRegionPanel.addEventListener('click', (e) => {
+    const btn = e.target.closest('.sc-region-option');
+    if (!btn) return;
+    selectServiceRegion(btn.dataset.region);
+  });
+  EL.scList.addEventListener('click', (e) => {
+    const item = e.target.closest('.sc-item');
+    if (!item) return;
+    selectServiceCenter(item.dataset.code);
+  });
+  document.addEventListener('click', (e) => {
+    if (!EL.scRegionPanel.contains(e.target) && !EL.scRegionBtn.contains(e.target)) {
+      EL.scRegionPanel.classList.remove('show');
+      EL.scRegionBtn.classList.remove('open');
+    }
+  });
+  updateServiceCenterCard(DEFAULT_SERVICE_CENTER);
+})();
 
-updateServiceCenterCard(getServiceCenterByCode(scSelectedCode));
+/* 유휴 시간에 명함 이미지 선로드 (공유·저장 시 즉시 응답) */
+(function preloadCardImage() {
+  const warm = () => fetchCardImageBlob().catch(() => { _cardImageBlobPromise = null; });
+  if ('requestIdleCallback' in window) requestIdleCallback(warm, { timeout: 3000 });
+  else setTimeout(warm, 1200);
+})();
+
+/* 세로 스크롤 10% 가속 (휠·터치) — 슬라이더·입력 필드 제외 */
+(function enableScrollBoost() {
+  const BOOST = 1.1;
+  const EXTRA = BOOST - 1;
+  let lastTouchY = null;
+
+  function isExcluded(target) {
+    if (!(target instanceof Element)) return true;
+    if (target.closest('#byd-slider-wrap')) return true;
+    if (target.closest('input, textarea, select, [contenteditable="true"]')) return true;
+    return false;
+  }
+
+  function scrollRoot() {
+    return document.scrollingElement || document.documentElement;
+  }
+
+  function scrollableParent(node) {
+    let el = node instanceof Element ? node : null;
+    while (el && el !== document.documentElement) {
+      const oy = getComputedStyle(el).overflowY;
+      if ((oy === 'auto' || oy === 'scroll') && el.scrollHeight > el.clientHeight + 1) return el;
+      el = el.parentElement;
+    }
+    return scrollRoot();
+  }
+
+  window.addEventListener('wheel', (e) => {
+    if (e.ctrlKey || e.metaKey || isExcluded(e.target)) return;
+    e.preventDefault();
+    const parent = scrollableParent(e.target);
+    const root = scrollRoot();
+    if (parent === root) {
+      window.scrollBy({ top: e.deltaY * BOOST, left: e.deltaX * BOOST, behavior: 'auto' });
+      return;
+    }
+    parent.scrollTop += e.deltaY * BOOST;
+    if (e.deltaX) parent.scrollLeft += e.deltaX * BOOST;
+  }, { passive: false });
+
+  document.addEventListener('touchstart', (e) => {
+    if (e.touches.length !== 1 || isExcluded(e.target)) {
+      lastTouchY = null;
+      return;
+    }
+    lastTouchY = e.touches[0].clientY;
+  }, { passive: true });
+
+  document.addEventListener('touchmove', (e) => {
+    if (lastTouchY == null || e.touches.length !== 1 || isExcluded(e.target)) return;
+    const y = e.touches[0].clientY;
+    const delta = lastTouchY - y;
+    lastTouchY = y;
+    if (!delta) return;
+    const extra = delta * EXTRA;
+    const parent = scrollableParent(e.target);
+    if (parent === scrollRoot()) window.scrollBy(0, extra);
+    else parent.scrollTop += extra;
+  }, { passive: true });
+
+  document.addEventListener('touchend', () => { lastTouchY = null; }, { passive: true });
+  document.addEventListener('touchcancel', () => { lastTouchY = null; }, { passive: true });
+})();
 </script>
 
 </body>
 </html>
-
