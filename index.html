@@ -277,23 +277,8 @@
       display: inline;
       font-weight: 800;
       letter-spacing: -0.02em;
-      background-image: linear-gradient(
-        90deg,
-        rgba(255, 255, 255, 0.5) 0%,
-        rgba(255, 255, 255, 0.5) 30%,
-        rgba(255, 255, 255, 0.82) 42%,
-        #ffffff 50%,
-        rgba(255, 255, 255, 0.82) 58%,
-        rgba(255, 255, 255, 0.5) 70%,
-        rgba(255, 255, 255, 0.5) 100%
-      );
-      background-size: 200% 100%;
-      background-repeat: repeat;
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      -webkit-text-fill-color: transparent;
-      animation: promoEditingShimmer 2.5s linear infinite;
+      color: rgba(255, 255, 255, 0.73);
+      animation: promoBlink 1.4s ease-in-out infinite;
     }
 
     .promo-marquee__lead-num {
@@ -303,9 +288,15 @@
       line-height: 1;
     }
 
-    @keyframes promoEditingShimmer {
-      0%   { background-position: 200% center; }
-      100% { background-position: -200% center; }
+    @keyframes promoBlink {
+      0%, 100% {
+        color: rgba(255, 255, 255, 0.73);
+        text-shadow: none;
+      }
+      50% {
+        color: #ffffff;
+        text-shadow: 0 0 8px rgba(255, 255, 255, 0.9), 0 0 16px rgba(255, 255, 255, 0.45);
+      }
     }
 
     .promo-marquee__sep {
@@ -346,11 +337,8 @@
       .promo-marquee__lead,
       .promo-marquee__highlight {
         animation: none;
-        background: none;
-        -webkit-background-clip: unset;
-        background-clip: unset;
-        -webkit-text-fill-color: #fff9c4;
-        color: #fff9c4;
+        color: #ffffff;
+        text-shadow: none;
       }
 
       .promo-marquee__text + .promo-marquee__text {
@@ -2872,3 +2860,4 @@ function selectServiceCenter(code) {
 
 </body>
 </html>
+
